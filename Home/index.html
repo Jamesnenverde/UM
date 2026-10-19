@@ -233,7 +233,7 @@ p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
 .pinfo{
   position:absolute; inset:0;
   padding:18px;
-  display:flex; flex-direction:column; justify-content:center;
+  display:flex; flex-direction:column;
   background:rgba(9,10,15,.9);
   backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);
   opacity:0;
@@ -242,6 +242,8 @@ p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
   text-align:left;
   z-index:2;
 }
+.pinfo > *:first-child{ margin-top:auto; }
+.pinfo > *:last-child{ margin-bottom:auto; }
 .pcard:hover .pinfo,
 .pcard:focus .pinfo,
 .pcard:focus-within .pinfo{ opacity:1; }
