@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE UNIVERSITY OF MANILA</title>
+<link rel="icon" type="image/jpg" href="../Images/UM.jpg">
+<style>
+/* ============ BASE ============ */
+*{ box-sizing:border-box; }
+[hidden]{ display:none !important; }
+html{ scroll-snap-type:y mandatory; }
+@media (prefers-reduced-motion:no-preference){ html{ scroll-behavior:smooth; } }
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:"Segoe UI", Cambria, Georgia, sans-serif;
+  color:#1b1b2f;
+  background:#fee440;
+  font-size:18px;
+}
+
+/* ============ ANIMATED BLOB BACKGROUND (same on every section) ============ */
+.blob-bg{
+  position:fixed; top:0; left:0;
+  width:100%; height:100vh;
+  z-index:-1; pointer-events:none;
+}
+@media (prefers-reduced-motion:reduce){
+  .blob-bg path{ animation:none !important; }
+}
+
+/* ============ GLASS ============ */
+.glass{
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(0.4px);
+  -webkit-backdrop-filter: blur(0.4px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* ============ HEADER ============ */
+.top{
+  position:fixed; top:0; left:0; right:0; z-index:10;
+  display:flex; align-items:center; gap:20px;
+  padding:10px 20px;
+  border-radius:0;
+  border-width:0 0 1px 0;
+  border-color:rgba(255,255,255,.18);
+}
+.brand{ display:flex; align-items:center; gap:12px; flex:0 0 auto; }
+#ums{ width:56px; height:56px; border-radius:50%; border:3px solid #2e9e3e; object-fit:cover; }
+.cslogo{ height:64px; width:auto; flex:0 0 auto; }
+.brand .motto{ font-size:14px; font-weight:600; color:#6b1b9a; letter-spacing:1px; }
+.brand h2{ margin:0; font-size:21px; letter-spacing:.5px; }
+
+/* flat, straight, single-line buttons */
+.nav{ display:flex; flex:1; gap:0; overflow-x:auto; }
+.nav button{
+  flex:1 1 auto; min-width:0;
+  padding:14px 12px;
+  border:0; border-right:1px solid rgba(255,255,255,.25);
+  border-bottom:3px solid transparent;
+  border-radius:0;
+  background:rgba(255,255,255,.08);
+  color:#1b1b2f; font:700 17px "Segoe UI", sans-serif;
+  white-space:nowrap; cursor:pointer;
+}
+.nav button:first-child{ border-left:1px solid rgba(255,255,255,.25); }
+.nav button:hover{ background:rgba(255,255,255,.2); }
+.nav button.active{ background:rgba(255,255,255,.28); border-bottom-color:#1b1b2f; }
+
+/* ============ SECTIONS ============ */
+.sec{
+  min-height:100vh;
+  scroll-snap-align:start;
+  padding:125px 16px 36px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+}
+.sec > *{ width:100%; max-width:1000px; }
+.sec > .hgrid{ max-width:1100px; }
+.panelbox{ padding:24px 28px; margin-bottom:16px; }
+.label{ color:#7a1fa2; font-weight:700; font-size:20px; margin:0 0 6px; }
+h1,h2,h3{ margin:0 0 12px; }
+h1{ font-size:48px; letter-spacing:1px; }
+h2{ font-size:30px; }
+p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
+.center{ text-align:center; }
+
+/* History */
+.hgrid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; align-items:stretch; }
+.hl .panelbox:last-child{ margin-bottom:0; }
+.hr .glass{ height:100%; max-height:calc(100vh - 160px); margin:0; display:flex; flex-direction:column; }
+.hr .mile{ overflow-y:auto; padding-right:8px; }
+.mile{ display:grid; grid-template-columns:92px 1fr; gap:8px 16px; font-size:18px; }
+.mile b{ color:#7a1fa2; font-size:22px; }
+.mile span{ padding-bottom:10px; border-bottom:1px solid rgba(255,255,255,.15); }
+.map{ width:100%; height:220px; border:0; border-radius:8px; }
+
+/* Mission cards (everything shown, no flipping) */
+.cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; }
+.card{ padding:26px 24px; min-height:260px; text-align:center; display:flex; flex-direction:column; justify-content:center; }
+.card h2{ font-size:72px; margin:4px 0 10px; color:#7a1fa2; }
+.card .word{ font-size:24px; font-weight:700; margin:0; }
+.card p{ font-size:20px; }
+
+/* Vision */
+.trilogy{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; }
+.trilogy div{ font-size:22px; padding:30px 10px; text-align:center; font-weight:700; letter-spacing:1px; }
+
+/* Motto */
+.quote{ font-size:36px; line-height:1.4; font-style:italic; text-align:center; padding:40px 30px; }
+
+/* Sub tabs (OS + CS) */
+.subtabs{ overflow:hidden; display:flex; margin-bottom:20px; overflow-x:auto; }
+.subtabs button{
+  flex:1 1 0; min-width:140px; padding:13px 10px;
+  border:0; border-right:1px solid rgba(255,255,255,.25);
+  border-bottom:3px solid transparent; border-radius:0;
+  background:rgba(255,255,255,.08); color:#1b1b2f;
+  font:700 17px "Segoe UI", sans-serif; cursor:pointer;
+}
+.subtabs button:first-child{ border-left:1px solid rgba(255,255,255,.25); }
+.subtabs button:hover{ background:rgba(255,255,255,.2); }
+.subtabs button.active{ background:rgba(255,255,255,.28); border-bottom-color:#1b1b2f; }
+
+.os-head{ text-align:center; }
+.os-head img{ width:110px; height:110px; object-fit:contain; border-radius:8px; background:rgba(255,255,255,.85); padding:6px; }
+.versions{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:8px; margin-top:16px; }
+.versions p{ font-size:18px; margin:0; padding:10px 14px; background:rgba(255,255,255,.1); border-left:3px solid #7a1fa2; }
+
+.events{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; }
+.events img{ width:100%; height:170px; object-fit:cover; border-radius:6px; }
+
+
+/* Developer */
+.picker{ display:flex; margin:10px -28px 0; overflow-x:auto; border-top:1px solid rgba(255,255,255,.25); }
+.pick{
+  flex:1 1 0; min-width:110px; padding:10px 8px;
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+  border:0; border-right:1px solid rgba(255,255,255,.25); border-bottom:3px solid transparent; border-radius:0;
+  background:rgba(255,255,255,.08); color:#1b1b2f;
+  font:700 17px "Segoe UI", sans-serif; cursor:pointer;
+}
+.pick:last-child{ border-right:0; }
+.pick img{ width:60px; height:68px; object-fit:cover; border-radius:10px; }
+.pick:hover{ background:rgba(255,255,255,.2); }
+.pick.active{ background:rgba(255,255,255,.28); border-bottom-color:#1b1b2f; }
+
+.dpanel{ display:grid; grid-template-columns:minmax(0,5fr) minmax(0,6fr); gap:16px; align-items:start; }
+.dcard{ padding:22px; }
+.dtop{ display:flex; gap:18px; align-items:center; margin-bottom:14px; }
+.dtop img{ width:130px; height:160px; object-fit:cover; border-radius:14px; border:3px solid #7a1fa2; flex:0 0 auto; }
+.dtop h2{ font-size:26px; margin:0 0 6px; }
+.dtop .course{ color:#7a1fa2; font-weight:700; font-size:17px; line-height:1.4; margin:0; }
+.dlist{ display:grid; grid-template-columns:max-content 1fr; gap:6px 14px; margin:0; font-size:18px; }
+.dlist dt{ font-weight:700; color:#7a1fa2; }
+.dlist dd{ margin:0; overflow-wrap:anywhere; }
+.dcard .subtabs{ margin-bottom:14px; }
+.dgal{ display:flex; flex-wrap:wrap; justify-content:center; gap:10px; max-height:calc(100vh - 390px); min-height:240px; overflow-y:auto; }
+.dgal.fam img{ max-width:100%; max-height:calc(100vh - 400px); height:auto; object-fit:contain; border-radius:10px; }
+.dgal.friends img{ width:140px; height:180px; object-fit:cover; border-radius:10px; }
+
+@media (max-width:900px){
+  .dpanel{ grid-template-columns:1fr; }
+  .dgal, .dgal.fam img{ max-height:60vh; }
+  .hgrid{ grid-template-columns:1fr; }
+  .hr .glass{ max-height:60vh; }
+}
+@media (max-width:760px){
+  .sec{ padding-top:200px; }
+  h1{ font-size:36px; }
+  .quote{ font-size:26px; }
+  .top{ flex-direction:column; align-items:stretch; gap:10px; }
+  .brand{ justify-content:center; }
+  .panelbox{ padding:18px; }
+  .mile{ grid-template-columns:60px 1fr; }
+}
+</style>
+</head>
+<body data-section="history">
+
+<!-- ANIMATED BLOB BACKGROUND -->
+<svg class="blob-bg" preserveAspectRatio="xMidYMid slice" viewBox="10 10 80 80" aria-hidden="true">
+  <defs>
+    <style>
+      @keyframes rotate { 0%{ transform:rotate(0deg); } 100%{ transform:rotate(360deg); } }
+      .out-top{ animation:rotate 20s linear infinite; transform-origin:13px 25px; }
+      .in-top{ animation:rotate 10s linear infinite; transform-origin:13px 25px; }
+      .out-bottom{ animation:rotate 25s linear infinite; transform-origin:84px 93px; }
+      .in-bottom{ animation:rotate 15s linear infinite; transform-origin:84px 93px; }
+    </style>
+  </defs>
+  <path fill="#9b5de5" class="out-top" d="M37-5C25.1-14.7,5.7-19.1-9.2-10-28.5,1.8-32.7,31.1-19.8,49c15.5,21.5,52.6,22,67.2,2.3C59.4,35,53.7,8.5,37-5Z"/>
+  <path fill="#f15bb5" class="in-top" d="M20.6,4.1C11.6,1.5-1.9,2.5-8,11.2-16.3,23.1-8.2,45.6,7.4,50S42.1,38.9,41,24.5C40.2,14.1,29.4,6.6,20.6,4.1Z"/>
+  <path fill="#00bbf9" class="out-bottom" d="M105.9,48.6c-12.4-8.2-29.3-4.8-39.4.8-23.4,12.8-37.7,51.9-19.1,74.1s63.9,15.3,76-5.6c7.6-13.3,1.8-31.1-2.3-43.8C117.6,63.3,114.7,54.3,105.9,48.6Z"/>
+  <path fill="#00f5d4" class="in-bottom" d="M102,67.1c-9.6-6.1-22-3.1-29.5,2-15.4,10.7-19.6,37.5-7.6,47.8s35.9,3.9,44.5-12.5C115.5,92.6,113.9,74.6,102,67.1Z"/>
+</svg>
+
+<header class="top glass">
+  <div class="brand">
+    <img src="../Images/newlogo.jpg" alt="University of Manila logo" id="ums">
+    <img src="Cslogo.jpg" alt="BS Computer Science logo" class="cslogo">
+    <div>
+      <div class="motto">Patria - Scientia - Virtus</div>
+      <h2>THE UNIVERSITY OF MANILA</h2>
+    </div>
+  </div>
+
+  <nav class="nav" id="nav">
+    <button data-s="history" class="active">History</button>
+    <button data-s="mission">Mission</button>
+    <button data-s="vision">Vision</button>
+    <button data-s="motto">Motto</button>
+    <button data-s="os">Operating System</button>
+    <button data-s="cs">CS Event</button>
+    <button data-s="dev">Developer</button>
+  </nav>
+</header>
+
+<main>
+
+<!-- ============ 1. HISTORY ============ -->
+<section id="history" class="sec">
+  <div class="hgrid">
+  <div class="hl">
+  <div class="glass panelbox center">
+    <p class="label">Founded 1913</p>
+    <h1>UM HISTORY</h1>
+    <p>On October 5, 1913, a group of four young men and a woman, with ages from fifteen to twenty-one, met for breakfast at the Palma de Mallorca, a popular restaurant beside the Sto. Domingo Church in Intramuros, Manila. The five were Dr. Apolinario G. de los Santos, his brother Dr. Mariano V. de los Santos, his sister Maria de los Santos, and two friends Dr. Buenaventura J. Bello and Atty. Antonio Rivero.</p>
+    <p>These impecunious young people encountered many challenges in realizing their dream of establishing an institution whose motto was "Patria, Scientia, et Virtus." They named their school Instituto de Manila, and Apolinario de los Santos was elected as the first director.</p>
+  </div>
+
+  <div class="glass panelbox center">
+    <p class="label">MAIN CAMPUS LOCATION<br>📍546 Delos Santos St, 403, Manila, 1008 Metro Manila</p>
+    <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1822.1231082810452!2d120.99070271642614!3d14.602247719528984!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c9f9208f7369%3A0xecda96ca6a603f5b!2sThe%20University%20of%20Manila!5e0!3m2!1sen!2sph!4v1791725552313!5m2!1sen!2sph" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+  </div>
+  </div>
+  <div class="hr">
+  <div class="glass panelbox">
+    <h2 class="center" style="color:#7a1fa2">MILESTONES</h2>
+    <div class="mile">
+      <b>1913</b><span>Instituto de Manila founded by five young visionaries in Intramuros.</span>
+      <b>1919</b><span>College of Law formally opened; graduates top the Bar Examinations.</span>
+      <b>1921</b><span>Re-incorporated as the University of Manila on November 3 under Act No. 1459.</span>
+      <b>1938</b><span>Emmanuel Pelaez, future Vice-President of the Philippines, tops the Bar Examinations.</span>
+      <b>1939</b><span>Nazi Germany invaded Poland, marking the beginning of World War II.</span>
+      <b>1941</b><span>Philippines joined World War II after the surprise attack on Pearl Harbor.</span>
+      <b>1942</b><span>Empire of Japan took control of Manila; The University of Manila closed during occupation.</span>
+      <b>1945</b><span>The University of Manila reopened after World War II, following the liberation of the Philippines by American forces.</span>
+      <b>1959</b><span>Madame Helen de los Santos takes the presidency following Dr. Mariano's passing.</span>
+      <b>1981</b><span>Dr. Virgilio de los Santos assumes presidency; receives Japan's Rising Sun Medal of Honor.</span>
+      <b>1994</b><span>Four-year courses in Hotel &amp; Restaurant Management and Computer Science launched.</span>
+      <b>2003</b><span>First university in the Philippines to offer a degree in the Japanese Language.</span>
+      <b>2006</b><span>Dr. Emily Dodson De Leon elected President; becomes PACU's first Vice-President in 2007.</span>
+      <b>2019</b><span>Total Lockdown in the Philippines; University of Manila adapts to the new normal of classes.</span>
+      <b>2026</b><span>Atty. Dave De los Santos elected President.</span>
+    </div>
+  </div>
+  </div>
+  </div>
+</section>
+
+<!-- ============ 2. MISSION ============ -->
+<section id="mission" class="sec">
+  <div class="glass panelbox center">
+    <p class="label">Our Purpose</p>
+    <h1>UM MISSION</h1>
+    <p><b>ACE</b> - to accomplish something with complete success.</p>
+  </div>
+
+  <div class="cards">
+    <div class="glass card">
+      <p class="word">Anchor</p><h2>A</h2>
+      <p>Anchor in the hearts of the youth the love of country, science, and virtue.</p>
+    </div>
+    <div class="glass card">
+      <p class="word">Create</p><h2>C</h2>
+      <p>Create an atmosphere of academic excellence and competence.</p>
+    </div>
+    <div class="glass card">
+      <p class="word">Empower</p><h2>E</h2>
+      <p>Empower the youth with modern scientific and technological skills in braving the challenges of the global society.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. VISION ============ -->
+<section id="vision" class="sec">
+  <div class="glass panelbox center">
+    <p class="label">Our Future</p>
+    <h1>VISION</h1>
+    <p><i>"To impart to future generations the University of Manila trilogy of ideals: love of country, love of science, and love of virtue, in making the lives of others better, brighter, lighter and more liveable by making quality education accessible to all."</i></p>
+  </div>
+  <div class="trilogy">
+    <div class="glass">LOVE OF COUNTRY</div>
+    <div class="glass">LOVE OF SCIENCE</div>
+    <div class="glass">LOVE OF VIRTUE</div>
+  </div>
+</section>
+
+<!-- ============ 4. MOTTO ============ -->
+<section id="motto" class="sec">
+  <div class="glass panelbox center">
+    <p class="label">Our Motto</p>
+    <h1>MOTTO</h1>
+  </div>
+  <div class="glass quote">"To acquire knowledge and skills for the benefit of mankind."</div>
+</section>
+
+<!-- ============ 5. OPERATING SYSTEM ============ -->
+<section id="os" class="sec">
+  <div class="subtabs glass" style="padding:0">
+    <button class="active" data-target="os-mac">MacOS</button>
+    <button data-target="os-win">Windows</button>
+    <button data-target="os-linux">Linux</button>
+  </div>
+
+  <div id="os-mac" class="glass panelbox">
+    <div class="os-head">
+      <h2>macOS</h2>
+      <img src="../Images/applelogo.jpg" alt="Apple logo">
+      <p><b>APPLE INC</b></p>
+    </div>
+    <p>macOS is the operating system developed by Apple Inc. for its line of Mac computers. Known for its sleek design, stability, and ease of use, macOS provides a graphical user interface that allows users to interact through windows, icons, and menus.</p>
+    <div class="versions">
+      <p>Mac OS 8 (1997)</p><p>Mac OS 9 (1999)</p><p>macOS 10.12 Sierra (2016)</p>
+      <p>macOS 10.13 High Sierra (2017)</p><p>macOS 10.14 Mojave (2018)</p><p>macOS 10.15 Catalina (2019)</p>
+      <p>macOS 11 Big Sur (2020)</p><p>macOS 12 Monterey (2021)</p><p>macOS 13 Ventura (2022)</p>
+      <p>macOS 14 Sonoma (2023)</p><p>macOS 15 Sequoia (2024)</p><p>macOS 26 Tahoe (2025)</p>
+      <p>macOS 27 Golden Gate (2026)</p>
+    </div>
+  </div>
+
+  <div id="os-win" class="glass panelbox" hidden>
+    <div class="os-head">
+      <h2>Windows</h2>
+      <img src="../Images/win.jpg" alt="Windows logo">
+      <p><b>Microsoft Corporation</b></p>
+    </div>
+    <p>Windows OS is a family of operating systems developed by Microsoft. It provides a graphical user interface (GUI) which allows users to interact with the computer using visual elements like windows, icons, and menus.</p>
+    <div class="versions">
+      <p>Windows 1.0 (1985)</p><p>Windows 2.0 (1987)</p><p>Windows 3.0 and 3.1 (1990–1992)</p>
+      <p>Windows NT 3.1 (1993)</p><p>Windows 95 (1995)</p><p>Windows 98 (1998)</p>
+      <p>Windows 2000 (2000)</p><p>Windows Me (2000)</p><p>Windows XP (2001)</p>
+      <p>Windows Vista (2007)</p><p>Windows 7 (2009)</p><p>Windows 8 (2012)</p>
+      <p>Windows 8.1 (2013)</p><p>Windows 10 (2015)</p><p>Windows 11 (2021)</p>
+    </div>
+  </div>
+
+  <div id="os-linux" class="glass panelbox" hidden>
+    <div class="os-head">
+      <h2>Linux</h2>
+      <img src="../Images/linuxlogo.jpg" alt="Linux logo">
+      <p><b>Linus Torvalds</b></p>
+    </div>
+    <p>Linux is a free and open-source operating system. It acts as the bridge between your computer's hardware and the software you use (like apps and programs). Unlike Windows or macOS, Linux is built on a kernel (the core system) created by Linus Torvalds in 1991. Linux doesn't come as just one version. Instead, it has many distributions (distros)—these are different versions of Linux with their own features, designs, and tools.</p>
+    <div class="versions">
+      <p>UBUNTU (Ubuntu 20.04, Ubuntu 22.04, Ubuntu 24.04)</p>
+      <p>DEBIAN (Debian 10, Debian 11, Debian 12)</p>
+      <p>FEDORA (Fedora 38, Fedora 39, Fedora 40)</p>
+      <p>RED HAT ENTERPRISE LINUX (RHEL 7, RHEL 8, RHEL 9)</p>
+      <p>LINUX MINT (Mint 20, Mint 21, Mint 22)</p>
+      <p>ARCH LINUX (Rolling Release - No fixed versions)</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. CS EVENT ============ -->
+<section id="cs" class="sec">
+  <div class="glass panelbox center">
+    <p class="label">College of Computer Science</p>
+    <h1>Computer Science Department</h1>
+    <p>We offer academic programs leading to the degree of <i>Bachelor of Science in Computer Science</i> and <i>Associate in Computer Technology.</i></p>
+  </div>
+
+  <div class="subtabs glass" style="padding:0">
+    <button class="active" data-target="cs-mv">CS Mission &amp; Vision</button>
+    <button data-target="cs-obj">Objectives</button>
+    <button data-target="cs-ev">Events</button>
+  </div>
+
+  <div id="cs-mv" class="glass panelbox">
+    <h2>CS Mission</h2>
+    <p>Provide quality undergraduate and graduate education in both the theoretical and applied foundations of computer science and train students to effectively apply this education to solve real-world problems, amplifying their potential for lifelong high-quality careers and giving them a competitive advantage in the ever-changing and challenging global work environment of the 21st century.</p>
+    <h2>CS Vision</h2>
+    <p>Build a strong research and teaching environment that responds swiftly to the challenges of the 21st century.</p>
+  </div>
+
+  <div id="cs-obj" class="glass panelbox" hidden>
+    <h2>General Objectives</h2>
+    <p>To produce technological and scientifically empowered professionals, information technology and computer science experts whose breadth and depth of orientation, knowledge, and training are within global standards, committed to share their expertise with the various sectors of the academic community and the community at large, ever motivated by the UM trilogy of ideals.</p>
+    <h2>Specific Objectives</h2>
+    <p>To equip students with the skills and competencies in information communications technology, its operation, language, and design. To prepare graduates with a solid foundation on the various languages, programs, and systems to enable them to perform with confidence the varied tasks expected of them in global organizations of the corporate world.</p>
+  </div>
+
+  <div id="cs-ev" class="glass panelbox" hidden>
+    <h2 class="center">UM EVENT &amp; CS EVENT</h2>
+    <div class="events">
+      <img src="../Images/Acquaintance.jpg" alt="Acquaintance">
+      <img src="../Images/Christmas_Bingo_Bonanza.jpg" alt="Christmas Bingo Bonanza">
+      <img src="../Images/Foundation_day.jpg" alt="Foundation Day">
+      <img src="../Images/Cleanup.jpg" alt="Cleanup">
+      <img src="../Images/intrams.jpg" alt="Intrams">
+      <img src="../Images/pagbigkas.jpg" alt="Pagbigkas">
+      <img src="../Images/Sportsfest.jpg" alt="Sportsfest">
+      <img src="../Images/farewell.jpg" alt="Farewell">
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ 7. DEVELOPER ============ -->
+<section id="dev" class="sec">
+  <div class="glass panelbox center" style="padding-bottom:0">
+    <p class="label">WEB DEVELOPERS</p>
+    <div class="picker">
+      <button class="pick active" data-dev="dev-molina"><img src="../Images/me1.jpg" alt="Molina"><span>Molina</span></button>
+      <button class="pick" data-dev="dev-olavides"><img src="../Images/jess1.jpg" alt="Olavides"><span>Olavides</span></button>
+      <button class="pick" data-dev="dev-leal"><img src="../Images/leal1.jpg" alt="Leal"><span>Leal</span></button>
+      <button class="pick" data-dev="dev-pingul"><img src="../Images/iris1.jpg" alt="Pingul"><span>Pingul</span></button>
+      <button class="pick" data-dev="dev-laxamana"><img src="../Images/khen1.jpg" alt="Laxamana"><span>Laxamana</span></button>
+    </div>
+  </div>
+
+  <div class="dpanel" id="dev-molina">
+    <div class="glass dcard">
+      <div class="dtop">
+        <img src="../Images/jason.jpg" alt="Jason Manuel R. Molina">
+        <div>
+          <h2>Jason Manuel R. Molina</h2>
+          <p class="course">3rd Year — Bachelor of Science in Computer Science</p>
+        </div>
+      </div>
+      <dl class="dlist">
+        <dt>Name:</dt><dd>Jason Manuel R. Molina</dd>
+        <dt>Address:</dt><dd>Blk 118 lot 45 Villazaragosa brgy. Turo bocaue bulacan</dd>
+        <dt>Age:</dt><dd>20</dd>
+        <dt>Contact no.:</dt><dd>09704844828</dd>
+        <dt>Email add.:</dt><dd>jasonmanuelmolina@gmail.com</dd>
+      </dl>
+    </div>
+    <div class="glass dcard">
+      <div class="subtabs">
+        <button class="active" data-target="molina-family">My Family</button>
+        <button data-target="molina-friends">Friends</button>
+      </div>
+      <div class="dgal fam" id="molina-family"><img src="../Images/fam6.jpg" alt="My family"></div>
+      <div class="dgal friends" id="molina-friends" hidden>
+          <img src="../Images/fam1.jpg" alt="">
+          <img src="../Images/fam2.jpg" alt="">
+          <img src="../Images/fam3.jpg" alt="">
+          <img src="../Images/fam4.jpg" alt="">
+          <img src="../Images/fam5.jpg" alt="">
+          <img src="../Images/fams1.jpg" alt="">
+          <img src="../Images/fg.jpg" alt="">
+          <img src="../Images/f3.jpg" alt="">
+      </div>
+    </div>
+  </div>
+
+  <div class="dpanel" id="dev-olavides" hidden>
+    <div class="glass dcard">
+      <div class="dtop">
+        <img src="../Images/jess1.jpg" alt="Jessa Jane P. Olavides">
+        <div>
+          <h2>Jessa Jane P. Olavides</h2>
+          <p class="course">3rd Year — Bachelor of Science in Computer Science</p>
+        </div>
+      </div>
+      <dl class="dlist">
+        <dt>Name:</dt><dd>Jessa Jane P. Olavides</dd>
+        <dt>Address:</dt><dd>146 B E Dela Paz Sanroque Marikina City</dd>
+        <dt>Age:</dt><dd>21</dd>
+        <dt>Contact no.:</dt><dd>09958193214</dd>
+        <dt>Email add.:</dt><dd>jessaolavides5@gmail.com</dd>
+      </dl>
+    </div>
+    <div class="glass dcard">
+      <div class="subtabs">
+        <button class="active" data-target="olavides-family">My Family</button>
+        <button data-target="olavides-friends">Friends</button>
+      </div>
+      <div class="dgal fam" id="olavides-family"><img src="../Images/jessfam.jpg" alt="My family"></div>
+      <div class="dgal friends" id="olavides-friends" hidden>
+          <img src="../Images/jessf1.jpg" alt="">
+          <img src="../Images/jessf2.jpg" alt="">
+          <img src="../Images/jessf3.jpg" alt="">
+          <img src="../Images/jessf4.jpg" alt="">
+          <img src="../Images/jessf5.jpg" alt="">
+          <img src="../Images/khenf5.jpg" alt="">
+          <img src="../Images/khenf1.jpg" alt="">
+          <img src="../Images/khenf2.jpg" alt="">
+      </div>
+    </div>
+  </div>
+
+  <div class="dpanel" id="dev-leal" hidden>
+    <div class="glass dcard">
+      <div class="dtop">
+        <img src="../Images/leal1.jpg" alt="Nicole L. Leal">
+        <div>
+          <h2>Nicole L. Leal</h2>
+          <p class="course">Bachelor of Science in Computer Science</p>
+        </div>
+      </div>
+      <dl class="dlist">
+        <dt>Name:</dt><dd>Nicole L. Leal</dd>
+        <dt>Address:</dt><dd>219 B. San Nicolas St. Binondo Manila, Brgy. 283 Zone 1010</dd>
+        <dt>Age:</dt><dd>20</dd>
+        <dt>Contact no.:</dt><dd>09453940244</dd>
+        <dt>Email add.:</dt><dd>labadannicole4@gmail.com</dd>
+      </dl>
+    </div>
+    <div class="glass dcard">
+      <div class="subtabs">
+        <button class="active" data-target="leal-family">My Family</button>
+        <button data-target="leal-friends">Friends</button>
+      </div>
+      <div class="dgal fam" id="leal-family"><img src="../Images/lealfam.jpg" alt="My family"></div>
+      <div class="dgal friends" id="leal-friends" hidden>
+          <img src="../Images/nicsf1.jpg" alt="">
+          <img src="../Images/nicsf2.jpg" alt="">
+          <img src="../Images/nicsf3.jpg" alt="">
+          <img src="../Images/nicsf4.jpg" alt="">
+          <img src="../Images/nicsf5.jpg" alt="">
+      </div>
+    </div>
+  </div>
+
+  <div class="dpanel" id="dev-pingul" hidden>
+    <div class="glass dcard">
+      <div class="dtop">
+        <img src="../Images/iris2.jpg" alt="Iris Matthew P. Pingul">
+        <div>
+          <h2>Iris Matthew</h2>
+          <p class="course">3rd Year — Bachelor of Science in Computer Science</p>
+        </div>
+      </div>
+      <dl class="dlist">
+        <dt>Name:</dt><dd>Iris Matthew P. Pingul</dd>
+        <dt>Address:</dt><dd>053 Bungad Kaingin 2 Barangay Pansol QC</dd>
+        <dt>Age:</dt><dd>20</dd>
+        <dt>Contact no.:</dt><dd>09777290245</dd>
+        <dt>Email add.:</dt><dd>irispingul257@gmail.com</dd>
+      </dl>
+    </div>
+    <div class="glass dcard">
+      <div class="subtabs">
+        <button class="active" data-target="pingul-family">My Family</button>
+        <button data-target="pingul-friends">Friends</button>
+      </div>
+      <div class="dgal fam" id="pingul-family"><img src="../Images/irisfam.jpg" alt="My family"></div>
+      <div class="dgal friends" id="pingul-friends" hidden>
+          <img src="../Images/irisf1.jpg" alt="">
+          <img src="../Images/irisf2.jpg" alt="">
+          <img src="../Images/irisf3.jpg" alt="">
+          <img src="../Images/irisf4.jpg" alt="">
+          <img src="../Images/irisf5.jpg" alt="">
+          <img src="../Images/irisf6.jpg" alt="">
+          <img src="../Images/irisf7.jpg" alt="">
+          <img src="../Images/UM.jpg" alt="">
+      </div>
+    </div>
+  </div>
+
+  <div class="dpanel" id="dev-laxamana" hidden>
+    <div class="glass dcard">
+      <div class="dtop">
+        <img src="../Images/khen1.jpg" alt="Khen Andrey T. Laxamana">
+        <div>
+          <h2>Khen Andrey T. Laxamana</h2>
+          <p class="course">3rd Year — Bachelor of Science in Computer Science</p>
+        </div>
+      </div>
+      <dl class="dlist">
+        <dt>Name:</dt><dd>Khen Andrey T. Laxamana</dd>
+        <dt>Address:</dt><dd>Blk 9 Lot 23 tawilis st. Dagat-dagatan Caloocan City</dd>
+        <dt>Age:</dt><dd>22</dd>
+        <dt>Contact no.:</dt><dd>09217054831</dd>
+        <dt>Email add.:</dt><dd>khenlaxamana04@gmail.com</dd>
+      </dl>
+    </div>
+    <div class="glass dcard">
+      <div class="subtabs">
+        <button class="active" data-target="laxamana-family">My Family</button>
+        <button data-target="laxamana-friends">Friends</button>
+      </div>
+      <div class="dgal fam" id="laxamana-family"><img src="../Images/khenfam1.jpg" alt="My family"></div>
+      <div class="dgal friends" id="laxamana-friends" hidden>
+          <img src="../Images/khenf1.jpg" alt="">
+          <img src="../Images/khenf2.jpg" alt="">
+          <img src="../Images/khenf3.jpg" alt="">
+          <img src="../Images/khenf4.jpg" alt="">
+          <img src="../Images/khenf5.jpg" alt="">
+          <img src="../Images/khenf6.jpg" alt="">
+          <img src="../Images/khenf7.jpg" alt="">
+          <img src="../Images/khenf8.jpg" alt="">
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+/* ===== Scroll sections: the nav scrolls to a section, scrolling changes the background ===== */
+const navBtns  = document.querySelectorAll('#nav button');
+const sections = document.querySelectorAll('.sec');
+
+function setActive(id){
+  navBtns.forEach(b => b.classList.toggle('active', b.dataset.s === id));
+  document.body.dataset.section = id;                 // changes the background picture
+  if (location.hash !== '#' + id) history.replaceState(null, '', '#' + id);
+}
+
+navBtns.forEach(b => b.addEventListener('click', () => {
+  document.getElementById(b.dataset.s).scrollIntoView({ block:'start' });
+}));
+
+/* whichever section crosses the middle of the screen becomes the active one */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(en => { if (en.isIntersecting) setActive(en.target.id); });
+}, { rootMargin:'-50% 0px -50% 0px' });
+sections.forEach(s => io.observe(s));
+
+const start = location.hash.replace('#', '');
+if (start && document.getElementById(start)) {
+  document.documentElement.style.scrollBehavior = 'auto';
+  document.getElementById(start).scrollIntoView();
+  document.documentElement.style.scrollBehavior = '';
+}
+setActive(start && document.getElementById(start) ? start : 'history');
+
+/* ===== Sub tabs (Operating System + CS) ===== */
+document.querySelectorAll('.subtabs').forEach(group => {
+  const btns = group.querySelectorAll('button');
+  btns.forEach(btn => btn.addEventListener('click', () => {
+    btns.forEach(b => {
+      b.classList.toggle('active', b === btn);
+      document.getElementById(b.dataset.target).hidden = b !== btn;
+    });
+  }));
+});
+
+/* ===== Developer picker ===== */
+const picks = document.querySelectorAll('.pick');
+picks.forEach(p => p.addEventListener('click', () => {
+  picks.forEach(x => x.classList.toggle('active', x === p));
+  document.querySelectorAll('.dpanel').forEach(d => d.hidden = d.id !== p.dataset.dev);
+}));
+</script>
+</body>
+</html>
