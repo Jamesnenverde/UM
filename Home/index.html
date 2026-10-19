@@ -46,13 +46,33 @@ body{
 
 /* ============ GLASS ============ */
 .glass{
-  /* From https://css.glass */
-  background: rgba(255, 255, 255, 0.12);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(0.4px);
-  -webkit-backdrop-filter: blur(0.4px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  position:relative;
+  background:rgba(255, 255, 255, 0.05);
+  backdrop-filter:blur(5px);
+  -webkit-backdrop-filter:blur(5px);
+  border-radius:16px;
+  border:1px solid rgba(255, 255, 255, 0.3);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.1);
+  overflow:hidden;
+}
+.glass::before{
+  content:'';
+  position:absolute;
+  top:0; left:0; right:0;
+  height:1px;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.8), transparent);
+  pointer-events:none;
+}
+.glass::after{
+  content:'';
+  position:absolute;
+  top:0; left:0;
+  width:1px; height:100%;
+  background:linear-gradient(180deg, rgba(255,255,255,.8), transparent, rgba(255,255,255,.3));
+  pointer-events:none;
 }
 
 /* ============ HEADER ============ */
@@ -195,6 +215,7 @@ p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
   border:1px solid rgba(255,255,255,.12);
   box-shadow:0 4px 30px rgba(0,0,0,.2);
 }
+#prof .pcard{ aspect-ratio:auto; height:340px; }
 .pcard > img{
   width:100%; height:100%;
   object-fit:cover;
@@ -202,9 +223,12 @@ p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
 }
 .pname{
   position:absolute; left:0; right:0; bottom:0;
-  padding:30px 12px 12px;
-  background:linear-gradient(transparent, rgba(0,0,0,.9));
-  font-weight:700; font-size:17px; text-align:center;
+  padding:14px 10px;
+  background:rgba(9,10,15,.85);
+  border-top:2px solid #ffd76a;
+  font-weight:700; font-size:18px; text-align:center;
+  color:#fff; text-shadow:0 1px 3px #000;
+  z-index:1;
 }
 .pinfo{
   position:absolute; inset:0;
@@ -216,6 +240,7 @@ p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
   transition:opacity .3s ease;
   overflow-y:auto;
   text-align:left;
+  z-index:2;
 }
 .pcard:hover .pinfo,
 .pcard:focus .pinfo,
