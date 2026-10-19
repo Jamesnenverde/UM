@@ -177,6 +177,52 @@ p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
 .dgal.fam img{ max-width:100%; max-height:calc(100vh - 400px); height:auto; object-fit:contain; border-radius:10px; }
 .dgal.friends img{ width:140px; height:180px; object-fit:cover; border-radius:10px; }
 
+/* Professors (hover to reveal info) */
+.pgrid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:16px;
+  width:100%;
+  max-width:1100px;
+}
+.pcard{
+  position:relative;
+  aspect-ratio:3 / 4;
+  border-radius:16px;
+  overflow:hidden;
+  cursor:pointer;
+  outline:none;
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 4px 30px rgba(0,0,0,.2);
+}
+.pcard > img{
+  width:100%; height:100%;
+  object-fit:cover;
+  display:block;
+}
+.pname{
+  position:absolute; left:0; right:0; bottom:0;
+  padding:30px 12px 12px;
+  background:linear-gradient(transparent, rgba(0,0,0,.9));
+  font-weight:700; font-size:17px; text-align:center;
+}
+.pinfo{
+  position:absolute; inset:0;
+  padding:18px;
+  display:flex; flex-direction:column; justify-content:center;
+  background:rgba(9,10,15,.9);
+  backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);
+  opacity:0;
+  transition:opacity .3s ease;
+  overflow-y:auto;
+  text-align:left;
+}
+.pcard:hover .pinfo,
+.pcard:focus .pinfo,
+.pcard:focus-within .pinfo{ opacity:1; }
+.pinfo h3{ color:#ffd76a; font-size:18px; margin:0 0 8px; }
+.pinfo p{ font-size:14.5px; line-height:1.55; margin:0; text-align:justify; }
+
 @media (max-width:900px){
   .dpanel{ grid-template-columns:1fr; }
   .dgal, .dgal.fam img{ max-height:60vh; }
@@ -191,6 +237,7 @@ p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
   .brand{ justify-content:center; }
   .panelbox{ padding:18px; }
   .mile{ grid-template-columns:60px 1fr; }
+  .pinfo p{ font-size:13.5px; }
 }
 </style>
 </head>
@@ -221,6 +268,7 @@ p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
     <button data-s="os">Operating System</button>
     <button data-s="cs">CS Event</button>
     <button data-s="dev">Developer</button>
+    <button data-s="prof">Professors</button>
   </nav>
 </header>
 
@@ -604,6 +652,64 @@ p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
           <img src="./khenf8.jpg" alt="">
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ============ 8. PROFESSORS ============ -->
+<section id="prof" class="sec">
+  <div class="glass panelbox center">
+    <p class="label">Faculty</p>
+    <h1>PROFESSORS</h1>
+    <p>Hover over a professor to see more about them.</p>
+  </div>
+
+  <div class="pgrid">
+
+    <div class="glass pcard" tabindex="0">
+      <img src="./1000052111.jpg" alt="Professor Rogelio Plaza Jr.">
+      <div class="pname">Prof. Rogelio Plaza Jr.</div>
+      <div class="pinfo">
+        <h3>Professor Rogelio Plaza Jr.</h3>
+        <p>A faculty member of the University of Manila, where he contributes to the academic development and learning experience of students. Through his role as an educator, he helps students build a stronger understanding of their subjects while encouraging them to develop discipline, critical thinking, and problem-solving skills.</p>
+      </div>
+    </div>
+
+    <div class="glass pcard" tabindex="0">
+      <img src="./1000052107.jpg" alt="Professor Joselito Borces">
+      <div class="pname">Prof. Joselito Borces</div>
+      <div class="pinfo">
+        <h3>Professor Joselito Borces</h3>
+        <p>With a deep passion for technology and a commitment to academic excellence, Prof. Joselito Borces represents the knowledge, dedication, and expertise that continue to shape the field of Computer Science. His specialization in Computer Hardware reflects a strong understanding of computer components, system architecture, processors, memory, storage, input/output devices, and hardware troubleshooting.</p>
+      </div>
+    </div>
+
+    <div class="glass pcard" tabindex="0">
+      <img src="./1000052110.jpg" alt="Professor Marjorie Borces">
+      <div class="pname">Prof. Marjorie Borces</div>
+      <div class="pinfo">
+        <h3>Professor Marjorie Borces</h3>
+        <p>With a deep passion for education and a commitment to student success, she represents the knowledge, generosity, and dedication that continue to inspire learners in the field of Computer Science. Her intelligence, supportive nature, and willingness to guide students reflect her genuine commitment to academic excellence, personal growth, and creating a positive learning environment.</p>
+      </div>
+    </div>
+
+    <div class="glass pcard" tabindex="0">
+      <img src="./1000052108.jpg" alt="Professor Rochelle Anne Fallorina">
+      <div class="pname">Prof. Rochelle Anne Fallorina</div>
+      <div class="pinfo">
+        <h3>Professor Rochelle Anne Fallorina</h3>
+        <p>She served as a dedicated educator at The University of Manila, inspiring students through her passion for teaching and commitment to learning. She uses a hands-on approach to make complex lessons in Computer Science and Japanology easier to understand and apply. Her patience, expertise, and genuine care create an engaging learning environment that encourages students to develop their knowledge, build confidence, and achieve their full potential.</p>
+      </div>
+    </div>
+
+    <div class="glass pcard" tabindex="0">
+      <img src="./1000052106.jpg" alt="Professor Stanley Verde">
+      <div class="pname">Prof. Stanley Verde</div>
+      <div class="pinfo">
+        <h3>Professor Stanley Verde</h3>
+        <p>He served as a dedicated educator at the University of Manila. He brings real-world knowledge and practical insights to the classroom, helping students connect theory with actual industry applications. His expertise includes core Computer Science subjects such as programming, data structures and algorithms, computer systems, and software development. He also has a strong understanding of emerging technologies and their applications in real-world scenarios.</p>
+      </div>
+    </div>
+
   </div>
 </section>
 
