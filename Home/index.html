@@ -54,21 +54,21 @@ h2 span, h1 span { background: linear-gradient(90deg, #60a5fa, #a78bfa); -webkit
 .chip:hover { border-color: var(--blue); }
 .chip.on { background: #fff; color: #0b0d18; font-weight: 700; box-shadow: 0 0 16px rgba(120,160,255,.6); }
 
-/* Hero */
-.hero { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; min-height: 100vh; }
+/* Hero: video on top, full width, text below */
+.hero { display: flex; flex-direction: column; gap: 2rem; align-items: stretch; min-height: auto; padding-top: calc(var(--nav-h) + 2rem); }
+.hero-media { width: 100%; min-width: 0; order: -1; }
+.hero-video { position: relative; width: 100%; border-radius: 24px; overflow: hidden; background: #000;
+  border: 1px solid rgba(96,140,255,.4); box-shadow: 0 0 50px rgba(59,130,246,.3), 0 0 90px rgba(139,92,246,.18); }
+.hero-video video { display: block; width: 100%; height: auto; max-height: 75vh; object-fit: contain; background: #000; }
+.hero-text { text-align: center; }
 .eyebrow { color: #9db8ff; letter-spacing: .3em; text-transform: uppercase; font-size: .75rem; }
 h1 { font-size: clamp(2.4rem, 6vw, 4.8rem); line-height: 1.05; font-weight: 900; margin: .6rem 0; }
 h1 span { display: block; }
 .tag { font-size: 1.3rem; font-style: italic; color: #c4b5fd; }
-.lead { margin-top: 1rem; color: var(--mut); max-width: 46ch; }
+.lead { margin: 1rem auto 0; color: var(--mut); max-width: 46ch; }
+.hero .row { justify-content: center; }
 
-/* Hero advertisement video */
-.hero-media { min-width: 0; }
-.hero-video { position: relative; width: 100%; border-radius: 24px; overflow: hidden; background: #000;
-  border: 1px solid rgba(96,140,255,.4); box-shadow: 0 0 50px rgba(59,130,246,.3), 0 0 90px rgba(139,92,246,.18); }
-.hero-video video { display: block; width: 100%; height: auto; max-height: 72vh; object-fit: contain; background: #000; }
-
-/* Camera */
+/* Note */
 .note { text-align: center; color: #f0b36a; margin: -1rem auto 1.5rem; max-width: 60ch; font-size: .9rem; }
 .cam { max-width: 960px; margin: 0 auto; padding: 1rem; border-radius: 24px; border: 1px solid rgba(96,140,255,.4); background: rgba(255,255,255,.04); box-shadow: 0 0 40px rgba(59,130,246,.18); }
 .view { position: relative; aspect-ratio: 3 / 2; overflow: hidden; border-radius: 16px; background: #000; cursor: grab; touch-action: none; }
@@ -121,8 +121,6 @@ footer { text-align: center; color: var(--mut); font-size: .8rem; padding: 3rem 
 
 /* Responsive */
 @media (max-width: 860px) {
-  .hero { grid-template-columns: 1fr; text-align: center; padding-top: calc(var(--nav-h) + 1.5rem); min-height: auto; }
-  .hero .row { justify-content: center; }
   .lead { margin-inline: auto; }
   .burger { display: block; }
   nav { position: fixed; top: var(--nav-h); left: 0; right: 0; flex-direction: column; padding: 1.2rem; background: rgba(5,6,13,.95); border-bottom: 1px solid rgba(120,150,255,.2);
@@ -156,8 +154,17 @@ footer { text-align: center; color: var(--mut); font-size: .8rem; padding: 3rem 
 </header>
 
 <main>
-<!-- HERO: text + advertisement video -->
+<!-- HERO: video full width on top, text below -->
 <section id="home" class="hero">
+  <div class="hero-media reveal">
+    <div class="hero-video">
+      <video id="ads" src="ADS (1).mp4" autoplay muted loop playsinline controls preload="auto" aria-label="vivos X300 Ultra advertisement">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <p class="hint">Tap the speaker icon on the video for sound</p>
+  </div>
+
   <div class="hero-text reveal">
     <p class="eyebrow">ZEISS co-engineered flagship</p>
     <h1>VIVOS <span>X300 ULTRA</span></h1>
@@ -167,15 +174,6 @@ footer { text-align: center; color: var(--mut); font-size: .8rem; padding: 3rem 
       <a class="btn primary" href="#description">Product Description</a>
       <a class="btn ghost" href="#buy">See the Price</a>
     </div>
-  </div>
-
-  <div class="hero-media reveal">
-    <div class="hero-video">
-      <video id="ads" src="ADS (1).mp4" autoplay muted loop playsinline controls preload="auto" aria-label="vivos X300 Ultra advertisement">
-        Your browser does not support the video tag.
-      </video>
-    </div>
-    <p class="hint">Tap the speaker icon on the video for sound</p>
   </div>
 </section>
 
