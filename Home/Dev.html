@@ -90,19 +90,19 @@ body{
 .brand .motto{ font-size:14px; font-weight:600; color:#e6d84a; letter-spacing:1px; }
 .brand h2{ margin:0; font-size:21px; letter-spacing:.5px; }
 
-/* flat, straight, single-line buttons */
+/* flat header buttons, no separator lines */
 .nav{ display:flex; flex:1; gap:0; overflow-x:auto; }
 .nav button{
   flex:1 1 auto; min-width:0;
   padding:14px 12px;
-  border:0; border-right:1px solid rgba(255,255,255,.25);
+  border:0; border-right:0; border-left:0;
   border-bottom:3px solid transparent;
   border-radius:0;
   background:rgba(255,255,255,.08);
   color:#fff; font:700 17px "Segoe UI", sans-serif;
   white-space:nowrap; cursor:pointer;
 }
-.nav button:first-child{ border-left:1px solid rgba(255,255,255,.25); }
+.nav button:first-child{ border-left:0; }
 .nav button:hover{ background:rgba(255,255,255,.2); }
 .nav button.active{ background:rgba(255,255,255,.28); border-bottom-color:#fff; }
 
