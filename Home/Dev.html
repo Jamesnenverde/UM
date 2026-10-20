@@ -19,7 +19,18 @@ body{
   background:#090A0F;
   font-size:18px;
 }
-
+/* FIX: stop clipping at 100% zoom */
+html{ scroll-snap-type:none; }
+.sec{
+  min-height:auto;
+  scroll-snap-align:none;
+  padding:210px 16px 80px;   /* room for the taller header */
+  justify-content:flex-start;
+}
+.top{ padding:8px 20px; }
+@media (max-width:760px){
+  .sec{ padding-top:260px; }
+}
 /* ============ STARFIELD BACKGROUND (pure CSS parallax stars, same on every section) ============ */
 .sky{
   position:fixed; inset:0; z-index:-1;
