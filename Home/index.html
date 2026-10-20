@@ -26,13 +26,11 @@ button { font: inherit; color: inherit; cursor: pointer; }
 nav { display: flex; gap: clamp(.8rem, 2vw, 1.8rem); align-items: center; }
 nav a { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: #cfd6ee; transition: color .2s; }
 nav a:hover { color: #fff; }
-nav .cta { padding: .45rem 1rem; border-radius: 30px; background: linear-gradient(90deg, var(--blue), var(--purple)); color: #fff; }
-.burger { display: none; background: none; border: 0; width: 32px; height: 26px; position: relative; }
-.burger span { position: absolute; left: 4px; right: 4px; height: 2px; background: #fff; transition: .3s; }
-.burger span:nth-child(1) { top: 5px; } .burger span:nth-child(2) { top: 12px; } .burger span:nth-child(3) { top: 19px; }
-.burger[aria-expanded="true"] span:nth-child(1) { top: 12px; transform: rotate(45deg); }
-.burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
-.burger[aria-expanded="true"] span:nth-child(3) { top: 12px; transform: rotate(-45deg); }
+.cart-btn { display: inline-flex; align-items: center; gap: .45rem; padding: .45rem 1rem; border-radius: 30px; border: 0;
+  background: linear-gradient(90deg, var(--blue), var(--purple)); color: #fff; font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; }
+.cart-count { display: inline-grid; place-items: center; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 20px; background: #fff; color: #0b0d18; font-size: .72rem; font-weight: 800; }
+.cart-btn.added .check { display: inline-block; }
+.check { display: none; font-weight: 900; }
 
 /* Layout */
 .sec, .hero { padding: calc(var(--nav-h) + 3rem) clamp(1rem, 5vw, 4rem) 3rem; max-width: 1200px; margin: 0 auto; }
@@ -52,9 +50,8 @@ h2 span, h1 span { background: linear-gradient(90deg, #60a5fa, #a78bfa); -webkit
 .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(90,120,255,.45); }
 .chip { padding: .5rem 1.1rem; border-radius: 30px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.2); font-size: .8rem; transition: .2s; }
 .chip:hover { border-color: var(--blue); }
-.chip.on { background: #fff; color: #0b0d18; font-weight: 700; box-shadow: 0 0 16px rgba(120,160,255,.6); }
 
-/* Hero: video on top, full width, text below */
+/* Hero */
 .hero { display: flex; flex-direction: column; gap: 2rem; align-items: stretch; min-height: auto; padding-top: calc(var(--nav-h) + 2rem); }
 .hero-media { width: 100%; min-width: 0; order: -1; }
 .hero-video { position: relative; width: 100%; border-radius: 24px; overflow: hidden; background: #000;
@@ -68,37 +65,7 @@ h1 span { display: block; }
 .lead { margin: 1rem auto 0; color: var(--mut); max-width: 46ch; }
 .hero .row { justify-content: center; }
 
-/* Note */
-.note { text-align: center; color: #f0b36a; margin: -1rem auto 1.5rem; max-width: 60ch; font-size: .9rem; }
-.cam { max-width: 960px; margin: 0 auto; padding: 1rem; border-radius: 24px; border: 1px solid rgba(96,140,255,.4); background: rgba(255,255,255,.04); box-shadow: 0 0 40px rgba(59,130,246,.18); }
-.view { position: relative; aspect-ratio: 3 / 2; overflow: hidden; border-radius: 16px; background: #000; cursor: grab; touch-action: none; }
-.view.drag { cursor: grabbing; }
-.view img { object-fit: cover; position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform-origin: 0 0; transition: transform .45s cubic-bezier(.2,.7,.2,1); user-select: none; }
-.view.drag img { transition: none; }
-.badge { position: absolute; top: 12px; left: 12px; padding: .25rem .8rem; border-radius: 20px; background: rgba(0,0,0,.6); border: 1px solid rgba(255,255,255,.3); font-weight: 700; }
-.mark { position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; border: 2px solid #fff; border-radius: 50%; opacity: 0; pointer-events: none; transition: opacity .3s; box-shadow: 0 0 8px #000; }
-.range { display: flex; align-items: center; gap: 1rem; margin-top: 1.2rem; font-weight: 700; }
-.range input { flex: 1; accent-color: #7c8cff; }
-
-/* Battery */
-.batt { max-width: 640px; margin: 0 auto; text-align: center; }
-.bat { position: relative; width: min(100%, 320px); height: 120px; margin: 0 auto 1.4rem; border: 4px solid #cfd8ff; border-radius: 24px; padding: 6px; }
-.bat::after { content: ""; position: absolute; right: -16px; top: 35%; width: 10px; height: 30%; border-radius: 0 6px 6px 0; background: #cfd8ff; }
-.fill { height: 100%; width: 0%; border-radius: 16px; background: linear-gradient(90deg, #22c55e, #60a5fa); transition: width .2s linear; }
-.bat b { position: absolute; inset: 0; display: grid; place-items: center; font-size: 2rem; text-shadow: 0 2px 8px #000; }
-.bat.charging { animation: pulse 1.2s ease-in-out infinite; }
-@keyframes pulse { 50% { box-shadow: 0 0 30px rgba(96,165,250,.8); } }
-.facts { list-style: none; margin-bottom: 1.4rem; display: grid; gap: .4rem; }
-.facts b { color: #9db8ff; }
-
-/* Specs */
-.tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem; margin-bottom: 1.5rem; }
-.specs { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
-.spec { padding: 1.1rem 1.3rem; border-radius: 16px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.14); animation: pop .4s ease both; }
-.spec small { display: block; color: var(--mut); letter-spacing: .15em; text-transform: uppercase; font-size: .68rem; }
-@keyframes pop { from { opacity: 0; transform: translateY(10px); } }
-
-/* Price / buy */
+/* Price */
 .buy { max-width: 720px; margin: 0 auto; }
 .opts { display: grid; gap: .7rem; margin: 1rem 0; }
 .opt { display: flex; justify-content: space-between; gap: 1rem; padding: .9rem 1.1rem; border-radius: 14px; border: 1px solid rgba(255,255,255,.2); background: rgba(0,0,0,.25); text-align: left; transition: .2s; }
@@ -139,22 +106,18 @@ footer { text-align: center; color: var(--mut); font-size: .8rem; padding: 3rem 
 <body>
 <header class="nav">
   <a href="#home" class="brand">vivos <b>X300 Ultra</b></a>
-  <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
   <nav id="menu">
-    <a href="#home">Home</a>
-    <a href="#description">Product Description</a>
-    <a href="#camera">Camera</a>
-    <a href="#performance">Performance</a>
-    <a href="#battery">Battery</a>
-    <a href="#specs">Specifications</a>
-    <a href="#location">Location</a>
     <a href="Dev.html">Developer</a>
-    <a href="#buy" class="cta">Buy Now</a>
+    <button class="cart-btn" id="cartBtn" type="button">
+      <span class="check">✓</span>
+      <span>Add to Cart</span>
+      <span class="cart-count" id="cc">0</span>
+    </button>
   </nav>
 </header>
 
 <main>
-<!-- HERO: video full width on top, text below -->
+<!-- HERO -->
 <section id="home" class="hero">
   <div class="hero-media reveal">
     <div class="hero-video">
@@ -203,29 +166,6 @@ footer { text-align: center; color: var(--mut); font-size: .8rem; padding: 3rem 
       <div class="price" id="price">₱0</div>
     </div>
     <p class="hint">Availability: pre-orders were reported May 23 – June 5, 2026; check vivo for current stock. Warranty: <span class="na">not verified</span>.</p>
-    <div class="row">
-      <button class="btn primary" id="buyNow">Buy Now</button>
-      <button class="btn ghost" id="addCart">Add to Cart (<span id="cc">0</span>)</button>
-    </div>
-  </div>
-</section>
-
-<!-- CAMERA -->
-<section id="camera" class="sec">
-  <h2 class="reveal">Camera <span>zoom demo</span></h2>
-  <p class="note reveal">Simulated digital zoom on a sample photo. It is a visual demo only and does not reproduce the phone's real optical or hybrid zoom quality. The sample image is low resolution, so it softens at high zoom.</p>
-  <div class="cam reveal">
-    <div class="view" id="view"><img id="photo" src="/vivos/Images/mountain2.jpg" draggable="false"><i class="mark" id="mark"></i><span class="badge" id="zv">1.0×</span></div>
-    <div class="row center" id="lenses" role="group" aria-label="Lens">
-      <button class="chip" data-z="0.5">Ultra-wide</button>
-      <button class="chip" data-z="1">Main</button>
-      <button class="chip" data-z="3.7">Telephoto</button>
-      <button class="chip" data-z="20">High Zoom</button>
-    </div>
-    <div class="row center" id="zbtns"></div>
-    <label class="range">Zoom <input type="range" id="zr" min="0.5" max="100" step="0.1" value="1"></label>
-    <div class="row center"><button class="btn ghost" id="reset">Reset View</button></div>
-    <p class="hint">Click the picture to set the zoom centre · drag to pan when zoomed</p>
   </div>
 </section>
 
@@ -239,30 +179,6 @@ footer { text-align: center; color: var(--mut); font-size: .8rem; padding: 3rem 
     <article class="card reveal"><h3>Memory</h3><p>512GB storage on the Philippine variants.</p></article>
     <article class="card reveal"><h3>Thermal management</h3><p>Cooling system details: <span class="na">not confirmed</span>.</p></article>
   </div>
-</section>
-
-<!-- BATTERY -->
-<section id="battery" class="sec">
-  <h2 class="reveal"><span>Battery</span> &amp; charging</h2>
-  <div class="card batt reveal">
-    <div class="bat" aria-hidden="true"><div class="fill" id="fill"></div><b id="pct">0%</b></div>
-    <ul class="facts">
-      <li><b>6600mAh</b> battery</li>
-      <li><b>100W</b> wired charging (Vivos FlashCharge)</li>
-      <li><b>40W</b> wireless charging</li>
-      <li>Power-saving features: <span class="na">not confirmed</span></li>
-    </ul>
-    <button class="btn primary" id="charge">Flash Charging</button>
-    <p class="hint">Full charge at 41 minutes</p>
-  </div>
-</section>
-
-<!-- SPECS -->
-<section id="specs" class="sec">
-  <h2 class="reveal"><span>Specifications</span></h2>
-  <div class="tabs reveal" id="tabs" role="tablist"></div>
-  <div class="grid specs reveal" id="panel" role="tabpanel"></div>
-  <p class="hint">Specs compiled from Philippine launch coverage.</p>
 </section>
 
 <section id="location" class="sec">
@@ -282,7 +198,6 @@ footer { text-align: center; color: var(--mut); font-size: .8rem; padding: 3rem 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 const peso = n => '₱' + n.toLocaleString('en-PH');
 
 /* Toast */
@@ -292,10 +207,7 @@ function toast(msg) {
   clearTimeout(tt); tt = setTimeout(() => t.classList.remove('show'), 2600);
 }
 
-/* Nav + scroll reveal */
-const burger = $('#burger'), menu = $('#menu');
-burger.onclick = () => { const o = menu.classList.toggle('open'); burger.setAttribute('aria-expanded', o); };
-$$('#menu a').forEach(a => a.addEventListener('click', () => { menu.classList.remove('open'); burger.setAttribute('aria-expanded', false); }));
+/* Scroll reveal */
 const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .15 });
 $$('.reveal').forEach(el => io.observe(el));
 
@@ -307,95 +219,13 @@ if (ads) {
   else { const p = ads.play(); if (p && p.catch) p.catch(() => {}); }
 }
 
-/* Camera zoom */
-const photo = $('#photo'), view = $('#view'), zr = $('#zr'), mark = $('#mark');
-const ZOOMS = [.5, 1, 2, 3, 5, 10, 20, 50, 100];
-ZOOMS.forEach(z => {
-  const b = document.createElement('button'); b.className = 'chip'; b.dataset.z = z; b.textContent = z + '×';
-  $('#zbtns').appendChild(b);
-});
-let Z = .5, X = 0, Y = 0, F = null;
-function paint() {
-  const W = view.clientWidth, H = view.clientHeight, k = Z * 2;
-  X = clamp(X, W * (1 - k), 0); Y = clamp(Y, H * (1 - k), 0);
-  photo.style.transform = `translate(${X}px,${Y}px) scale(${k})`;
-  $('#zv').textContent = (+Z.toFixed(1)) + '×';
-  zr.value = Z;
-  $$('#zbtns .chip, #lenses .chip').forEach(b => b.classList.remove('on'));
-  $$('#zbtns .chip').forEach(b => b.classList.toggle('on', +b.dataset.z === Z));
-  const lens = Z < 1 ? 0 : Z < 3.7 ? 1 : Z < 10 ? 2 : 3;
-  $$('#lenses .chip')[lens].classList.add('on');
-}
-function setZoom(nz) {
-  nz = clamp(nz, .5, 100);
-  const W = view.clientWidth, H = view.clientHeight, p = F || { x: W / 2, y: H / 2 }, r = nz / Z;
-  X = p.x - (p.x - X) * r; Y = p.y - (p.y - Y) * r; Z = nz; paint();
-}
-$$('#zbtns .chip, #lenses .chip').forEach(b => b.onclick = () => setZoom(+b.dataset.z));
-zr.addEventListener('input', () => setZoom(+zr.value));
-$('#reset').onclick = () => { F = null; mark.style.opacity = 0; Z = .5; X = Y = 0; setZoom(1); };
-
-let pd = false, moved = 0, px = 0, py = 0;
-view.addEventListener('pointerdown', e => { pd = true; moved = 0; px = e.clientX; py = e.clientY; view.setPointerCapture(e.pointerId); });
-view.addEventListener('pointermove', e => {
-  if (!pd) return;
-  const dx = e.clientX - px, dy = e.clientY - py; moved += Math.abs(dx) + Math.abs(dy);
-  if (moved > 4) { view.classList.add('drag'); X += dx; Y += dy; paint(); }
-  px = e.clientX; py = e.clientY;
-});
-view.addEventListener('pointerup', e => {
-  pd = false; view.classList.remove('drag');
-  if (moved <= 4) {
-    const r = view.getBoundingClientRect(); F = { x: e.clientX - r.left, y: e.clientY - r.top };
-    mark.style.left = F.x + 'px'; mark.style.top = F.y + 'px'; mark.style.opacity = 1;
-    setTimeout(() => mark.style.opacity = 0, 1200);
-  }
-});
-addEventListener('resize', paint);
-Z = .5; setZoom(1);
-
-/* Battery simulation */
-let charging = false;
-$('#charge').onclick = () => {
-  if (charging) return; charging = true;
-  const bat = $('.bat'), t0 = performance.now(), dur = RM ? 300 : 5000;
-  bat.classList.add('charging'); $('#charge').textContent = 'Charging…';
-  (function step(n) {
-    const p = clamp((n - t0) / dur, 0, 1), v = Math.round(p * 100);
-    $('#fill').style.width = v + '%'; $('#pct').textContent = v + '%';
-    if (p < 1) return requestAnimationFrame(step);
-    bat.classList.remove('charging'); $('#charge').textContent = 'Flash Charging'; charging = false;
-  })(t0);
-};
-
-/* Specification tabs */
-const NC = 'Not confirmed';
-const SPECS = {
-  Display: [['Size', '6.82 inches'], ['Panel', '2K AMOLED'], ['Resolution', '1216 x 2640 pixels'], ['Refresh rate', '120Hz']],
-  Performance: [['Processor', 'Qualcomm Snapdragon 8 Elite Gen 5 (3 nm)'], ['GPU', 'Arm G1-Ultra'], ['RAM', '12GB or 16GB (sources differ)'], ['Storage', '512GB, up to 1TB']],
-  Camera: [['Main', '200MP, f/1.9, Gimbal OIS'], ['Telephoto', '200MP, f/2.7, 3.7× zoom, OIS'], ['Ultra-wide', '50MP, f/2.0, OIS'], ['Extenders', 'ZEISS 200mm and 400mm (optional)']],
-  Battery: [['Capacity', '6600mAh'], ['Wired', '100W vivos FlashCharge'], ['Wireless', '40W']],
-  Software: [['OS', 'Android 16 with OriginOS 6'], ['Updates', 'Up to 5 years OS, 7 years security'], ['Connectivity', '5G, Wi-Fi 7, NFC, IR'], ['Security', 'Ultrasonic fingerprint scanner'], ['Audio', 'Stereo speakers']],
-  Body: [['Dimensions', '150.6 x 71.9 x 8 mm (5.93 x 2.83 x 0.31 in)'], ['Weight', '190 g (6.70 oz)'], ['Water / dust', 'IP69']],
-};
-const tabs = $('#tabs'), panel = $('#panel');
-function showTab(name) {
-  $$('.chip', tabs).forEach(b => { const on = b.textContent === name; b.classList.toggle('on', on); b.setAttribute('aria-selected', on); });
-  panel.innerHTML = SPECS[name].map(([k, v]) => `<div class="spec"><small>${k}</small>${v === NC ? `<span class="na">${v}</span>` : v}</div>`).join('');
-}
-Object.keys(SPECS).forEach(n => {
-  const b = document.createElement('button'); b.className = 'chip'; b.textContent = n; b.setAttribute('role', 'tab');
-  b.onclick = () => showTab(n); tabs.appendChild(b);
-});
-showTab('Display');
-
-/* Configuration + cart (demo; no real purchase) */
+/* Configuration */
 const CONFIGS = [
   { name: '512GB · Phone only', price: 109999 },
   { name: '512GB · with 200mm ZEISS Telephoto Kit', price: 123998 },
   { name: '512GB · Photographer Kit', price: 149999 },
 ];
-let cfg = CONFIGS[0], cart = 0;
+let cfg = CONFIGS[0], cart = 0, cartTimer;
 function renderCfg() {
   $('#sel').textContent = cfg.name; $('#price').textContent = peso(cfg.price);
   $$('.opt').forEach((o, i) => o.setAttribute('aria-checked', CONFIGS[i] === cfg));
@@ -407,8 +237,17 @@ CONFIGS.forEach(c => {
   $('#opts').appendChild(b);
 });
 renderCfg();
-$('#addCart').onclick = () => { cart++; $('#cc').textContent = cart; toast(`Added: ${cfg.name} — demo cart`); };
-$('#buyNow').onclick = () => toast('Demo page: no order placed. Please buy from vivos’s official channels.');
+
+/* Add to cart: show check + count in header */
+$('#cartBtn').onclick = () => {
+  cart++;
+  $('#cc').textContent = cart;
+  const btn = $('#cartBtn');
+  btn.classList.add('added');
+  clearTimeout(cartTimer);
+  cartTimer = setTimeout(() => btn.classList.remove('added'), 1500);
+  toast(`Added: ${cfg.name} — demo cart`);
+};
 </script>
 </body>
 </html>
