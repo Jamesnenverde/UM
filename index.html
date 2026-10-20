@@ -1,656 +1,416 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>THE UNIVERSITY OF MANILA</title>
-<link rel="icon" type="image/jpg" href="../Images/UM.jpg">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vivos X300 Ultra — Beyond the Limits</title>
 <style>
-/* ============ BASE ============ */
-*{ box-sizing:border-box; }
-[hidden]{ display:none !important; }
-html{ scroll-snap-type:y mandatory; }
-@media (prefers-reduced-motion:no-preference){ html{ scroll-behavior:smooth; } }
-body{
-  margin:0;
-  min-height:100vh;
-  font-family:"Segoe UI", Cambria, Georgia, sans-serif;
-  color:#1b1b2f;
-  background:#fee440;
-  font-size:18px;
+:root { --bg: #05060d; --blue: #3b82f6; --purple: #8b5cf6; --txt: #e8ecf8; --mut: #98a2c0; --nav-h: 64px; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: var(--nav-h); }
+body { font-family: "Segoe UI", system-ui, Helvetica, Arial, sans-serif; color: var(--txt); line-height: 1.6; overflow-x: hidden;
+  background: radial-gradient(800px 500px at 10% 0%, rgba(59,130,246,.22), transparent 70%),
+    radial-gradient(800px 600px at 95% 35%, rgba(139,92,246,.2), transparent 70%), var(--bg); }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; cursor: pointer; }
+.row { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.4rem; }
+.row.center { justify-content: center; }
+.na { color: #f0b36a; font-style: italic; }
+.hint { color: var(--mut); font-size: .8rem; text-align: center; margin-top: .8rem; }
+
+/* Nav */
+.nav { position: fixed; inset: 0 0 auto; height: var(--nav-h); z-index: 20; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 clamp(1rem, 4vw, 3rem); background: rgba(5,6,13,.65); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(120,150,255,.18); }
+.brand { letter-spacing: .25em; text-transform: uppercase; font-size: .85rem; font-weight: 300; }
+.brand b { font-weight: 800; }
+nav { display: flex; gap: clamp(.8rem, 2vw, 1.8rem); align-items: center; }
+nav a { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: #cfd6ee; transition: color .2s; }
+nav a:hover { color: #fff; }
+nav .cta { padding: .45rem 1rem; border-radius: 30px; background: linear-gradient(90deg, var(--blue), var(--purple)); color: #fff; }
+.burger { display: none; background: none; border: 0; width: 32px; height: 26px; position: relative; }
+.burger span { position: absolute; left: 4px; right: 4px; height: 2px; background: #fff; transition: .3s; }
+.burger span:nth-child(1) { top: 5px; } .burger span:nth-child(2) { top: 12px; } .burger span:nth-child(3) { top: 19px; }
+.burger[aria-expanded="true"] span:nth-child(1) { top: 12px; transform: rotate(45deg); }
+.burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.burger[aria-expanded="true"] span:nth-child(3) { top: 12px; transform: rotate(-45deg); }
+
+/* Layout */
+.sec, .hero { padding: calc(var(--nav-h) + 3rem) clamp(1rem, 5vw, 4rem) 3rem; max-width: 1200px; margin: 0 auto; }
+.sec { padding-top: 5rem; }
+h2 { font-size: clamp(1.7rem, 4.5vw, 3rem); text-align: center; font-weight: 800; letter-spacing: .02em; margin-bottom: 2rem; }
+h2 span, h1 span { background: linear-gradient(90deg, #60a5fa, #a78bfa); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.intro { max-width: 72ch; margin: -.8rem auto 2rem; text-align: center; color: #cdd5ec; font-size: 1.05rem; }
+.grid { display: grid; gap: 1.2rem; }
+.cards { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.card { padding: 1.5rem; border-radius: 20px; background: rgba(255,255,255,.05); backdrop-filter: blur(12px);
+  border: 1px solid rgba(96,140,255,.35); box-shadow: 0 0 24px rgba(59,130,246,.12), inset 0 0 30px rgba(139,92,246,.06); }
+.card h3 { margin-bottom: .5rem; color: #9db8ff; font-size: 1rem; letter-spacing: .12em; text-transform: uppercase; }
+.card p { color: #cdd5ec; }
+.btn { padding: .8rem 1.6rem; border-radius: 40px; border: 1px solid rgba(120,150,255,.5); font-weight: 700; letter-spacing: .08em; transition: .25s; display: inline-block; }
+.btn.primary { background: linear-gradient(90deg, var(--blue), var(--purple)); border: 0; box-shadow: 0 8px 28px rgba(80,100,255,.4); }
+.btn.ghost { background: rgba(255,255,255,.05); }
+.btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(90,120,255,.45); }
+.chip { padding: .5rem 1.1rem; border-radius: 30px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.2); font-size: .8rem; transition: .2s; }
+.chip:hover { border-color: var(--blue); }
+.chip.on { background: #fff; color: #0b0d18; font-weight: 700; box-shadow: 0 0 16px rgba(120,160,255,.6); }
+
+/* Hero */
+.hero { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; min-height: 100vh; }
+.eyebrow { color: #9db8ff; letter-spacing: .3em; text-transform: uppercase; font-size: .75rem; }
+h1 { font-size: clamp(2.4rem, 6vw, 4.8rem); line-height: 1.05; font-weight: 900; margin: .6rem 0; }
+h1 span { display: block; }
+.tag { font-size: 1.3rem; font-style: italic; color: #c4b5fd; }
+.lead { margin-top: 1rem; color: var(--mut); max-width: 46ch; }
+
+/* Hero advertisement video */
+.hero-media { min-width: 0; }
+.hero-video { position: relative; width: 100%; border-radius: 24px; overflow: hidden; background: #000;
+  border: 1px solid rgba(96,140,255,.4); box-shadow: 0 0 50px rgba(59,130,246,.3), 0 0 90px rgba(139,92,246,.18); }
+.hero-video video { display: block; width: 100%; height: auto; max-height: 72vh; object-fit: contain; background: #000; }
+
+/* Camera */
+.note { text-align: center; color: #f0b36a; margin: -1rem auto 1.5rem; max-width: 60ch; font-size: .9rem; }
+.cam { max-width: 960px; margin: 0 auto; padding: 1rem; border-radius: 24px; border: 1px solid rgba(96,140,255,.4); background: rgba(255,255,255,.04); box-shadow: 0 0 40px rgba(59,130,246,.18); }
+.view { position: relative; aspect-ratio: 3 / 2; overflow: hidden; border-radius: 16px; background: #000; cursor: grab; touch-action: none; }
+.view.drag { cursor: grabbing; }
+.view img { object-fit: cover; position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform-origin: 0 0; transition: transform .45s cubic-bezier(.2,.7,.2,1); user-select: none; }
+.view.drag img { transition: none; }
+.badge { position: absolute; top: 12px; left: 12px; padding: .25rem .8rem; border-radius: 20px; background: rgba(0,0,0,.6); border: 1px solid rgba(255,255,255,.3); font-weight: 700; }
+.mark { position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; border: 2px solid #fff; border-radius: 50%; opacity: 0; pointer-events: none; transition: opacity .3s; box-shadow: 0 0 8px #000; }
+.range { display: flex; align-items: center; gap: 1rem; margin-top: 1.2rem; font-weight: 700; }
+.range input { flex: 1; accent-color: #7c8cff; }
+
+/* Battery */
+.batt { max-width: 640px; margin: 0 auto; text-align: center; }
+.bat { position: relative; width: min(100%, 320px); height: 120px; margin: 0 auto 1.4rem; border: 4px solid #cfd8ff; border-radius: 24px; padding: 6px; }
+.bat::after { content: ""; position: absolute; right: -16px; top: 35%; width: 10px; height: 30%; border-radius: 0 6px 6px 0; background: #cfd8ff; }
+.fill { height: 100%; width: 0%; border-radius: 16px; background: linear-gradient(90deg, #22c55e, #60a5fa); transition: width .2s linear; }
+.bat b { position: absolute; inset: 0; display: grid; place-items: center; font-size: 2rem; text-shadow: 0 2px 8px #000; }
+.bat.charging { animation: pulse 1.2s ease-in-out infinite; }
+@keyframes pulse { 50% { box-shadow: 0 0 30px rgba(96,165,250,.8); } }
+.facts { list-style: none; margin-bottom: 1.4rem; display: grid; gap: .4rem; }
+.facts b { color: #9db8ff; }
+
+/* Specs */
+.tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem; margin-bottom: 1.5rem; }
+.specs { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.spec { padding: 1.1rem 1.3rem; border-radius: 16px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.14); animation: pop .4s ease both; }
+.spec small { display: block; color: var(--mut); letter-spacing: .15em; text-transform: uppercase; font-size: .68rem; }
+@keyframes pop { from { opacity: 0; transform: translateY(10px); } }
+
+/* Price / buy */
+.buy { max-width: 720px; margin: 0 auto; }
+.opts { display: grid; gap: .7rem; margin: 1rem 0; }
+.opt { display: flex; justify-content: space-between; gap: 1rem; padding: .9rem 1.1rem; border-radius: 14px; border: 1px solid rgba(255,255,255,.2); background: rgba(0,0,0,.25); text-align: left; transition: .2s; }
+.opt[aria-checked="true"] { border-color: #7c8cff; background: rgba(90,110,255,.2); box-shadow: 0 0 18px rgba(96,140,255,.35); }
+.sum { display: flex; justify-content: space-between; align-items: end; gap: 1rem; margin-top: 1.2rem; flex-wrap: wrap; }
+.sum small { color: var(--mut); }
+.price { font-size: clamp(1.8rem, 5vw, 2.6rem); font-weight: 900; }
+footer { text-align: center; color: var(--mut); font-size: .8rem; padding: 3rem 1rem; }
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translate(-50%, 30px); padding: .8rem 1.4rem; border-radius: 30px; background: #fff; color: #0b0d18; font-weight: 600; opacity: 0; pointer-events: none; transition: .35s; z-index: 30; max-width: 90vw; text-align: center; }
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* Map */
+.map { max-width: 900px; margin: 0 auto; border-radius: 20px; overflow: hidden; border: 1px solid rgba(96,140,255,.4); box-shadow: 0 0 40px rgba(59,130,246,.18); }
+.map iframe { display: block; width: 100%; height: clamp(280px, 50vw, 450px); }
+
+/* Scroll reveal */
+.js .reveal { opacity: 0; transform: translateY(36px);
+  transition: opacity .9s ease var(--d, 0s), transform .9s cubic-bezier(.2,.7,.2,1) var(--d, 0s); }
+.js .reveal.in { opacity: 1; transform: none; }
+
+/* Responsive */
+@media (max-width: 860px) {
+  .hero { grid-template-columns: 1fr; text-align: center; padding-top: calc(var(--nav-h) + 1.5rem); min-height: auto; }
+  .hero .row { justify-content: center; }
+  .lead { margin-inline: auto; }
+  .burger { display: block; }
+  nav { position: fixed; top: var(--nav-h); left: 0; right: 0; flex-direction: column; padding: 1.2rem; background: rgba(5,6,13,.95); border-bottom: 1px solid rgba(120,150,255,.2);
+    transform: translateY(-120%); transition: transform .35s; }
+  nav.open { transform: none; }
 }
 
-/* ============ ANIMATED BLOB BACKGROUND (same on every section) ============ */
-.blob-bg{
-  position:fixed; top:0; left:0;
-  width:100%; height:100vh;
-  z-index:-1; pointer-events:none;
-}
-@media (prefers-reduced-motion:reduce){
-  .blob-bg path{ animation:none !important; }
-}
-
-/* ============ GLASS ============ */
-.glass{
-  /* From https://css.glass */
-  background: rgba(255, 255, 255, 0.12);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(0.4px);
-  -webkit-backdrop-filter: blur(0.4px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-}
-
-/* ============ HEADER ============ */
-.top{
-  position:fixed; top:0; left:0; right:0; z-index:10;
-  display:flex; align-items:center; gap:20px;
-  padding:10px 20px;
-  border-radius:0;
-  border-width:0 0 1px 0;
-  border-color:rgba(255,255,255,.18);
-}
-.brand{ display:flex; align-items:center; gap:12px; flex:0 0 auto; }
-#ums{ width:56px; height:56px; border-radius:50%; border:3px solid #2e9e3e; object-fit:cover; }
-.cslogo{ height:64px; width:auto; flex:0 0 auto; }
-.brand .motto{ font-size:14px; font-weight:600; color:#6b1b9a; letter-spacing:1px; }
-.brand h2{ margin:0; font-size:21px; letter-spacing:.5px; }
-
-/* flat, straight, single-line buttons */
-.nav{ display:flex; flex:1; gap:0; overflow-x:auto; }
-.nav button{
-  flex:1 1 auto; min-width:0;
-  padding:14px 12px;
-  border:0; border-right:1px solid rgba(255,255,255,.25);
-  border-bottom:3px solid transparent;
-  border-radius:0;
-  background:rgba(255,255,255,.08);
-  color:#1b1b2f; font:700 17px "Segoe UI", sans-serif;
-  white-space:nowrap; cursor:pointer;
-}
-.nav button:first-child{ border-left:1px solid rgba(255,255,255,.25); }
-.nav button:hover{ background:rgba(255,255,255,.2); }
-.nav button.active{ background:rgba(255,255,255,.28); border-bottom-color:#1b1b2f; }
-
-/* ============ SECTIONS ============ */
-.sec{
-  min-height:100vh;
-  scroll-snap-align:start;
-  padding:125px 16px 36px;
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-}
-.sec > *{ width:100%; max-width:1000px; }
-.sec > .hgrid{ max-width:1100px; }
-.panelbox{ padding:24px 28px; margin-bottom:16px; }
-.label{ color:#7a1fa2; font-weight:700; font-size:20px; margin:0 0 6px; }
-h1,h2,h3{ margin:0 0 12px; }
-h1{ font-size:48px; letter-spacing:1px; }
-h2{ font-size:30px; }
-p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
-.center{ text-align:center; }
-
-/* History */
-.hgrid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; align-items:stretch; }
-.hl .panelbox:last-child{ margin-bottom:0; }
-.hr .glass{ height:100%; max-height:calc(100vh - 160px); margin:0; display:flex; flex-direction:column; }
-.hr .mile{ overflow-y:auto; padding-right:8px; }
-.mile{ display:grid; grid-template-columns:92px 1fr; gap:8px 16px; font-size:18px; }
-.mile b{ color:#7a1fa2; font-size:22px; }
-.mile span{ padding-bottom:10px; border-bottom:1px solid rgba(255,255,255,.15); }
-.map{ width:100%; height:220px; border:0; border-radius:8px; }
-
-/* Mission cards (everything shown, no flipping) */
-.cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; }
-.card{ padding:26px 24px; min-height:260px; text-align:center; display:flex; flex-direction:column; justify-content:center; }
-.card h2{ font-size:72px; margin:4px 0 10px; color:#7a1fa2; }
-.card .word{ font-size:24px; font-weight:700; margin:0; }
-.card p{ font-size:20px; }
-
-/* Vision */
-.trilogy{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; }
-.trilogy div{ font-size:22px; padding:30px 10px; text-align:center; font-weight:700; letter-spacing:1px; }
-
-/* Motto */
-.quote{ font-size:36px; line-height:1.4; font-style:italic; text-align:center; padding:40px 30px; }
-
-/* Sub tabs (OS + CS) */
-.subtabs{ overflow:hidden; display:flex; margin-bottom:20px; overflow-x:auto; }
-.subtabs button{
-  flex:1 1 0; min-width:140px; padding:13px 10px;
-  border:0; border-right:1px solid rgba(255,255,255,.25);
-  border-bottom:3px solid transparent; border-radius:0;
-  background:rgba(255,255,255,.08); color:#1b1b2f;
-  font:700 17px "Segoe UI", sans-serif; cursor:pointer;
-}
-.subtabs button:first-child{ border-left:1px solid rgba(255,255,255,.25); }
-.subtabs button:hover{ background:rgba(255,255,255,.2); }
-.subtabs button.active{ background:rgba(255,255,255,.28); border-bottom-color:#1b1b2f; }
-
-.os-head{ text-align:center; }
-.os-head img{ width:110px; height:110px; object-fit:contain; border-radius:8px; background:rgba(255,255,255,.85); padding:6px; }
-.versions{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:8px; margin-top:16px; }
-.versions p{ font-size:18px; margin:0; padding:10px 14px; background:rgba(255,255,255,.1); border-left:3px solid #7a1fa2; }
-
-.events{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; }
-.events img{ width:100%; height:170px; object-fit:cover; border-radius:6px; }
-
-
-/* Developer */
-.picker{ display:flex; margin:10px -28px 0; overflow-x:auto; border-top:1px solid rgba(255,255,255,.25); }
-.pick{
-  flex:1 1 0; min-width:110px; padding:10px 8px;
-  display:flex; flex-direction:column; align-items:center; gap:6px;
-  border:0; border-right:1px solid rgba(255,255,255,.25); border-bottom:3px solid transparent; border-radius:0;
-  background:rgba(255,255,255,.08); color:#1b1b2f;
-  font:700 17px "Segoe UI", sans-serif; cursor:pointer;
-}
-.pick:last-child{ border-right:0; }
-.pick img{ width:60px; height:68px; object-fit:cover; border-radius:10px; }
-.pick:hover{ background:rgba(255,255,255,.2); }
-.pick.active{ background:rgba(255,255,255,.28); border-bottom-color:#1b1b2f; }
-
-.dpanel{ display:grid; grid-template-columns:minmax(0,5fr) minmax(0,6fr); gap:16px; align-items:start; }
-.dcard{ padding:22px; }
-.dtop{ display:flex; gap:18px; align-items:center; margin-bottom:14px; }
-.dtop img{ width:130px; height:160px; object-fit:cover; border-radius:14px; border:3px solid #7a1fa2; flex:0 0 auto; }
-.dtop h2{ font-size:26px; margin:0 0 6px; }
-.dtop .course{ color:#7a1fa2; font-weight:700; font-size:17px; line-height:1.4; margin:0; }
-.dlist{ display:grid; grid-template-columns:max-content 1fr; gap:6px 14px; margin:0; font-size:18px; }
-.dlist dt{ font-weight:700; color:#7a1fa2; }
-.dlist dd{ margin:0; overflow-wrap:anywhere; }
-.dcard .subtabs{ margin-bottom:14px; }
-.dgal{ display:flex; flex-wrap:wrap; justify-content:center; gap:10px; max-height:calc(100vh - 390px); min-height:240px; overflow-y:auto; }
-.dgal.fam img{ max-width:100%; max-height:calc(100vh - 400px); height:auto; object-fit:contain; border-radius:10px; }
-.dgal.friends img{ width:140px; height:180px; object-fit:cover; border-radius:10px; }
-
-@media (max-width:900px){
-  .dpanel{ grid-template-columns:1fr; }
-  .dgal, .dgal.fam img{ max-height:60vh; }
-  .hgrid{ grid-template-columns:1fr; }
-  .hr .glass{ max-height:60vh; }
-}
-@media (max-width:760px){
-  .sec{ padding-top:200px; }
-  h1{ font-size:36px; }
-  .quote{ font-size:26px; }
-  .top{ flex-direction:column; align-items:stretch; gap:10px; }
-  .brand{ justify-content:center; }
-  .panelbox{ padding:18px; }
-  .mile{ grid-template-columns:60px 1fr; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+  .js .reveal { opacity: 1; transform: none; }
 }
 </style>
+<script>document.documentElement.classList.add('js');</script>
 </head>
-<body data-section="history">
-
-<!-- ANIMATED BLOB BACKGROUND -->
-<svg class="blob-bg" preserveAspectRatio="xMidYMid slice" viewBox="10 10 80 80" aria-hidden="true">
-  <defs>
-    <style>
-      @keyframes rotate { 0%{ transform:rotate(0deg); } 100%{ transform:rotate(360deg); } }
-      .out-top{ animation:rotate 20s linear infinite; transform-origin:13px 25px; }
-      .in-top{ animation:rotate 10s linear infinite; transform-origin:13px 25px; }
-      .out-bottom{ animation:rotate 25s linear infinite; transform-origin:84px 93px; }
-      .in-bottom{ animation:rotate 15s linear infinite; transform-origin:84px 93px; }
-    </style>
-  </defs>
-  <path fill="#9b5de5" class="out-top" d="M37-5C25.1-14.7,5.7-19.1-9.2-10-28.5,1.8-32.7,31.1-19.8,49c15.5,21.5,52.6,22,67.2,2.3C59.4,35,53.7,8.5,37-5Z"/>
-  <path fill="#f15bb5" class="in-top" d="M20.6,4.1C11.6,1.5-1.9,2.5-8,11.2-16.3,23.1-8.2,45.6,7.4,50S42.1,38.9,41,24.5C40.2,14.1,29.4,6.6,20.6,4.1Z"/>
-  <path fill="#00bbf9" class="out-bottom" d="M105.9,48.6c-12.4-8.2-29.3-4.8-39.4.8-23.4,12.8-37.7,51.9-19.1,74.1s63.9,15.3,76-5.6c7.6-13.3,1.8-31.1-2.3-43.8C117.6,63.3,114.7,54.3,105.9,48.6Z"/>
-  <path fill="#00f5d4" class="in-bottom" d="M102,67.1c-9.6-6.1-22-3.1-29.5,2-15.4,10.7-19.6,37.5-7.6,47.8s35.9,3.9,44.5-12.5C115.5,92.6,113.9,74.6,102,67.1Z"/>
-</svg>
-
-<header class="top glass">
-  <div class="brand">
-    <img src="../Images/newlogo.jpg" alt="University of Manila logo" id="ums">
-    <img src="Cslogo.jpg" alt="BS Computer Science logo" class="cslogo">
-    <div>
-      <div class="motto">Patria - Scientia - Virtus</div>
-      <h2>THE UNIVERSITY OF MANILA</h2>
-    </div>
-  </div>
-
-  <nav class="nav" id="nav">
-    <button data-s="history" class="active">History</button>
-    <button data-s="mission">Mission</button>
-    <button data-s="vision">Vision</button>
-    <button data-s="motto">Motto</button>
-    <button data-s="os">Operating System</button>
-    <button data-s="cs">CS Event</button>
-    <button data-s="dev">Developer</button>
+<body>
+<header class="nav">
+  <a href="#home" class="brand">vivos <b>X300 Ultra</b></a>
+  <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <nav id="menu">
+    <a href="#home">Home</a>
+    <a href="#description">Product Description</a>
+    <a href="#camera">Camera</a>
+    <a href="#performance">Performance</a>
+    <a href="#battery">Battery</a>
+    <a href="#specs">Specifications</a>
+    <a href="#location">Location</a>
+    <a href="Dev.html">Developer</a>
+    <a href="#buy" class="cta">Buy Now</a>
   </nav>
 </header>
 
 <main>
-
-<!-- ============ 1. HISTORY ============ -->
-<section id="history" class="sec">
-  <div class="hgrid">
-  <div class="hl">
-  <div class="glass panelbox center">
-    <p class="label">Founded 1913</p>
-    <h1>UM HISTORY</h1>
-    <p>On October 5, 1913, a group of four young men and a woman, with ages from fifteen to twenty-one, met for breakfast at the Palma de Mallorca, a popular restaurant beside the Sto. Domingo Church in Intramuros, Manila. The five were Dr. Apolinario G. de los Santos, his brother Dr. Mariano V. de los Santos, his sister Maria de los Santos, and two friends Dr. Buenaventura J. Bello and Atty. Antonio Rivero.</p>
-    <p>These impecunious young people encountered many challenges in realizing their dream of establishing an institution whose motto was "Patria, Scientia, et Virtus." They named their school Instituto de Manila, and Apolinario de los Santos was elected as the first director.</p>
-  </div>
-
-  <div class="glass panelbox center">
-    <p class="label">MAIN CAMPUS LOCATION<br>📍546 Delos Santos St, 403, Manila, 1008 Metro Manila</p>
-    <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1822.1231082810452!2d120.99070271642614!3d14.602247719528984!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c9f9208f7369%3A0xecda96ca6a603f5b!2sThe%20University%20of%20Manila!5e0!3m2!1sen!2sph!4v1791725552313!5m2!1sen!2sph" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-  </div>
-  </div>
-  <div class="hr">
-  <div class="glass panelbox">
-    <h2 class="center" style="color:#7a1fa2">MILESTONES</h2>
-    <div class="mile">
-      <b>1913</b><span>Instituto de Manila founded by five young visionaries in Intramuros.</span>
-      <b>1919</b><span>College of Law formally opened; graduates top the Bar Examinations.</span>
-      <b>1921</b><span>Re-incorporated as the University of Manila on November 3 under Act No. 1459.</span>
-      <b>1938</b><span>Emmanuel Pelaez, future Vice-President of the Philippines, tops the Bar Examinations.</span>
-      <b>1939</b><span>Nazi Germany invaded Poland, marking the beginning of World War II.</span>
-      <b>1941</b><span>Philippines joined World War II after the surprise attack on Pearl Harbor.</span>
-      <b>1942</b><span>Empire of Japan took control of Manila; The University of Manila closed during occupation.</span>
-      <b>1945</b><span>The University of Manila reopened after World War II, following the liberation of the Philippines by American forces.</span>
-      <b>1959</b><span>Madame Helen de los Santos takes the presidency following Dr. Mariano's passing.</span>
-      <b>1981</b><span>Dr. Virgilio de los Santos assumes presidency; receives Japan's Rising Sun Medal of Honor.</span>
-      <b>1994</b><span>Four-year courses in Hotel &amp; Restaurant Management and Computer Science launched.</span>
-      <b>2003</b><span>First university in the Philippines to offer a degree in the Japanese Language.</span>
-      <b>2006</b><span>Dr. Emily Dodson De Leon elected President; becomes PACU's first Vice-President in 2007.</span>
-      <b>2019</b><span>Total Lockdown in the Philippines; University of Manila adapts to the new normal of classes.</span>
-      <b>2026</b><span>Atty. Dave De los Santos elected President.</span>
+<!-- HERO: text + advertisement video -->
+<section id="home" class="hero">
+  <div class="hero-text reveal">
+    <p class="eyebrow">ZEISS co-engineered flagship</p>
+    <h1>VIVOS <span>X300 ULTRA</span></h1>
+    <p class="tag">“Beyond the Limits.”</p>
+    <p class="lead">A camera-first flagship with two 200MP sensors, a 6.82-inch 2K AMOLED display and a 6600mAh battery.</p>
+    <div class="row">
+      <a class="btn primary" href="#description">Product Description</a>
+      <a class="btn ghost" href="#buy">See the Price</a>
     </div>
   </div>
-  </div>
+
+  <div class="hero-media reveal">
+    <div class="hero-video">
+      <video id="ads" src="ADS(1).mp4" autoplay muted loop playsinline controls preload="auto" aria-label="vivos X300 Ultra advertisement">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <p class="hint">Tap the speaker icon on the video for sound</p>
   </div>
 </section>
 
-<!-- ============ 2. MISSION ============ -->
-<section id="mission" class="sec">
-  <div class="glass panelbox center">
-    <p class="label">Our Purpose</p>
-    <h1>UM MISSION</h1>
-    <p><b>ACE</b> - to accomplish something with complete success.</p>
+<!-- PRODUCT DESCRIPTION -->
+<section id="description" class="sec">
+  <h2 class="reveal">Product <span>Description</span></h2>
+  <p class="intro reveal">The vivos X300 Ultra is a camera-first flagship co-engineered with ZEISS. It pairs two 200MP sensors (main and 3.7× telephoto) and a 50MP ultra-wide camera, all with optical image stabilisation, with a 6.82-inch 2K AMOLED display, the Qualcomm Snapdragon 8 Elite Gen 5 processor, 512GB of storage and a 6600mAh battery with 100W wired and 40W wireless charging. It runs Android 16 with OriginOS 6 and is rated IP69 for water and dust resistance.</p>
+  <div class="grid cards">
+    <article class="card reveal" style="--d:.05s"><h3>Design</h3><p>A camera module-led back, aluminium-class premium finish language and IP69 water resistance for everyday confidence.</p></article>
+    <article class="card reveal" style="--d:.12s"><h3>Display</h3><p>A 6.82-inch 2K AMOLED screen built for photos, video and games.</p></article>
+    <article class="card reveal" style="--d:.19s"><h3>Camera</h3><p>200MP main, 200MP 3.7× telephoto and 50MP ultra-wide, all with OIS, plus optional ZEISS telephoto extenders.</p></article>
+    <article class="card reveal" style="--d:.05s"><h3>Performance</h3><p>Qualcomm Snapdragon 8 Elite Gen 5 with 512GB of storage.</p></article>
+    <article class="card reveal" style="--d:.12s"><h3>Battery</h3><p>6600mAh with 100W wired and 40W wireless charging.</p></article>
+    <article class="card reveal" style="--d:.19s"><h3>Software</h3><p>Android 16 with OriginOS 6, with up to 5 years of OS upgrades and 7 years of security updates.</p></article>
   </div>
+</section>
 
-  <div class="cards">
-    <div class="glass card">
-      <p class="word">Anchor</p><h2>A</h2>
-      <p>Anchor in the hearts of the youth the love of country, science, and virtue.</p>
+<!-- PRICE -->
+<section id="buy" class="sec">
+  <h2 class="reveal"><span>Price</span> &amp; configuration</h2>
+  <div class="card buy reveal" style="--d:.1s">
+    <h3>Configuration</h3>
+    <div class="opts" id="opts" role="radiogroup"></div>
+    <p class="hint">Only Philippine configurations found in launch coverage are listed. RAM is not selectable because sources differ.</p>
+    <div class="sum">
+      <div><small>Selected</small><b id="sel">—</b></div>
+      <div class="price" id="price">₱0</div>
     </div>
-    <div class="glass card">
-      <p class="word">Create</p><h2>C</h2>
-      <p>Create an atmosphere of academic excellence and competence.</p>
-    </div>
-    <div class="glass card">
-      <p class="word">Empower</p><h2>E</h2>
-      <p>Empower the youth with modern scientific and technological skills in braving the challenges of the global society.</p>
+    <p class="hint">Availability: pre-orders were reported May 23 – June 5, 2026; check vivo for current stock. Warranty: <span class="na">not verified</span>.</p>
+    <div class="row">
+      <button class="btn primary" id="buyNow">Buy Now</button>
+      <button class="btn ghost" id="addCart">Add to Cart (<span id="cc">0</span>)</button>
     </div>
   </div>
 </section>
 
-<!-- ============ 3. VISION ============ -->
-<section id="vision" class="sec">
-  <div class="glass panelbox center">
-    <p class="label">Our Future</p>
-    <h1>VISION</h1>
-    <p><i>"To impart to future generations the University of Manila trilogy of ideals: love of country, love of science, and love of virtue, in making the lives of others better, brighter, lighter and more liveable by making quality education accessible to all."</i></p>
-  </div>
-  <div class="trilogy">
-    <div class="glass">LOVE OF COUNTRY</div>
-    <div class="glass">LOVE OF SCIENCE</div>
-    <div class="glass">LOVE OF VIRTUE</div>
-  </div>
-</section>
-
-<!-- ============ 4. MOTTO ============ -->
-<section id="motto" class="sec">
-  <div class="glass panelbox center">
-    <p class="label">Our Motto</p>
-    <h1>MOTTO</h1>
-  </div>
-  <div class="glass quote">"To acquire knowledge and skills for the benefit of mankind."</div>
-</section>
-
-<!-- ============ 5. OPERATING SYSTEM ============ -->
-<section id="os" class="sec">
-  <div class="subtabs glass" style="padding:0">
-    <button class="active" data-target="os-mac">MacOS</button>
-    <button data-target="os-win">Windows</button>
-    <button data-target="os-linux">Linux</button>
-  </div>
-
-  <div id="os-mac" class="glass panelbox">
-    <div class="os-head">
-      <h2>macOS</h2>
-      <img src="../Images/applelogo.jpg" alt="Apple logo">
-      <p><b>APPLE INC</b></p>
+<!-- CAMERA -->
+<section id="camera" class="sec">
+  <h2 class="reveal">Camera <span>zoom demo</span></h2>
+  <p class="note reveal">Simulated digital zoom on a sample photo. It is a visual demo only and does not reproduce the phone's real optical or hybrid zoom quality. The sample image is low resolution, so it softens at high zoom.</p>
+  <div class="cam reveal">
+    <div class="view" id="view"><img id="photo" src="/vivos/Images/mountain2.jpg" draggable="false"><i class="mark" id="mark"></i><span class="badge" id="zv">1.0×</span></div>
+    <div class="row center" id="lenses" role="group" aria-label="Lens">
+      <button class="chip" data-z="0.5">Ultra-wide</button>
+      <button class="chip" data-z="1">Main</button>
+      <button class="chip" data-z="3.7">Telephoto</button>
+      <button class="chip" data-z="20">High Zoom</button>
     </div>
-    <p>macOS is the operating system developed by Apple Inc. for its line of Mac computers. Known for its sleek design, stability, and ease of use, macOS provides a graphical user interface that allows users to interact through windows, icons, and menus.</p>
-    <div class="versions">
-      <p>Mac OS 8 (1997)</p><p>Mac OS 9 (1999)</p><p>macOS 10.12 Sierra (2016)</p>
-      <p>macOS 10.13 High Sierra (2017)</p><p>macOS 10.14 Mojave (2018)</p><p>macOS 10.15 Catalina (2019)</p>
-      <p>macOS 11 Big Sur (2020)</p><p>macOS 12 Monterey (2021)</p><p>macOS 13 Ventura (2022)</p>
-      <p>macOS 14 Sonoma (2023)</p><p>macOS 15 Sequoia (2024)</p><p>macOS 26 Tahoe (2025)</p>
-      <p>macOS 27 Golden Gate (2026)</p>
-    </div>
-  </div>
-
-  <div id="os-win" class="glass panelbox" hidden>
-    <div class="os-head">
-      <h2>Windows</h2>
-      <img src="../Images/win.jpg" alt="Windows logo">
-      <p><b>Microsoft Corporation</b></p>
-    </div>
-    <p>Windows OS is a family of operating systems developed by Microsoft. It provides a graphical user interface (GUI) which allows users to interact with the computer using visual elements like windows, icons, and menus.</p>
-    <div class="versions">
-      <p>Windows 1.0 (1985)</p><p>Windows 2.0 (1987)</p><p>Windows 3.0 and 3.1 (1990–1992)</p>
-      <p>Windows NT 3.1 (1993)</p><p>Windows 95 (1995)</p><p>Windows 98 (1998)</p>
-      <p>Windows 2000 (2000)</p><p>Windows Me (2000)</p><p>Windows XP (2001)</p>
-      <p>Windows Vista (2007)</p><p>Windows 7 (2009)</p><p>Windows 8 (2012)</p>
-      <p>Windows 8.1 (2013)</p><p>Windows 10 (2015)</p><p>Windows 11 (2021)</p>
-    </div>
-  </div>
-
-  <div id="os-linux" class="glass panelbox" hidden>
-    <div class="os-head">
-      <h2>Linux</h2>
-      <img src="../Images/linuxlogo.jpg" alt="Linux logo">
-      <p><b>Linus Torvalds</b></p>
-    </div>
-    <p>Linux is a free and open-source operating system. It acts as the bridge between your computer's hardware and the software you use (like apps and programs). Unlike Windows or macOS, Linux is built on a kernel (the core system) created by Linus Torvalds in 1991. Linux doesn't come as just one version. Instead, it has many distributions (distros)—these are different versions of Linux with their own features, designs, and tools.</p>
-    <div class="versions">
-      <p>UBUNTU (Ubuntu 20.04, Ubuntu 22.04, Ubuntu 24.04)</p>
-      <p>DEBIAN (Debian 10, Debian 11, Debian 12)</p>
-      <p>FEDORA (Fedora 38, Fedora 39, Fedora 40)</p>
-      <p>RED HAT ENTERPRISE LINUX (RHEL 7, RHEL 8, RHEL 9)</p>
-      <p>LINUX MINT (Mint 20, Mint 21, Mint 22)</p>
-      <p>ARCH LINUX (Rolling Release - No fixed versions)</p>
-    </div>
+    <div class="row center" id="zbtns"></div>
+    <label class="range">Zoom <input type="range" id="zr" min="0.5" max="100" step="0.1" value="1"></label>
+    <div class="row center"><button class="btn ghost" id="reset">Reset View</button></div>
+    <p class="hint">Click the picture to set the zoom centre · drag to pan when zoomed</p>
   </div>
 </section>
 
-<!-- ============ 6. CS EVENT ============ -->
-<section id="cs" class="sec">
-  <div class="glass panelbox center">
-    <p class="label">College of Computer Science</p>
-    <h1>Computer Science Department</h1>
-    <p>We offer academic programs leading to the degree of <i>Bachelor of Science in Computer Science</i> and <i>Associate in Computer Technology.</i></p>
-  </div>
-
-  <div class="subtabs glass" style="padding:0">
-    <button class="active" data-target="cs-mv">CS Mission &amp; Vision</button>
-    <button data-target="cs-obj">Objectives</button>
-    <button data-target="cs-ev">Events</button>
-  </div>
-
-  <div id="cs-mv" class="glass panelbox">
-    <h2>CS Mission</h2>
-    <p>Provide quality undergraduate and graduate education in both the theoretical and applied foundations of computer science and train students to effectively apply this education to solve real-world problems, amplifying their potential for lifelong high-quality careers and giving them a competitive advantage in the ever-changing and challenging global work environment of the 21st century.</p>
-    <h2>CS Vision</h2>
-    <p>Build a strong research and teaching environment that responds swiftly to the challenges of the 21st century.</p>
-  </div>
-
-  <div id="cs-obj" class="glass panelbox" hidden>
-    <h2>General Objectives</h2>
-    <p>To produce technological and scientifically empowered professionals, information technology and computer science experts whose breadth and depth of orientation, knowledge, and training are within global standards, committed to share their expertise with the various sectors of the academic community and the community at large, ever motivated by the UM trilogy of ideals.</p>
-    <h2>Specific Objectives</h2>
-    <p>To equip students with the skills and competencies in information communications technology, its operation, language, and design. To prepare graduates with a solid foundation on the various languages, programs, and systems to enable them to perform with confidence the varied tasks expected of them in global organizations of the corporate world.</p>
-  </div>
-
-  <div id="cs-ev" class="glass panelbox" hidden>
-    <h2 class="center">UM EVENT &amp; CS EVENT</h2>
-    <div class="events">
-      <img src="../Images/Acquaintance.jpg" alt="Acquaintance">
-      <img src="../Images/Christmas_Bingo_Bonanza.jpg" alt="Christmas Bingo Bonanza">
-      <img src="../Images/Foundation_day.jpg" alt="Foundation Day">
-      <img src="../Images/Cleanup.jpg" alt="Cleanup">
-      <img src="../Images/intrams.jpg" alt="Intrams">
-      <img src="../Images/pagbigkas.jpg" alt="Pagbigkas">
-      <img src="../Images/Sportsfest.jpg" alt="Sportsfest">
-      <img src="../Images/farewell.jpg" alt="Farewell">
-    </div>
+<!-- PERFORMANCE -->
+<section id="performance" class="sec">
+  <h2 class="reveal"><span>Performance</span></h2>
+  <div class="grid cards">
+    <article class="card reveal"><h3>Processor</h3><p>Qualcomm Snapdragon 8 Elite Gen 5 (3 nm).</p></article>
+    <article class="card reveal"><h3>Gaming</h3><p>Benchmark and frame-rate figures: <span class="na">AnTuTu: 2346352 (v10), 3416530 (v11) GeekBench: 9843 (v6)</span>.</p></article>
+    <article class="card reveal"><h3>Multitasking</h3><p>RAM: 12GB or 16GB, as listings differ. <span class="na">Verify with vivo</span>.</p></article>
+    <article class="card reveal"><h3>Memory</h3><p>512GB storage on the Philippine variants.</p></article>
+    <article class="card reveal"><h3>Thermal management</h3><p>Cooling system details: <span class="na">not confirmed</span>.</p></article>
   </div>
 </section>
 
-
-<!-- ============ 7. DEVELOPER ============ -->
-<section id="dev" class="sec">
-  <div class="glass panelbox center" style="padding-bottom:0">
-    <p class="label">WEB DEVELOPERS</p>
-    <div class="picker">
-      <button class="pick active" data-dev="dev-molina"><img src="../Images/me1.jpg" alt="Molina"><span>Molina</span></button>
-      <button class="pick" data-dev="dev-olavides"><img src="../Images/jess1.jpg" alt="Olavides"><span>Olavides</span></button>
-      <button class="pick" data-dev="dev-leal"><img src="../Images/leal1.jpg" alt="Leal"><span>Leal</span></button>
-      <button class="pick" data-dev="dev-pingul"><img src="../Images/iris1.jpg" alt="Pingul"><span>Pingul</span></button>
-      <button class="pick" data-dev="dev-laxamana"><img src="../Images/khen1.jpg" alt="Laxamana"><span>Laxamana</span></button>
-    </div>
-  </div>
-
-  <div class="dpanel" id="dev-molina">
-    <div class="glass dcard">
-      <div class="dtop">
-        <img src="../Images/jason.jpg" alt="Jason Manuel R. Molina">
-        <div>
-          <h2>Jason Manuel R. Molina</h2>
-          <p class="course">3rd Year — Bachelor of Science in Computer Science</p>
-        </div>
-      </div>
-      <dl class="dlist">
-        <dt>Name:</dt><dd>Jason Manuel R. Molina</dd>
-        <dt>Address:</dt><dd>Blk 118 lot 45 Villazaragosa brgy. Turo bocaue bulacan</dd>
-        <dt>Age:</dt><dd>20</dd>
-        <dt>Contact no.:</dt><dd>09704844828</dd>
-        <dt>Email add.:</dt><dd>jasonmanuelmolina@gmail.com</dd>
-      </dl>
-    </div>
-    <div class="glass dcard">
-      <div class="subtabs">
-        <button class="active" data-target="molina-family">My Family</button>
-        <button data-target="molina-friends">Friends</button>
-      </div>
-      <div class="dgal fam" id="molina-family"><img src="../Images/fam6.jpg" alt="My family"></div>
-      <div class="dgal friends" id="molina-friends" hidden>
-          <img src="../Images/fam1.jpg" alt="">
-          <img src="../Images/fam2.jpg" alt="">
-          <img src="../Images/fam3.jpg" alt="">
-          <img src="../Images/fam4.jpg" alt="">
-          <img src="../Images/fam5.jpg" alt="">
-          <img src="../Images/fams1.jpg" alt="">
-          <img src="../Images/fg.jpg" alt="">
-          <img src="../Images/f3.jpg" alt="">
-      </div>
-    </div>
-  </div>
-
-  <div class="dpanel" id="dev-olavides" hidden>
-    <div class="glass dcard">
-      <div class="dtop">
-        <img src="../Images/jess1.jpg" alt="Jessa Jane P. Olavides">
-        <div>
-          <h2>Jessa Jane P. Olavides</h2>
-          <p class="course">3rd Year — Bachelor of Science in Computer Science</p>
-        </div>
-      </div>
-      <dl class="dlist">
-        <dt>Name:</dt><dd>Jessa Jane P. Olavides</dd>
-        <dt>Address:</dt><dd>146 B E Dela Paz Sanroque Marikina City</dd>
-        <dt>Age:</dt><dd>21</dd>
-        <dt>Contact no.:</dt><dd>09958193214</dd>
-        <dt>Email add.:</dt><dd>jessaolavides5@gmail.com</dd>
-      </dl>
-    </div>
-    <div class="glass dcard">
-      <div class="subtabs">
-        <button class="active" data-target="olavides-family">My Family</button>
-        <button data-target="olavides-friends">Friends</button>
-      </div>
-      <div class="dgal fam" id="olavides-family"><img src="../Images/jessfam.jpg" alt="My family"></div>
-      <div class="dgal friends" id="olavides-friends" hidden>
-          <img src="../Images/jessf1.jpg" alt="">
-          <img src="../Images/jessf2.jpg" alt="">
-          <img src="../Images/jessf3.jpg" alt="">
-          <img src="../Images/jessf4.jpg" alt="">
-          <img src="../Images/jessf5.jpg" alt="">
-          <img src="../Images/khenf5.jpg" alt="">
-          <img src="../Images/khenf1.jpg" alt="">
-          <img src="../Images/khenf2.jpg" alt="">
-      </div>
-    </div>
-  </div>
-
-  <div class="dpanel" id="dev-leal" hidden>
-    <div class="glass dcard">
-      <div class="dtop">
-        <img src="../Images/leal1.jpg" alt="Nicole L. Leal">
-        <div>
-          <h2>Nicole L. Leal</h2>
-          <p class="course">Bachelor of Science in Computer Science</p>
-        </div>
-      </div>
-      <dl class="dlist">
-        <dt>Name:</dt><dd>Nicole L. Leal</dd>
-        <dt>Address:</dt><dd>219 B. San Nicolas St. Binondo Manila, Brgy. 283 Zone 1010</dd>
-        <dt>Age:</dt><dd>20</dd>
-        <dt>Contact no.:</dt><dd>09453940244</dd>
-        <dt>Email add.:</dt><dd>labadannicole4@gmail.com</dd>
-      </dl>
-    </div>
-    <div class="glass dcard">
-      <div class="subtabs">
-        <button class="active" data-target="leal-family">My Family</button>
-        <button data-target="leal-friends">Friends</button>
-      </div>
-      <div class="dgal fam" id="leal-family"><img src="../Images/lealfam.jpg" alt="My family"></div>
-      <div class="dgal friends" id="leal-friends" hidden>
-          <img src="../Images/nicsf1.jpg" alt="">
-          <img src="../Images/nicsf2.jpg" alt="">
-          <img src="../Images/nicsf3.jpg" alt="">
-          <img src="../Images/nicsf4.jpg" alt="">
-          <img src="../Images/nicsf5.jpg" alt="">
-      </div>
-    </div>
-  </div>
-
-  <div class="dpanel" id="dev-pingul" hidden>
-    <div class="glass dcard">
-      <div class="dtop">
-        <img src="../Images/iris2.jpg" alt="Iris Matthew P. Pingul">
-        <div>
-          <h2>Iris Matthew</h2>
-          <p class="course">3rd Year — Bachelor of Science in Computer Science</p>
-        </div>
-      </div>
-      <dl class="dlist">
-        <dt>Name:</dt><dd>Iris Matthew P. Pingul</dd>
-        <dt>Address:</dt><dd>053 Bungad Kaingin 2 Barangay Pansol QC</dd>
-        <dt>Age:</dt><dd>20</dd>
-        <dt>Contact no.:</dt><dd>09777290245</dd>
-        <dt>Email add.:</dt><dd>irispingul257@gmail.com</dd>
-      </dl>
-    </div>
-    <div class="glass dcard">
-      <div class="subtabs">
-        <button class="active" data-target="pingul-family">My Family</button>
-        <button data-target="pingul-friends">Friends</button>
-      </div>
-      <div class="dgal fam" id="pingul-family"><img src="../Images/irisfam.jpg" alt="My family"></div>
-      <div class="dgal friends" id="pingul-friends" hidden>
-          <img src="../Images/irisf1.jpg" alt="">
-          <img src="../Images/irisf2.jpg" alt="">
-          <img src="../Images/irisf3.jpg" alt="">
-          <img src="../Images/irisf4.jpg" alt="">
-          <img src="../Images/irisf5.jpg" alt="">
-          <img src="../Images/irisf6.jpg" alt="">
-          <img src="../Images/irisf7.jpg" alt="">
-          <img src="../Images/UM.jpg" alt="">
-      </div>
-    </div>
-  </div>
-
-  <div class="dpanel" id="dev-laxamana" hidden>
-    <div class="glass dcard">
-      <div class="dtop">
-        <img src="../Images/khen1.jpg" alt="Khen Andrey T. Laxamana">
-        <div>
-          <h2>Khen Andrey T. Laxamana</h2>
-          <p class="course">3rd Year — Bachelor of Science in Computer Science</p>
-        </div>
-      </div>
-      <dl class="dlist">
-        <dt>Name:</dt><dd>Khen Andrey T. Laxamana</dd>
-        <dt>Address:</dt><dd>Blk 9 Lot 23 tawilis st. Dagat-dagatan Caloocan City</dd>
-        <dt>Age:</dt><dd>22</dd>
-        <dt>Contact no.:</dt><dd>09217054831</dd>
-        <dt>Email add.:</dt><dd>khenlaxamana04@gmail.com</dd>
-      </dl>
-    </div>
-    <div class="glass dcard">
-      <div class="subtabs">
-        <button class="active" data-target="laxamana-family">My Family</button>
-        <button data-target="laxamana-friends">Friends</button>
-      </div>
-      <div class="dgal fam" id="laxamana-family"><img src="../Images/khenfam1.jpg" alt="My family"></div>
-      <div class="dgal friends" id="laxamana-friends" hidden>
-          <img src="../Images/khenf1.jpg" alt="">
-          <img src="../Images/khenf2.jpg" alt="">
-          <img src="../Images/khenf3.jpg" alt="">
-          <img src="../Images/khenf4.jpg" alt="">
-          <img src="../Images/khenf5.jpg" alt="">
-          <img src="../Images/khenf6.jpg" alt="">
-          <img src="../Images/khenf7.jpg" alt="">
-          <img src="../Images/khenf8.jpg" alt="">
-      </div>
-    </div>
+<!-- BATTERY -->
+<section id="battery" class="sec">
+  <h2 class="reveal"><span>Battery</span> &amp; charging</h2>
+  <div class="card batt reveal">
+    <div class="bat" aria-hidden="true"><div class="fill" id="fill"></div><b id="pct">0%</b></div>
+    <ul class="facts">
+      <li><b>6600mAh</b> battery</li>
+      <li><b>100W</b> wired charging (Vivos FlashCharge)</li>
+      <li><b>40W</b> wireless charging</li>
+      <li>Power-saving features: <span class="na">not confirmed</span></li>
+    </ul>
+    <button class="btn primary" id="charge">Flash Charging</button>
+    <p class="hint">Full charge at 41 minutes</p>
   </div>
 </section>
 
+<!-- SPECS -->
+<section id="specs" class="sec">
+  <h2 class="reveal"><span>Specifications</span></h2>
+  <div class="tabs reveal" id="tabs" role="tablist"></div>
+  <div class="grid specs reveal" id="panel" role="tabpanel"></div>
+  <p class="hint">Specs compiled from Philippine launch coverage.</p>
+</section>
+
+<section id="location" class="sec">
+  <h2 class="reveal">Find <span>us</span></h2>
+  <div class="map reveal">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3860.3920866957096!2d121.01701967413311!3d14.633670876268107!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b64506899a6f%3A0x70adff3e73248746!2sFisher%20Mall!5e0!3m2!1sen!2sph!4v1791754641149!5m2!1sen!2sph"
+      style="border:0;" allowfullscreen="" loading="lazy"
+      referrerpolicy="strict-origin-when-cross-origin" title="Store location map"></iframe>
+  </div>
+</section>
 </main>
 
+<footer>Unofficial concept page.</footer>
+<div class="toast" id="toast" role="status"></div>
 <script>
-/* ===== Scroll sections: the nav scrolls to a section, scrolling changes the background ===== */
-const navBtns  = document.querySelectorAll('#nav button');
-const sections = document.querySelectorAll('.sec');
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+const peso = n => '₱' + n.toLocaleString('en-PH');
 
-function setActive(id){
-  navBtns.forEach(b => b.classList.toggle('active', b.dataset.s === id));
-  document.body.dataset.section = id;                 // changes the background picture
-  if (location.hash !== '#' + id) history.replaceState(null, '', '#' + id);
+/* Toast */
+let tt;
+function toast(msg) {
+  const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(tt); tt = setTimeout(() => t.classList.remove('show'), 2600);
 }
 
-navBtns.forEach(b => b.addEventListener('click', () => {
-  document.getElementById(b.dataset.s).scrollIntoView({ block:'start' });
-}));
+/* Nav + scroll reveal */
+const burger = $('#burger'), menu = $('#menu');
+burger.onclick = () => { const o = menu.classList.toggle('open'); burger.setAttribute('aria-expanded', o); };
+$$('#menu a').forEach(a => a.addEventListener('click', () => { menu.classList.remove('open'); burger.setAttribute('aria-expanded', false); }));
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .15 });
+$$('.reveal').forEach(el => io.observe(el));
 
-/* whichever section crosses the middle of the screen becomes the active one */
-const io = new IntersectionObserver(entries => {
-  entries.forEach(en => { if (en.isIntersecting) setActive(en.target.id); });
-}, { rootMargin:'-50% 0px -50% 0px' });
-sections.forEach(s => io.observe(s));
-
-const start = location.hash.replace('#', '');
-if (start && document.getElementById(start)) {
-  document.documentElement.style.scrollBehavior = 'auto';
-  document.getElementById(start).scrollIntoView();
-  document.documentElement.style.scrollBehavior = '';
+/* Advertisement video */
+const ads = $('#ads');
+if (ads) {
+  ads.muted = true;
+  if (RM) ads.pause();
+  else { const p = ads.play(); if (p && p.catch) p.catch(() => {}); }
 }
-setActive(start && document.getElementById(start) ? start : 'history');
 
-/* ===== Sub tabs (Operating System + CS) ===== */
-document.querySelectorAll('.subtabs').forEach(group => {
-  const btns = group.querySelectorAll('button');
-  btns.forEach(btn => btn.addEventListener('click', () => {
-    btns.forEach(b => {
-      b.classList.toggle('active', b === btn);
-      document.getElementById(b.dataset.target).hidden = b !== btn;
-    });
-  }));
+/* Camera zoom */
+const photo = $('#photo'), view = $('#view'), zr = $('#zr'), mark = $('#mark');
+const ZOOMS = [.5, 1, 2, 3, 5, 10, 20, 50, 100];
+ZOOMS.forEach(z => {
+  const b = document.createElement('button'); b.className = 'chip'; b.dataset.z = z; b.textContent = z + '×';
+  $('#zbtns').appendChild(b);
 });
+let Z = .5, X = 0, Y = 0, F = null;
+function paint() {
+  const W = view.clientWidth, H = view.clientHeight, k = Z * 2;
+  X = clamp(X, W * (1 - k), 0); Y = clamp(Y, H * (1 - k), 0);
+  photo.style.transform = `translate(${X}px,${Y}px) scale(${k})`;
+  $('#zv').textContent = (+Z.toFixed(1)) + '×';
+  zr.value = Z;
+  $$('#zbtns .chip, #lenses .chip').forEach(b => b.classList.remove('on'));
+  $$('#zbtns .chip').forEach(b => b.classList.toggle('on', +b.dataset.z === Z));
+  const lens = Z < 1 ? 0 : Z < 3.7 ? 1 : Z < 10 ? 2 : 3;
+  $$('#lenses .chip')[lens].classList.add('on');
+}
+function setZoom(nz) {
+  nz = clamp(nz, .5, 100);
+  const W = view.clientWidth, H = view.clientHeight, p = F || { x: W / 2, y: H / 2 }, r = nz / Z;
+  X = p.x - (p.x - X) * r; Y = p.y - (p.y - Y) * r; Z = nz; paint();
+}
+$$('#zbtns .chip, #lenses .chip').forEach(b => b.onclick = () => setZoom(+b.dataset.z));
+zr.addEventListener('input', () => setZoom(+zr.value));
+$('#reset').onclick = () => { F = null; mark.style.opacity = 0; Z = .5; X = Y = 0; setZoom(1); };
 
-/* ===== Developer picker ===== */
-const picks = document.querySelectorAll('.pick');
-picks.forEach(p => p.addEventListener('click', () => {
-  picks.forEach(x => x.classList.toggle('active', x === p));
-  document.querySelectorAll('.dpanel').forEach(d => d.hidden = d.id !== p.dataset.dev);
-}));
+let pd = false, moved = 0, px = 0, py = 0;
+view.addEventListener('pointerdown', e => { pd = true; moved = 0; px = e.clientX; py = e.clientY; view.setPointerCapture(e.pointerId); });
+view.addEventListener('pointermove', e => {
+  if (!pd) return;
+  const dx = e.clientX - px, dy = e.clientY - py; moved += Math.abs(dx) + Math.abs(dy);
+  if (moved > 4) { view.classList.add('drag'); X += dx; Y += dy; paint(); }
+  px = e.clientX; py = e.clientY;
+});
+view.addEventListener('pointerup', e => {
+  pd = false; view.classList.remove('drag');
+  if (moved <= 4) {
+    const r = view.getBoundingClientRect(); F = { x: e.clientX - r.left, y: e.clientY - r.top };
+    mark.style.left = F.x + 'px'; mark.style.top = F.y + 'px'; mark.style.opacity = 1;
+    setTimeout(() => mark.style.opacity = 0, 1200);
+  }
+});
+addEventListener('resize', paint);
+Z = .5; setZoom(1);
+
+/* Battery simulation */
+let charging = false;
+$('#charge').onclick = () => {
+  if (charging) return; charging = true;
+  const bat = $('.bat'), t0 = performance.now(), dur = RM ? 300 : 5000;
+  bat.classList.add('charging'); $('#charge').textContent = 'Charging…';
+  (function step(n) {
+    const p = clamp((n - t0) / dur, 0, 1), v = Math.round(p * 100);
+    $('#fill').style.width = v + '%'; $('#pct').textContent = v + '%';
+    if (p < 1) return requestAnimationFrame(step);
+    bat.classList.remove('charging'); $('#charge').textContent = 'Flash Charging'; charging = false;
+  })(t0);
+};
+
+/* Specification tabs */
+const NC = 'Not confirmed';
+const SPECS = {
+  Display: [['Size', '6.82 inches'], ['Panel', '2K AMOLED'], ['Resolution', '1216 x 2640 pixels'], ['Refresh rate', '120Hz']],
+  Performance: [['Processor', 'Qualcomm Snapdragon 8 Elite Gen 5 (3 nm)'], ['GPU', 'Arm G1-Ultra'], ['RAM', '12GB or 16GB (sources differ)'], ['Storage', '512GB, up to 1TB']],
+  Camera: [['Main', '200MP, f/1.9, Gimbal OIS'], ['Telephoto', '200MP, f/2.7, 3.7× zoom, OIS'], ['Ultra-wide', '50MP, f/2.0, OIS'], ['Extenders', 'ZEISS 200mm and 400mm (optional)']],
+  Battery: [['Capacity', '6600mAh'], ['Wired', '100W vivos FlashCharge'], ['Wireless', '40W']],
+  Software: [['OS', 'Android 16 with OriginOS 6'], ['Updates', 'Up to 5 years OS, 7 years security'], ['Connectivity', '5G, Wi-Fi 7, NFC, IR'], ['Security', 'Ultrasonic fingerprint scanner'], ['Audio', 'Stereo speakers']],
+  Body: [['Dimensions', '150.6 x 71.9 x 8 mm (5.93 x 2.83 x 0.31 in)'], ['Weight', '190 g (6.70 oz)'], ['Water / dust', 'IP69']],
+};
+const tabs = $('#tabs'), panel = $('#panel');
+function showTab(name) {
+  $$('.chip', tabs).forEach(b => { const on = b.textContent === name; b.classList.toggle('on', on); b.setAttribute('aria-selected', on); });
+  panel.innerHTML = SPECS[name].map(([k, v]) => `<div class="spec"><small>${k}</small>${v === NC ? `<span class="na">${v}</span>` : v}</div>`).join('');
+}
+Object.keys(SPECS).forEach(n => {
+  const b = document.createElement('button'); b.className = 'chip'; b.textContent = n; b.setAttribute('role', 'tab');
+  b.onclick = () => showTab(n); tabs.appendChild(b);
+});
+showTab('Display');
+
+/* Configuration + cart (demo; no real purchase) */
+const CONFIGS = [
+  { name: '512GB · Phone only', price: 109999 },
+  { name: '512GB · with 200mm ZEISS Telephoto Kit', price: 123998 },
+  { name: '512GB · Photographer Kit', price: 149999 },
+];
+let cfg = CONFIGS[0], cart = 0;
+function renderCfg() {
+  $('#sel').textContent = cfg.name; $('#price').textContent = peso(cfg.price);
+  $$('.opt').forEach((o, i) => o.setAttribute('aria-checked', CONFIGS[i] === cfg));
+}
+CONFIGS.forEach(c => {
+  const b = document.createElement('button'); b.className = 'opt'; b.setAttribute('role', 'radio');
+  b.innerHTML = `<span>${c.name}</span><b>${peso(c.price)}</b>`;
+  b.onclick = () => { cfg = c; renderCfg(); };
+  $('#opts').appendChild(b);
+});
+renderCfg();
+$('#addCart').onclick = () => { cart++; $('#cc').textContent = cart; toast(`Added: ${cfg.name} — demo cart`); };
+$('#buyNow').onclick = () => toast('Demo page: no order placed. Please buy from vivos’s official channels.');
 </script>
 </body>
 </html>
