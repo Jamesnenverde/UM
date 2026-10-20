@@ -294,6 +294,19 @@ p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
 /* Hide the scrollbar on the Friends/Family galleries (scrolling still works) */
 .dgal{ scrollbar-width:none; -ms-overflow-style:none; }
 .dgal::-webkit-scrollbar{ display:none; }
+
+/* Remove glass look from content boxes (header stays glass) */
+.sec .glass{
+  background:none;
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+  overflow:visible;
+}
+.sec .glass::before,
+.sec .glass::after{ display:none; }
 </style>
 </head>
 <body data-section="history">
