@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Developers — The University of Manila</title>
+<link rel="icon" type="image/jpg" href="./UM.jpg">
+<style>
+*{ box-sizing:border-box; }
+[hidden]{ display:none !important; }
+html{ scroll-behavior:smooth; }
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:"Segoe UI", Cambria, Georgia, sans-serif;
+  color:#fff;
+  background:radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%) fixed, #090A0F;
+  font-size:18px;
+}
+
+/* STARFIELD: paste your --small / --medium / --big star lists and #stars rules here if you want them */
+
+/* GLASS */
+.glass{
+  position:relative;
+  background:rgba(255,255,255,.05);
+  backdrop-filter:blur(5px);
+  -webkit-backdrop-filter:blur(5px);
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.3);
+  box-shadow:0 8px 32px rgba(0,0,0,.1), inset 0 1px 0 rgba(255,255,255,.5), inset 0 -1px 0 rgba(255,255,255,.1);
+  overflow:hidden;
+}
+
+/* HEADER */
+.top{
+  position:fixed; top:0; left:0; right:0; z-index:10;
+  display:flex; align-items:center; gap:20px;
+  padding:10px 20px; border-radius:0;
+  border-width:0 0 1px 0; border-color:rgba(255,255,255,.18);
+}
+.brand{ display:flex; align-items:center; gap:12px; flex:0 0 auto; }
+#ums{ width:56px; height:56px; border-radius:50%; border:3px solid #2e9e3e; object-fit:cover; }
+.brand .motto{ font-size:14px; font-weight:600; color:#e6d84a; letter-spacing:1px; }
+.brand h2{ margin:0; font-size:21px; letter-spacing:.5px; }
+.back{
+  margin-left:auto; padding:12px 18px; border-radius:0;
+  background:rgba(255,255,255,.08); color:#fff; text-decoration:none;
+  font:700 17px "Segoe UI", sans-serif; white-space:nowrap;
+  border-bottom:3px solid transparent;
+}
+.back:hover{ background:rgba(255,255,255,.2); border-bottom-color:#fff; }
+
+/* SECTION */
+.sec{
+  min-height:100vh;
+  padding:125px 16px 36px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+}
+.sec > *{ width:100%; max-width:1100px; }
+.panelbox{ padding:24px 28px; margin-bottom:16px; }
+.label{ color:#ffd76a; font-weight:700; font-size:20px; margin:0 0 6px; text-align:center; }
+h1,h2,h3{ margin:0 0 12px; }
+h2{ font-size:26px; }
+p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
+.center{ text-align:center; }
+
+/* SUBTABS */
+.subtabs{ overflow:hidden; display:flex; margin-bottom:20px; overflow-x:auto; }
+.subtabs button{
+  flex:1 1 0; min-width:140px; padding:13px 10px;
+  border:0; border-right:1px solid rgba(255,255,255,.25);
+  border-bottom:3px solid transparent; border-radius:0;
+  background:rgba(255,255,255,.08); color:#fff;
+  font:700 17px "Segoe UI", sans-serif; cursor:pointer;
+}
+.subtabs button:first-child{ border-left:1px solid rgba(255,255,255,.25); }
+.subtabs button:hover{ background:rgba(255,255,255,.2); }
+.subtabs button.active{ background:rgba(255,255,255,.28); border-bottom-color:#fff; }
+
+/* PICKER */
+.picker{ display:flex; margin:10px -28px 0; overflow-x:auto; border-top:1px solid rgba(255,255,255,.25); }
+.pick{
+  flex:1 1 0; min-width:110px; padding:10px 8px;
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+  border:0; border-right:1px solid rgba(255,255,255,.25); border-bottom:3px solid transparent; border-radius:0;
+  background:rgba(255,255,255,.08); color:#fff;
+  font:700 17px "Segoe UI", sans-serif; cursor:pointer;
+}
+.pick:last-child{ border-right:0; }
+.pick img{ width:60px; height:68px; object-fit:cover; border-radius:10px; }
+.pick:hover{ background:rgba(255,255,255,.2); }
+.pick.active{ background:rgba(255,255,255,.28); border-bottom-color:#fff; }
+
+/* DEV PANEL */
+.dpanel{ display:grid; grid-template-columns:minmax(0,5fr) minmax(0,6fr); gap:16px; align-items:start; }
+.dcard{ padding:22px; }
+.dtop{ display:flex; gap:18px; align-items:center; margin-bottom:14px; }
+.dtop img{ width:130px; height:160px; object-fit:cover; border-radius:14px; border:3px solid #ffd76a; flex:0 0 auto; }
+.dtop h2{ font-size:26px; margin:0 0 6px; }
+.dtop .course{ color:#ffd76a; font-weight:700; font-size:17px; line-height:1.4; margin:0; }
+.dlist{ display:grid; grid-template-columns:max-content 1fr; gap:6px 14px; margin:0; font-size:18px; }
+.dlist dt{ font-weight:700; color:#ffd76a; }
+.dlist dd{ margin:0; overflow-wrap:anywhere; }
+.dcard .subtabs{ margin-bottom:14px; }
+.dgal{ display:flex; flex-wrap:wrap; justify-content:center; gap:10px; max-height:60vh; min-height:240px; overflow-y:auto; }
+.dgal.fam img{ max-width:100%; max-height:60vh; height:auto; object-fit:contain; border-radius:10px; }
+.dgal.friends img{ width:140px; height:180px; object-fit:cover; border-radius:10px; }
+
+@media (max-width:900px){
+  .dpanel{ grid-template-columns:1fr; }
+  .top{ flex-direction:column; align-items:stretch; gap:10px; }
+  .back{ margin-left:0; text-align:center; }
+  .sec{ padding-top:200px; }
+}
+</style>
+</head>
+<body>
+
+<header class="top glass">
+  <div class="brand">
+    <img src="./newlogo.jpg" alt="University of Manila logo" id="ums">
+    <div>
+      <div class="motto">Patria - Scientia - Virtus</div>
+      <h2>THE UNIVERSITY OF MANILA</h2>
+    </div>
+  </div>
+  <a class="back" href="index.html#dev">← Back to UM</a>
+</header>
+
+<main>
+<section id="dev" class="sec">
+  <div class="glass panelbox center" style="padding-bottom:0">
+    <p class="label">WEB DEVELOPERS</p>
+    <div class="picker">
+      <button class="pick active" data-dev="dev-molina"><img src="./me1.jpg" alt="Molina"><span>Molina</span></button>
+      <button class="pick" data-dev="dev-olavides"><img src="./jess1.jpg" alt="Olavides"><span>Olavides</span></button>
+      <button class="pick" data-dev="dev-leal"><img src="./leal1.jpg" alt="Leal"><span>Leal</span></button>
+      <button class="pick" data-dev="dev-pingul"><img src="./iris1.jpg" alt="Pingul"><span>Pingul</span></button>
+      <button class="pick" data-dev="dev-laxamana"><img src="./khen1.jpg" alt="Laxamana"><span>Laxamana</span></button>
+    </div>
+  </div>
+
+  <div class="dpanel" id="dev-molina">
+    <div class="glass dcard">
+      <div class="dtop">
+        <img src="./jason.jpg" alt="Jason Manuel R. Molina">
+        <div><h2>Jason Manuel R. Molina</h2><p class="course">3rd Year — Bachelor of Science in Computer Science</p></div>
+      </div>
+      <dl class="dlist">
+        <dt>Name:</dt><dd>Jason Manuel R. Molina</dd>
+        <dt>Address:</dt><dd>Blk 118 lot 45 Villazaragosa brgy. Turo bocaue bulacan</dd>
+        <dt>Age:</dt><dd>20</dd>
+        <dt>Contact no.:</dt><dd>09704844828</dd>
+        <dt>Email add.:</dt><dd>jasonmanuelmolina@gmail.com</dd>
+      </dl>
+    </div>
+    <div class="glass dcard">
+      <div class="subtabs">
+        <button class="active" data-target="molina-family">My Family</button>
+        <button data-target="molina-friends">Friends</button>
+      </div>
+      <div class="dgal fam" id="molina-family"><img src="./fam6.jpg" alt="My family"></div>
+      <div class="dgal friends" id="molina-friends" hidden>
+        <img src="./fam1.jpg" alt=""><img src="./fam2.jpg" alt=""><img src="./fam3.jpg" alt=""><img src="./fam4.jpg" alt="">
+        <img src="./fam5.jpg" alt=""><img src="./fams1.jpg" alt=""><img src="./fg.jpg" alt=""><img src="./f3.jpg" alt="">
+      </div>
+    </div>
+  </div>
+
+  <div class="dpanel" id="dev-olavides" hidden>
+    <div class="glass dcard">
+      <div class="dtop">
+        <img src="./jess1.jpg" alt="Jessa Jane P. Olavides">
+        <div><h2>Jessa Jane P. Olavides</h2><p class="course">3rd Year — Bachelor of Science in Computer Science</p></div>
+      </div>
+      <dl class="dlist">
+        <dt>Name:</dt><dd>Jessa Jane P. Olavides</dd>
+        <dt>Address:</dt><dd>146 B E Dela Paz Sanroque Marikina City</dd>
+        <dt>Age:</dt><dd>21</dd>
+        <dt>Contact no.:</dt><dd>09958193214</dd>
+        <dt>Email add.:</dt><dd>jessaolavides5@gmail.com</dd>
+      </dl>
+    </div>
+    <div class="glass dcard">
+      <div class="subtabs">
+        <button class="active" data-target="olavides-family">My Family</button>
+        <button data-target="olavides-friends">Friends</button>
+      </div>
+      <div class="dgal fam" id="olavides-family"><img src="./jessfam.jpg" alt="My family"></div>
+      <div class="dgal friends" id="olavides-friends" hidden>
+        <img src="./jessf1.jpg" alt=""><img src="./jessf2.jpg" alt=""><img src="./jessf3.jpg" alt=""><img src="./jessf4.jpg" alt="">
+        <img src="./jessf5.jpg" alt=""><img src="./khenf5.jpg" alt=""><img src="./khenf1.jpg" alt=""><img src="./khenf2.jpg" alt="">
+      </div>
+    </div>
+  </div>
+
+  <div class="dpanel" id="dev-leal" hidden>
+    <div class="glass dcard">
+      <div class="dtop">
+        <img src="./leal1.jpg" alt="Nicole L. Leal">
+        <div><h2>Nicole L. Leal</h2><p class="course">Bachelor of Science in Computer Science</p></div>
+      </div>
+      <dl class="dlist">
+        <dt>Name:</dt><dd>Nicole L. Leal</dd>
+        <dt>Address:</dt><dd>219 B. San Nicolas St. Binondo Manila, Brgy. 283 Zone 1010</dd>
+        <dt>Age:</dt><dd>20</dd>
+        <dt>Contact no.:</dt><dd>09453940244</dd>
+        <dt>Email add.:</dt><dd>labadannicole4@gmail.com</dd>
+      </dl>
+    </div>
+    <div class="glass dcard">
+      <div class="subtabs">
+        <button class="active" data-target="leal-family">My Family</button>
+        <button data-target="leal-friends">Friends</button>
+      </div>
+      <div class="dgal fam" id="leal-family"><img src="./nicsfam.jpg" alt="My family"></div>
+      <div class="dgal friends" id="leal-friends" hidden>
+        <img src="./nicsf1.jpg" alt=""><img src="./nicsf2.jpg" alt=""><img src="./nicsf3.jpg" alt=""><img src="./nicsf4.jpg" alt=""><img src="./nicsf5.jpg" alt="">
+      </div>
+    </div>
+  </div>
+
+  <div class="dpanel" id="dev-pingul" hidden>
+    <div class="glass dcard">
+      <div class="dtop">
+        <img src="./iris2.jpg" alt="Iris Matthew P. Pingul">
+        <div><h2>Iris Matthew</h2><p class="course">3rd Year — Bachelor of Science in Computer Science</p></div>
+      </div>
+      <dl class="dlist">
+        <dt>Name:</dt><dd>Iris Matthew P. Pingul</dd>
+        <dt>Address:</dt><dd>053 Bungad Kaingin 2 Barangay Pansol QC</dd>
+        <dt>Age:</dt><dd>20</dd>
+        <dt>Contact no.:</dt><dd>09777290245</dd>
+        <dt>Email add.:</dt><dd>irispingul257@gmail.com</dd>
+      </dl>
+    </div>
+    <div class="glass dcard">
+      <div class="subtabs">
+        <button class="active" data-target="pingul-family">My Family</button>
+        <button data-target="pingul-friends">Friends</button>
+      </div>
+      <div class="dgal fam" id="pingul-family"><img src="./irisfam.jpg" alt="My family"></div>
+      <div class="dgal friends" id="pingul-friends" hidden>
+        <img src="./irisf1.jpg" alt=""><img src="./irisf2.jpg" alt=""><img src="./irisf3.jpg" alt=""><img src="./irisf4.jpg" alt="">
+        <img src="./irisf5.jpg" alt=""><img src="./irisf6.jpg" alt=""><img src="./irisf7.jpg" alt=""><img src="./UM.jpg" alt="">
+      </div>
+    </div>
+  </div>
+
+  <div class="dpanel" id="dev-laxamana" hidden>
+    <div class="glass dcard">
+      <div class="dtop">
+        <img src="./khen1.jpg" alt="Khen Andrey T. Laxamana">
+        <div><h2>Khen Andrey T. Laxamana</h2><p class="course">3rd Year — Bachelor of Science in Computer Science</p></div>
+      </div>
+      <dl class="dlist">
+        <dt>Name:</dt><dd>Khen Andrey T. Laxamana</dd>
+        <dt>Address:</dt><dd>Blk 9 Lot 23 tawilis st. Dagat-dagatan Caloocan City</dd>
+        <dt>Age:</dt><dd>22</dd>
+        <dt>Contact no.:</dt><dd>09217054831</dd>
+        <dt>Email add.:</dt><dd>khenlaxamana04@gmail.com</dd>
+      </dl>
+    </div>
+    <div class="glass dcard">
+      <div class="subtabs">
+        <button class="active" data-target="laxamana-family">My Family</button>
+        <button data-target="laxamana-friends">Friends</button>
+      </div>
+      <div class="dgal fam" id="laxamana-family"><img src="./khenfam1.jpg" alt="My family"></div>
+      <div class="dgal friends" id="laxamana-friends" hidden>
+        <img src="./khenf1.jpg" alt=""><img src="./khenf2.jpg" alt=""><img src="./khenf3.jpg" alt=""><img src="./khenf4.jpg" alt="">
+        <img src="./khenf5.jpg" alt=""><img src="./khenf6.jpg" alt=""><img src="./khenf7.jpg" alt=""><img src="./khenf8.jpg" alt="">
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<script>
+/* Developer picker */
+const picks = document.querySelectorAll('.pick');
+picks.forEach(p => p.addEventListener('click', () => {
+  picks.forEach(x => x.classList.toggle('active', x === p));
+  document.querySelectorAll('.dpanel').forEach(d => d.hidden = d.id !== p.dataset.dev);
+}));
+
+/* Family / Friends subtabs */
+document.querySelectorAll('.subtabs').forEach(group => {
+  const btns = group.querySelectorAll('button');
+  btns.forEach(btn => btn.addEventListener('click', () => {
+    btns.forEach(b => {
+      b.classList.toggle('active', b === btn);
+      document.getElementById(b.dataset.target).hidden = b !== btn;
+    });
+  }));
+});
+</script>
+</body>
+</html>
