@@ -5,145 +5,178 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Vivos X300 Ultra — Beyond the Limits</title>
 <style>
+/* ================= VIVOS PAGE ================= */
 :root { --bg: #05060d; --blue: #3b82f6; --purple: #8b5cf6; --txt: #e8ecf8; --mut: #98a2c0; --nav-h: 64px; }
-* { margin: 0; padding: 0; box-sizing: border-box; }
+.vivos * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: var(--nav-h); }
-body { font-family: "Segoe UI", system-ui, Helvetica, Arial, sans-serif; color: var(--txt); line-height: 1.6; overflow-x: hidden;
-  background: radial-gradient(800px 500px at 10% 0%, rgba(59,130,246,.22), transparent 70%),
+body { margin: 0; font-family: "Segoe UI", system-ui, Helvetica, Arial, sans-serif; color: var(--txt); line-height: 1.6; overflow-x: hidden;
+  background: var(--bg); }
+.vivos { background: radial-gradient(800px 500px at 10% 0%, rgba(59,130,246,.22), transparent 70%),
     radial-gradient(800px 600px at 95% 35%, rgba(139,92,246,.2), transparent 70%), var(--bg); }
-a { color: inherit; text-decoration: none; }
-button { font: inherit; color: inherit; cursor: pointer; }
-.row { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.4rem; }
-.row.center { justify-content: center; }
-.na { color: #f0b36a; font-style: italic; }
-.hint { color: var(--mut); font-size: .8rem; text-align: center; margin-top: .8rem; }
+.vivos a { color: inherit; text-decoration: none; }
+.vivos button { font: inherit; color: inherit; cursor: pointer; }
+.vivos .row { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.4rem; }
+.vivos .row.center { justify-content: center; }
+.vivos .na { color: #f0b36a; font-style: italic; }
+.vivos .hint { color: var(--mut); font-size: .8rem; text-align: center; margin-top: .8rem; }
 
-/* Nav */
-.nav { position: fixed; inset: 0 0 auto; height: var(--nav-h); z-index: 20; display: flex; align-items: center; justify-content: space-between;
+.vivos .vnav { position: fixed; inset: 0 0 auto; height: var(--nav-h); z-index: 20; display: flex; align-items: center; justify-content: space-between;
   padding: 0 clamp(1rem, 4vw, 3rem); background: rgba(5,6,13,.65); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(120,150,255,.18); }
-.brand { letter-spacing: .25em; text-transform: uppercase; font-size: .85rem; font-weight: 300; }
-.brand b { font-weight: 800; }
-nav { display: flex; gap: clamp(.8rem, 2vw, 1.8rem); align-items: center; }
-nav a { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: #cfd6ee; transition: color .2s; }
-nav a:hover { color: #fff; }
-nav .cta { padding: .45rem 1rem; border-radius: 30px; background: linear-gradient(90deg, var(--blue), var(--purple)); color: #fff; }
-.burger { display: none; background: none; border: 0; width: 32px; height: 26px; position: relative; }
-.burger span { position: absolute; left: 4px; right: 4px; height: 2px; background: #fff; transition: .3s; }
-.burger span:nth-child(1) { top: 5px; } .burger span:nth-child(2) { top: 12px; } .burger span:nth-child(3) { top: 19px; }
-.burger[aria-expanded="true"] span:nth-child(1) { top: 12px; transform: rotate(45deg); }
-.burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
-.burger[aria-expanded="true"] span:nth-child(3) { top: 12px; transform: rotate(-45deg); }
+.vivos .brand { letter-spacing: .25em; text-transform: uppercase; font-size: .85rem; font-weight: 300; }
+.vivos .brand b { font-weight: 800; }
+.vivos .vmenu { display: flex; gap: clamp(.8rem, 2vw, 1.8rem); align-items: center; }
+.vivos .vmenu a { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: #cfd6ee; transition: color .2s; }
+.vivos .vmenu a:hover { color: #fff; }
+.vivos .vmenu .cta { padding: .45rem 1rem; border-radius: 30px; background: linear-gradient(90deg, var(--blue), var(--purple)); color: #fff; }
+.vivos .burger { display: none; background: none; border: 0; width: 32px; height: 26px; position: relative; }
+.vivos .burger span { position: absolute; left: 4px; right: 4px; height: 2px; background: #fff; transition: .3s; }
+.vivos .burger span:nth-child(1) { top: 5px; } .vivos .burger span:nth-child(2) { top: 12px; } .vivos .burger span:nth-child(3) { top: 19px; }
+.vivos .burger[aria-expanded="true"] span:nth-child(1) { top: 12px; transform: rotate(45deg); }
+.vivos .burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.vivos .burger[aria-expanded="true"] span:nth-child(3) { top: 12px; transform: rotate(-45deg); }
 
-/* Layout */
-.sec, .hero { padding: calc(var(--nav-h) + 3rem) clamp(1rem, 5vw, 4rem) 3rem; max-width: 1200px; margin: 0 auto; }
-.sec { padding-top: 5rem; }
-h2 { font-size: clamp(1.7rem, 4.5vw, 3rem); text-align: center; font-weight: 800; letter-spacing: .02em; margin-bottom: 2rem; }
-h2 span, h1 span { background: linear-gradient(90deg, #60a5fa, #a78bfa); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.intro { max-width: 72ch; margin: -.8rem auto 2rem; text-align: center; color: #cdd5ec; font-size: 1.05rem; }
-.grid { display: grid; gap: 1.2rem; }
-.cards { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
-.card { padding: 1.5rem; border-radius: 20px; background: rgba(255,255,255,.05); backdrop-filter: blur(12px);
+.vivos .sec, .vivos .hero { padding: calc(var(--nav-h) + 3rem) clamp(1rem, 5vw, 4rem) 3rem; max-width: 1200px; margin: 0 auto; }
+.vivos .sec { padding-top: 5rem; }
+.vivos h2 { font-size: clamp(1.7rem, 4.5vw, 3rem); text-align: center; font-weight: 800; letter-spacing: .02em; margin-bottom: 2rem; }
+.vivos h2 span, .vivos h1 span { background: linear-gradient(90deg, #60a5fa, #a78bfa); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.vivos .intro { max-width: 72ch; margin: -.8rem auto 2rem; text-align: center; color: #cdd5ec; font-size: 1.05rem; }
+.vivos .grid { display: grid; gap: 1.2rem; }
+.vivos .cards { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.vivos .card { padding: 1.5rem; border-radius: 20px; background: rgba(255,255,255,.05); backdrop-filter: blur(12px);
   border: 1px solid rgba(96,140,255,.35); box-shadow: 0 0 24px rgba(59,130,246,.12), inset 0 0 30px rgba(139,92,246,.06); }
-.card h3 { margin-bottom: .5rem; color: #9db8ff; font-size: 1rem; letter-spacing: .12em; text-transform: uppercase; }
-.card p { color: #cdd5ec; }
-.btn { padding: .8rem 1.6rem; border-radius: 40px; border: 1px solid rgba(120,150,255,.5); font-weight: 700; letter-spacing: .08em; transition: .25s; display: inline-block; }
-.btn.primary { background: linear-gradient(90deg, var(--blue), var(--purple)); border: 0; box-shadow: 0 8px 28px rgba(80,100,255,.4); }
-.btn.ghost { background: rgba(255,255,255,.05); }
-.btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(90,120,255,.45); }
-.chip { padding: .5rem 1.1rem; border-radius: 30px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.2); font-size: .8rem; transition: .2s; }
-.chip:hover { border-color: var(--blue); }
-.chip.on { background: #fff; color: #0b0d18; font-weight: 700; box-shadow: 0 0 16px rgba(120,160,255,.6); }
+.vivos .card h3 { margin-bottom: .5rem; color: #9db8ff; font-size: 1rem; letter-spacing: .12em; text-transform: uppercase; }
+.vivos .card p { color: #cdd5ec; }
+.vivos .btn { padding: .8rem 1.6rem; border-radius: 40px; border: 1px solid rgba(120,150,255,.5); font-weight: 700; letter-spacing: .08em; transition: .25s; display: inline-block; }
+.vivos .btn.primary { background: linear-gradient(90deg, var(--blue), var(--purple)); border: 0; box-shadow: 0 8px 28px rgba(80,100,255,.4); }
+.vivos .btn.ghost { background: rgba(255,255,255,.05); }
+.vivos .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(90,120,255,.45); }
+.vivos .chip { padding: .5rem 1.1rem; border-radius: 30px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.2); font-size: .8rem; transition: .2s; }
+.vivos .chip:hover { border-color: var(--blue); }
+.vivos .chip.on { background: #fff; color: #0b0d18; font-weight: 700; box-shadow: 0 0 16px rgba(120,160,255,.6); }
 
-/* Hero */
-.hero { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; min-height: 100vh; }
-.eyebrow { color: #9db8ff; letter-spacing: .3em; text-transform: uppercase; font-size: .75rem; }
-h1 { font-size: clamp(2.4rem, 6vw, 4.8rem); line-height: 1.05; font-weight: 900; margin: .6rem 0; }
-h1 span { display: block; }
-.tag { font-size: 1.3rem; font-style: italic; color: #c4b5fd; }
-.lead { margin-top: 1rem; color: var(--mut); max-width: 46ch; }
-
-/* Hero advertisement video */
-.hero-media { min-width: 0; }
-.hero-video { position: relative; width: 100%; border-radius: 24px; overflow: hidden; background: #000;
+.vivos .hero { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; min-height: 100vh; }
+.vivos .eyebrow { color: #9db8ff; letter-spacing: .3em; text-transform: uppercase; font-size: .75rem; }
+.vivos h1 { font-size: clamp(2.4rem, 6vw, 4.8rem); line-height: 1.05; font-weight: 900; margin: .6rem 0; }
+.vivos h1 span { display: block; }
+.vivos .tag { font-size: 1.3rem; font-style: italic; color: #c4b5fd; }
+.vivos .lead { margin-top: 1rem; color: var(--mut); max-width: 46ch; }
+.vivos .hero-media { min-width: 0; }
+.vivos .hero-video { position: relative; width: 100%; border-radius: 24px; overflow: hidden; background: #000;
   border: 1px solid rgba(96,140,255,.4); box-shadow: 0 0 50px rgba(59,130,246,.3), 0 0 90px rgba(139,92,246,.18); }
-.hero-video video { display: block; width: 100%; height: auto; max-height: 72vh; object-fit: contain; background: #000; }
+.vivos .hero-video video { display: block; width: 100%; height: auto; max-height: 72vh; object-fit: contain; background: #000; }
 
-/* Camera */
-.note { text-align: center; color: #f0b36a; margin: -1rem auto 1.5rem; max-width: 60ch; font-size: .9rem; }
-.cam { max-width: 960px; margin: 0 auto; padding: 1rem; border-radius: 24px; border: 1px solid rgba(96,140,255,.4); background: rgba(255,255,255,.04); box-shadow: 0 0 40px rgba(59,130,246,.18); }
-.view { position: relative; aspect-ratio: 3 / 2; overflow: hidden; border-radius: 16px; background: #000; cursor: grab; touch-action: none; }
-.view.drag { cursor: grabbing; }
-.view img { object-fit: cover; position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform-origin: 0 0; transition: transform .45s cubic-bezier(.2,.7,.2,1); user-select: none; }
-.view.drag img { transition: none; }
-.badge { position: absolute; top: 12px; left: 12px; padding: .25rem .8rem; border-radius: 20px; background: rgba(0,0,0,.6); border: 1px solid rgba(255,255,255,.3); font-weight: 700; }
-.mark { position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; border: 2px solid #fff; border-radius: 50%; opacity: 0; pointer-events: none; transition: opacity .3s; box-shadow: 0 0 8px #000; }
-.range { display: flex; align-items: center; gap: 1rem; margin-top: 1.2rem; font-weight: 700; }
-.range input { flex: 1; accent-color: #7c8cff; }
+.vivos .note { text-align: center; color: #f0b36a; margin: -1rem auto 1.5rem; max-width: 60ch; font-size: .9rem; }
+.vivos .cam { max-width: 960px; margin: 0 auto; padding: 1rem; border-radius: 24px; border: 1px solid rgba(96,140,255,.4); background: rgba(255,255,255,.04); box-shadow: 0 0 40px rgba(59,130,246,.18); }
+.vivos .view { position: relative; aspect-ratio: 3 / 2; overflow: hidden; border-radius: 16px; background: #000; cursor: grab; touch-action: none; }
+.vivos .view.drag { cursor: grabbing; }
+.vivos .view img { object-fit: cover; position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform-origin: 0 0; transition: transform .45s cubic-bezier(.2,.7,.2,1); user-select: none; }
+.vivos .view.drag img { transition: none; }
+.vivos .badge { position: absolute; top: 12px; left: 12px; padding: .25rem .8rem; border-radius: 20px; background: rgba(0,0,0,.6); border: 1px solid rgba(255,255,255,.3); font-weight: 700; }
+.vivos .mark { position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; border: 2px solid #fff; border-radius: 50%; opacity: 0; pointer-events: none; transition: opacity .3s; box-shadow: 0 0 8px #000; }
+.vivos .range { display: flex; align-items: center; gap: 1rem; margin-top: 1.2rem; font-weight: 700; }
+.vivos .range input { flex: 1; accent-color: #7c8cff; }
 
-/* Battery */
-.batt { max-width: 640px; margin: 0 auto; text-align: center; }
-.bat { position: relative; width: min(100%, 320px); height: 120px; margin: 0 auto 1.4rem; border: 4px solid #cfd8ff; border-radius: 24px; padding: 6px; }
-.bat::after { content: ""; position: absolute; right: -16px; top: 35%; width: 10px; height: 30%; border-radius: 0 6px 6px 0; background: #cfd8ff; }
-.fill { height: 100%; width: 0%; border-radius: 16px; background: linear-gradient(90deg, #22c55e, #60a5fa); transition: width .2s linear; }
-.bat b { position: absolute; inset: 0; display: grid; place-items: center; font-size: 2rem; text-shadow: 0 2px 8px #000; }
-.bat.charging { animation: pulse 1.2s ease-in-out infinite; }
-@keyframes pulse { 50% { box-shadow: 0 0 30px rgba(96,165,250,.8); } }
-.facts { list-style: none; margin-bottom: 1.4rem; display: grid; gap: .4rem; }
-.facts b { color: #9db8ff; }
+.vivos .batt { max-width: 640px; margin: 0 auto; text-align: center; }
+.vivos .bat { position: relative; width: min(100%, 320px); height: 120px; margin: 0 auto 1.4rem; border: 4px solid #cfd8ff; border-radius: 24px; padding: 6px; }
+.vivos .bat::after { content: ""; position: absolute; right: -16px; top: 35%; width: 10px; height: 30%; border-radius: 0 6px 6px 0; background: #cfd8ff; }
+.vivos .fill { height: 100%; width: 0%; border-radius: 16px; background: linear-gradient(90deg, #22c55e, #60a5fa); transition: width .2s linear; }
+.vivos .bat b { position: absolute; inset: 0; display: grid; place-items: center; font-size: 2rem; text-shadow: 0 2px 8px #000; }
+.vivos .bat.charging { animation: vpulse 1.2s ease-in-out infinite; }
+@keyframes vpulse { 50% { box-shadow: 0 0 30px rgba(96,165,250,.8); } }
+.vivos .facts { list-style: none; margin-bottom: 1.4rem; display: grid; gap: .4rem; }
+.vivos .facts b { color: #9db8ff; }
 
-/* Specs */
-.tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem; margin-bottom: 1.5rem; }
-.specs { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
-.spec { padding: 1.1rem 1.3rem; border-radius: 16px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.14); animation: pop .4s ease both; }
-.spec small { display: block; color: var(--mut); letter-spacing: .15em; text-transform: uppercase; font-size: .68rem; }
-@keyframes pop { from { opacity: 0; transform: translateY(10px); } }
+.vivos .tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem; margin-bottom: 1.5rem; }
+.vivos .specs { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.vivos .spec { padding: 1.1rem 1.3rem; border-radius: 16px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.14); animation: vpop .4s ease both; }
+.vivos .spec small { display: block; color: var(--mut); letter-spacing: .15em; text-transform: uppercase; font-size: .68rem; }
+@keyframes vpop { from { opacity: 0; transform: translateY(10px); } }
 
-/* Price / buy */
-.buy { max-width: 720px; margin: 0 auto; }
-.opts { display: grid; gap: .7rem; margin: 1rem 0; }
-.opt { display: flex; justify-content: space-between; gap: 1rem; padding: .9rem 1.1rem; border-radius: 14px; border: 1px solid rgba(255,255,255,.2); background: rgba(0,0,0,.25); text-align: left; transition: .2s; }
-.opt[aria-checked="true"] { border-color: #7c8cff; background: rgba(90,110,255,.2); box-shadow: 0 0 18px rgba(96,140,255,.35); }
-.sum { display: flex; justify-content: space-between; align-items: end; gap: 1rem; margin-top: 1.2rem; flex-wrap: wrap; }
-.sum small { color: var(--mut); }
-.price { font-size: clamp(1.8rem, 5vw, 2.6rem); font-weight: 900; }
-footer { text-align: center; color: var(--mut); font-size: .8rem; padding: 3rem 1rem; }
-.toast { position: fixed; bottom: 24px; left: 50%; transform: translate(-50%, 30px); padding: .8rem 1.4rem; border-radius: 30px; background: #fff; color: #0b0d18; font-weight: 600; opacity: 0; pointer-events: none; transition: .35s; z-index: 30; max-width: 90vw; text-align: center; }
-.toast.show { opacity: 1; transform: translate(-50%, 0); }
+.vivos .buy { max-width: 720px; margin: 0 auto; }
+.vivos .opts { display: grid; gap: .7rem; margin: 1rem 0; }
+.vivos .opt { display: flex; justify-content: space-between; gap: 1rem; padding: .9rem 1.1rem; border-radius: 14px; border: 1px solid rgba(255,255,255,.2); background: rgba(0,0,0,.25); text-align: left; transition: .2s; }
+.vivos .opt[aria-checked="true"] { border-color: #7c8cff; background: rgba(90,110,255,.2); box-shadow: 0 0 18px rgba(96,140,255,.35); }
+.vivos .sum { display: flex; justify-content: space-between; align-items: end; gap: 1rem; margin-top: 1.2rem; flex-wrap: wrap; }
+.vivos .sum small { color: var(--mut); }
+.vivos .price { font-size: clamp(1.8rem, 5vw, 2.6rem); font-weight: 900; }
+.vivos .vfooter { text-align: center; color: var(--mut); font-size: .8rem; padding: 3rem 1rem; }
+.vivos .toast { position: fixed; bottom: 24px; left: 50%; transform: translate(-50%, 30px); padding: .8rem 1.4rem; border-radius: 30px; background: #fff; color: #0b0d18; font-weight: 600; opacity: 0; pointer-events: none; transition: .35s; z-index: 30; max-width: 90vw; text-align: center; }
+.vivos .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
-/* Map */
-.map { max-width: 900px; margin: 0 auto; border-radius: 20px; overflow: hidden; border: 1px solid rgba(96,140,255,.4); box-shadow: 0 0 40px rgba(59,130,246,.18); }
-.map iframe { display: block; width: 100%; height: clamp(280px, 50vw, 450px); }
+.vivos .map { max-width: 900px; margin: 0 auto; border-radius: 20px; overflow: hidden; border: 1px solid rgba(96,140,255,.4); box-shadow: 0 0 40px rgba(59,130,246,.18); }
+.vivos .map iframe { display: block; width: 100%; height: clamp(280px, 50vw, 450px); }
 
-/* Scroll reveal: the description appears first, then the price (--d = small delay per item) */
-/* Only hide content when JavaScript is running */
-.js .reveal { opacity: 0; transform: translateY(36px);
+.js .vivos .reveal { opacity: 0; transform: translateY(36px);
   transition: opacity .9s ease var(--d, 0s), transform .9s cubic-bezier(.2,.7,.2,1) var(--d, 0s); }
-.js .reveal.in { opacity: 1; transform: none; }
+.js .vivos .reveal.in { opacity: 1; transform: none; }
 
-/* Responsive */
 @media (max-width: 860px) {
-  .hero { grid-template-columns: 1fr; text-align: center; padding-top: calc(var(--nav-h) + 1.5rem); min-height: auto; }
-  .hero .row { justify-content: center; }
-  .lead { margin-inline: auto; }
-  .burger { display: block; }
-  nav { position: fixed; top: var(--nav-h); left: 0; right: 0; flex-direction: column; padding: 1.2rem; background: rgba(5,6,13,.95); border-bottom: 1px solid rgba(120,150,255,.2);
+  .vivos .hero { grid-template-columns: 1fr; text-align: center; padding-top: calc(var(--nav-h) + 1.5rem); min-height: auto; }
+  .vivos .hero .row { justify-content: center; }
+  .vivos .lead { margin-inline: auto; }
+  .vivos .burger { display: block; }
+  .vivos .vmenu { position: fixed; top: var(--nav-h); left: 0; right: 0; flex-direction: column; padding: 1.2rem; background: rgba(5,6,13,.95); border-bottom: 1px solid rgba(120,150,255,.2);
     transform: translateY(-120%); transition: transform .35s; }
-  nav.open { transform: none; }
+  .vivos .vmenu.open { transform: none; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
-  .js .reveal { opacity: 1; transform: none; }
-}
+/* ================= UM PAGE ================= */
+.um { font-family: "Segoe UI", Cambria, Georgia, sans-serif; color: #fff; background: #090A0F; font-size: 18px; min-height: 100vh; position: relative; overflow: hidden; }
+.um * { box-sizing: border-box; }
+.um .glass { position: relative; background: rgba(255,255,255,.05); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+  border-radius: 16px; border: 1px solid rgba(255,255,255,.3); box-shadow: 0 8px 32px rgba(0,0,0,.1), inset 0 1px 0 rgba(255,255,255,.5), inset 0 -1px 0 rgba(255,255,255,.1); overflow: hidden; }
+.um .sky { position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%); }
+.um [hidden] { display: none !important; }
+.um .sec { min-height: 100vh; padding: 125px 16px 36px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.um .sec > * { width: 100%; max-width: 1000px; }
+.um .panelbox { padding: 24px 28px; margin-bottom: 16px; }
+.um .label { color: #ffd76a; font-weight: 700; font-size: 20px; margin: 0 0 6px; }
+.um h1, .um h2, .um h3 { margin: 0 0 12px; }
+.um h1 { font-size: 48px; letter-spacing: 1px; }
+.um h2 { font-size: 30px; }
+.um p { font-size: 19px; line-height: 1.7; margin: 0 0 12px; }
+.um .center { text-align: center; }
+.um .subtabs { overflow: hidden; display: flex; margin-bottom: 20px; overflow-x: auto; }
+.um .subtabs button { flex: 1 1 0; min-width: 140px; padding: 13px 10px; border: 0; border-right: 1px solid rgba(255,255,255,.25);
+  border-bottom: 3px solid transparent; border-radius: 0; background: rgba(255,255,255,.08); color: #fff; font: 700 17px "Segoe UI", sans-serif; cursor: pointer; }
+.um .subtabs button:first-child { border-left: 1px solid rgba(255,255,255,.25); }
+.um .subtabs button.active { background: rgba(255,255,255,.28); border-bottom-color: #fff; }
+.um .picker { display: flex; margin: 10px -28px 0; overflow-x: auto; border-top: 1px solid rgba(255,255,255,.25); }
+.um .pick { flex: 1 1 0; min-width: 110px; padding: 10px 8px; display: flex; flex-direction: column; align-items: center; gap: 6px;
+  border: 0; border-right: 1px solid rgba(255,255,255,.25); border-bottom: 3px solid transparent; border-radius: 0;
+  background: rgba(255,255,255,.08); color: #fff; font: 700 17px "Segoe UI", sans-serif; cursor: pointer; }
+.um .pick:last-child { border-right: 0; }
+.um .pick img { width: 60px; height: 68px; object-fit: cover; border-radius: 10px; }
+.um .pick.active { background: rgba(255,255,255,.28); border-bottom-color: #fff; }
+.um .dpanel { display: grid; grid-template-columns: minmax(0,5fr) minmax(0,6fr); gap: 16px; align-items: start; width: 100%; max-width: 1100px; }
+.um .dcard { padding: 22px; }
+.um .dtop { display: flex; gap: 18px; align-items: center; margin-bottom: 14px; }
+.um .dtop img { width: 130px; height: 160px; object-fit: cover; border-radius: 14px; border: 3px solid #ffd76a; flex: 0 0 auto; }
+.um .dtop h2 { font-size: 26px; margin: 0 0 6px; text-align: left; }
+.um .dtop .course { color: #ffd76a; font-weight: 700; font-size: 17px; line-height: 1.4; margin: 0; }
+.um .dlist { display: grid; grid-template-columns: max-content 1fr; gap: 6px 14px; margin: 0; font-size: 18px; }
+.um .dlist dt { font-weight: 700; color: #ffd76a; }
+.um .dlist dd { margin: 0; overflow-wrap: anywhere; }
+.um .dcard .subtabs { margin-bottom: 14px; }
+.um .dgal { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-height: 60vh; min-height: 240px; overflow-y: auto; }
+.um .dgal.fam img { max-width: 100%; max-height: 60vh; height: auto; object-fit: contain; border-radius: 10px; }
+.um .dgal.friends img { width: 140px; height: 180px; object-fit: cover; border-radius: 10px; }
+@media (max-width: 900px) { .um .dpanel { grid-template-columns: 1fr; } }
+
+/* ================= SHARED ================= */
+.vivos-wrap { position: relative; }
 </style>
 <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
-<header class="nav">
+
+<!-- ===================== VIVOS PAGE ===================== -->
+<div class="vivos" id="home-top">
+<header class="vnav">
   <a href="#home" class="brand">vivos <b>X300 Ultra</b></a>
   <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
-  <nav id="menu">
+  <nav class="vmenu" id="menu">
     <a href="#home">Home</a>
     <a href="#description">Product Description</a>
     <a href="#camera">Camera</a>
@@ -151,13 +184,12 @@ footer { text-align: center; color: var(--mut); font-size: .8rem; padding: 3rem 
     <a href="#battery">Battery</a>
     <a href="#specs">Specifications</a>
     <a href="#location">Location</a>
-    <a href="Home/index.html#dev">Developer</a>
+    <a href="#um-dev">Developer</a>
     <a href="#buy" class="cta">Buy Now</a>
   </nav>
 </header>
 
 <main>
-<!-- HERO: text + advertisement video -->
 <section id="home" class="hero">
   <div class="hero-text reveal">
     <p class="eyebrow">ZEISS co-engineered flagship</p>
@@ -169,10 +201,9 @@ footer { text-align: center; color: var(--mut); font-size: .8rem; padding: 3rem 
       <a class="btn ghost" href="#buy">See the Price</a>
     </div>
   </div>
-
   <div class="hero-media reveal">
     <div class="hero-video">
-      <video id="ads" src="ADS.mp4" autoplay muted loop playsinline controls preload="auto" aria-label="vivos X300 Ultra advertisement">
+      <video id="ads" src="ADS(1).mp4" autoplay muted loop playsinline controls preload="auto" aria-label="vivos X300 Ultra advertisement">
         Your browser does not support the video tag.
       </video>
     </div>
@@ -180,7 +211,6 @@ footer { text-align: center; color: var(--mut); font-size: .8rem; padding: 3rem 
   </div>
 </section>
 
-<!-- PRODUCT DESCRIPTION (shown first when scrolling) -->
 <section id="description" class="sec">
   <h2 class="reveal">Product <span>Description</span></h2>
   <p class="intro reveal">The vivos X300 Ultra is a camera-first flagship co-engineered with ZEISS. It pairs two 200MP sensors (main and 3.7× telephoto) and a 50MP ultra-wide camera, all with optical image stabilisation, with a 6.82-inch 2K AMOLED display, the Qualcomm Snapdragon 8 Elite Gen 5 processor, 512GB of storage and a 6600mAh battery with 100W wired and 40W wireless charging. It runs Android 16 with OriginOS 6 and is rated IP69 for water and dust resistance.</p>
@@ -194,7 +224,6 @@ footer { text-align: center; color: var(--mut); font-size: .8rem; padding: 3rem 
   </div>
 </section>
 
-<!-- PRICE (shown right after the description) -->
 <section id="buy" class="sec">
   <h2 class="reveal"><span>Price</span> &amp; configuration</h2>
   <div class="card buy reveal" style="--d:.1s">
@@ -213,7 +242,6 @@ footer { text-align: center; color: var(--mut); font-size: .8rem; padding: 3rem 
   </div>
 </section>
 
-<!-- CAMERA -->
 <section id="camera" class="sec">
   <h2 class="reveal">Camera <span>zoom demo</span></h2>
   <p class="note reveal">Simulated digital zoom on a sample photo. It is a visual demo only and does not reproduce the phone's real optical or hybrid zoom quality. The sample image is low resolution, so it softens at high zoom.</p>
@@ -232,20 +260,17 @@ footer { text-align: center; color: var(--mut); font-size: .8rem; padding: 3rem 
   </div>
 </section>
 
-<!-- PERFORMANCE -->
 <section id="performance" class="sec">
   <h2 class="reveal"><span>Performance</span></h2>
   <div class="grid cards">
     <article class="card reveal"><h3>Processor</h3><p>Qualcomm Snapdragon 8 Elite Gen 5 (3 nm).</p></article>
-    <article class="card reveal"><h3>Gaming</h3><p>Benchmark and frame-rate figures: <span class="na">AnTuTu: 2346352 (v10), 3416530 (v11)
-GeekBench: 9843 (v6)</span>.</p></article>
+    <article class="card reveal"><h3>Gaming</h3><p>Benchmark and frame-rate figures: <span class="na">AnTuTu: 2346352 (v10), 3416530 (v11) GeekBench: 9843 (v6)</span>.</p></article>
     <article class="card reveal"><h3>Multitasking</h3><p>RAM: 12GB or 16GB, as listings differ. <span class="na">Verify with vivo</span>.</p></article>
     <article class="card reveal"><h3>Memory</h3><p>512GB storage on the Philippine variants.</p></article>
     <article class="card reveal"><h3>Thermal management</h3><p>Cooling system details: <span class="na">not confirmed</span>.</p></article>
   </div>
 </section>
 
-<!-- BATTERY -->
 <section id="battery" class="sec">
   <h2 class="reveal"><span>Battery</span> &amp; charging</h2>
   <div class="card batt reveal">
@@ -256,12 +281,11 @@ GeekBench: 9843 (v6)</span>.</p></article>
       <li><b>40W</b> wireless charging</li>
       <li>Power-saving features: <span class="na">not confirmed</span></li>
     </ul>
-    <button class="btn primary" id="charge"> Flash Charging</button>
-    <p class="hint">Full charge  at 41- minutes</p>
+    <button class="btn primary" id="charge">Flash Charging</button>
+    <p class="hint">Full charge at 41 minutes</p>
   </div>
 </section>
 
-<!-- SPECS -->
 <section id="specs" class="sec">
   <h2 class="reveal"><span>Specifications</span></h2>
   <div class="tabs reveal" id="tabs" role="tablist"></div>
@@ -271,7 +295,6 @@ GeekBench: 9843 (v6)</span>.</p></article>
 
 <section id="location" class="sec">
   <h2 class="reveal">Find <span>us</span></h2>
-
   <div class="map reveal">
     <iframe
       src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3860.3920866957096!2d121.01701967413311!3d14.633670876268107!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b64506899a6f%3A0x70adff3e73248746!2sFisher%20Mall!5e0!3m2!1sen!2sph!4v1791754641149!5m2!1sen!2sph"
@@ -281,8 +304,147 @@ GeekBench: 9843 (v6)</span>.</p></article>
 </section>
 </main>
 
-<footer>Unofficial concept page.</footer>
+<footer class="vfooter">Unofficial concept page.</footer>
+</div>
+
+<!-- ===================== UM PAGE (Developer section) ===================== -->
+<div class="um">
+  <div class="sky" aria-hidden="true"></div>
+  <section id="um-dev" class="sec">
+    <div class="glass panelbox center" style="padding-bottom:0">
+      <p class="label">WEB DEVELOPERS</p>
+      <div class="picker">
+        <button class="pick active" data-dev="dev-molina"><img src="./me1.jpg" alt="Molina"><span>Molina</span></button>
+        <button class="pick" data-dev="dev-olavides"><img src="./jess1.jpg" alt="Olavides"><span>Olavides</span></button>
+        <button class="pick" data-dev="dev-leal"><img src="./leal1.jpg" alt="Leal"><span>Leal</span></button>
+        <button class="pick" data-dev="dev-pingul"><img src="./iris1.jpg" alt="Pingul"><span>Pingul</span></button>
+        <button class="pick" data-dev="dev-laxamana"><img src="./khen1.jpg" alt="Laxamana"><span>Laxamana</span></button>
+      </div>
+    </div>
+
+    <div class="dpanel" id="dev-molina">
+      <div class="glass dcard">
+        <div class="dtop"><img src="./jason.jpg" alt="Jason Manuel R. Molina"><div><h2>Jason Manuel R. Molina</h2><p class="course">3rd Year — Bachelor of Science in Computer Science</p></div></div>
+        <dl class="dlist">
+          <dt>Name:</dt><dd>Jason Manuel R. Molina</dd>
+          <dt>Address:</dt><dd>Blk 118 lot 45 Villazaragosa brgy. Turo bocaue bulacan</dd>
+          <dt>Age:</dt><dd>20</dd>
+          <dt>Contact no.:</dt><dd>09704844828</dd>
+          <dt>Email add.:</dt><dd>jasonmanuelmolina@gmail.com</dd>
+        </dl>
+      </div>
+      <div class="glass dcard">
+        <div class="subtabs">
+          <button class="active" data-target="molina-family">My Family</button>
+          <button data-target="molina-friends">Friends</button>
+        </div>
+        <div class="dgal fam" id="molina-family"><img src="./fam6.jpg" alt="My family"></div>
+        <div class="dgal friends" id="molina-friends" hidden>
+          <img src="./fam1.jpg" alt=""><img src="./fam2.jpg" alt=""><img src="./fam3.jpg" alt=""><img src="./fam4.jpg" alt="">
+          <img src="./fam5.jpg" alt=""><img src="./fams1.jpg" alt=""><img src="./fg.jpg" alt=""><img src="./f3.jpg" alt="">
+        </div>
+      </div>
+    </div>
+
+    <div class="dpanel" id="dev-olavides" hidden>
+      <div class="glass dcard">
+        <div class="dtop"><img src="./jess1.jpg" alt="Jessa Jane P. Olavides"><div><h2>Jessa Jane P. Olavides</h2><p class="course">3rd Year — Bachelor of Science in Computer Science</p></div></div>
+        <dl class="dlist">
+          <dt>Name:</dt><dd>Jessa Jane P. Olavides</dd>
+          <dt>Address:</dt><dd>146 B E Dela Paz Sanroque Marikina City</dd>
+          <dt>Age:</dt><dd>21</dd>
+          <dt>Contact no.:</dt><dd>09958193214</dd>
+          <dt>Email add.:</dt><dd>jessaolavides5@gmail.com</dd>
+        </dl>
+      </div>
+      <div class="glass dcard">
+        <div class="subtabs">
+          <button class="active" data-target="olavides-family">My Family</button>
+          <button data-target="olavides-friends">Friends</button>
+        </div>
+        <div class="dgal fam" id="olavides-family"><img src="./jessfam.jpg" alt="My family"></div>
+        <div class="dgal friends" id="olavides-friends" hidden>
+          <img src="./jessf1.jpg" alt=""><img src="./jessf2.jpg" alt=""><img src="./jessf3.jpg" alt=""><img src="./jessf4.jpg" alt="">
+          <img src="./jessf5.jpg" alt=""><img src="./khenf5.jpg" alt=""><img src="./khenf1.jpg" alt=""><img src="./khenf2.jpg" alt="">
+        </div>
+      </div>
+    </div>
+
+    <div class="dpanel" id="dev-leal" hidden>
+      <div class="glass dcard">
+        <div class="dtop"><img src="./leal1.jpg" alt="Nicole L. Leal"><div><h2>Nicole L. Leal</h2><p class="course">Bachelor of Science in Computer Science</p></div></div>
+        <dl class="dlist">
+          <dt>Name:</dt><dd>Nicole L. Leal</dd>
+          <dt>Address:</dt><dd>219 B. San Nicolas St. Binondo Manila, Brgy. 283 Zone 1010</dd>
+          <dt>Age:</dt><dd>20</dd>
+          <dt>Contact no.:</dt><dd>09453940244</dd>
+          <dt>Email add.:</dt><dd>labadannicole4@gmail.com</dd>
+        </dl>
+      </div>
+      <div class="glass dcard">
+        <div class="subtabs">
+          <button class="active" data-target="leal-family">My Family</button>
+          <button data-target="leal-friends">Friends</button>
+        </div>
+        <div class="dgal fam" id="leal-family"><img src="./nicsfam.jpg" alt="My family"></div>
+        <div class="dgal friends" id="leal-friends" hidden>
+          <img src="./nicsf1.jpg" alt=""><img src="./nicsf2.jpg" alt=""><img src="./nicsf3.jpg" alt=""><img src="./nicsf4.jpg" alt=""><img src="./nicsf5.jpg" alt="">
+        </div>
+      </div>
+    </div>
+
+    <div class="dpanel" id="dev-pingul" hidden>
+      <div class="glass dcard">
+        <div class="dtop"><img src="./iris2.jpg" alt="Iris Matthew P. Pingul"><div><h2>Iris Matthew</h2><p class="course">3rd Year — Bachelor of Science in Computer Science</p></div></div>
+        <dl class="dlist">
+          <dt>Name:</dt><dd>Iris Matthew P. Pingul</dd>
+          <dt>Address:</dt><dd>053 Bungad Kaingin 2 Barangay Pansol QC</dd>
+          <dt>Age:</dt><dd>20</dd>
+          <dt>Contact no.:</dt><dd>09777290245</dd>
+          <dt>Email add.:</dt><dd>irispingul257@gmail.com</dd>
+        </dl>
+      </div>
+      <div class="glass dcard">
+        <div class="subtabs">
+          <button class="active" data-target="pingul-family">My Family</button>
+          <button data-target="pingul-friends">Friends</button>
+        </div>
+        <div class="dgal fam" id="pingul-family"><img src="./irisfam.jpg" alt="My family"></div>
+        <div class="dgal friends" id="pingul-friends" hidden>
+          <img src="./irisf1.jpg" alt=""><img src="./irisf2.jpg" alt=""><img src="./irisf3.jpg" alt=""><img src="./irisf4.jpg" alt="">
+          <img src="./irisf5.jpg" alt=""><img src="./irisf6.jpg" alt=""><img src="./irisf7.jpg" alt=""><img src="./UM.jpg" alt="">
+        </div>
+      </div>
+    </div>
+
+    <div class="dpanel" id="dev-laxamana" hidden>
+      <div class="glass dcard">
+        <div class="dtop"><img src="./khen1.jpg" alt="Khen Andrey T. Laxamana"><div><h2>Khen Andrey T. Laxamana</h2><p class="course">3rd Year — Bachelor of Science in Computer Science</p></div></div>
+        <dl class="dlist">
+          <dt>Name:</dt><dd>Khen Andrey T. Laxamana</dd>
+          <dt>Address:</dt><dd>Blk 9 Lot 23 tawilis st. Dagat-dagatan Caloocan City</dd>
+          <dt>Age:</dt><dd>22</dd>
+          <dt>Contact no.:</dt><dd>09217054831</dd>
+          <dt>Email add.:</dt><dd>khenlaxamana04@gmail.com</dd>
+        </dl>
+      </div>
+      <div class="glass dcard">
+        <div class="subtabs">
+          <button class="active" data-target="laxamana-family">My Family</button>
+          <button data-target="laxamana-friends">Friends</button>
+        </div>
+        <div class="dgal fam" id="laxamana-family"><img src="./khenfam1.jpg" alt="My family"></div>
+        <div class="dgal friends" id="laxamana-friends" hidden>
+          <img src="./khenf1.jpg" alt=""><img src="./khenf2.jpg" alt=""><img src="./khenf3.jpg" alt=""><img src="./khenf4.jpg" alt="">
+          <img src="./khenf5.jpg" alt=""><img src="./khenf6.jpg" alt=""><img src="./khenf7.jpg" alt=""><img src="./khenf8.jpg" alt="">
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
 <div class="toast" id="toast" role="status"></div>
+
 <script>
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -290,36 +452,25 @@ const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 const peso = n => '₱' + n.toLocaleString('en-PH');
 
-/* ---------- Toast ---------- */
+/* Toast */
 let tt;
-function toast(msg) {
-  const t = $('#toast'); t.textContent = msg; t.classList.add('show');
-  clearTimeout(tt); tt = setTimeout(() => t.classList.remove('show'), 2600);
-}
+function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('show'), 2600); }
 
-/* ---------- Nav + scroll reveal ---------- */
+/* Nav + reveal */
 const burger = $('#burger'), menu = $('#menu');
 burger.onclick = () => { const o = menu.classList.toggle('open'); burger.setAttribute('aria-expanded', o); };
 $$('#menu a').forEach(a => a.addEventListener('click', () => { menu.classList.remove('open'); burger.setAttribute('aria-expanded', false); }));
 const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .15 });
-$$('.reveal').forEach(el => io.observe(el));
+$$('.vivos .reveal').forEach(el => io.observe(el));
 
-/* ---------- Advertisement video (ADS.mp4) ---------- */
+/* Advertisement video */
 const ads = $('#ads');
-if (ads) {
-  ads.muted = true;                       // browsers only autoplay muted video
-  if (RM) ads.pause();                    // respect "reduce motion"
-  else { const p = ads.play(); if (p && p.catch) p.catch(() => {}); }
-}
+if (ads) { ads.muted = true; if (RM) ads.pause(); else { const p = ads.play(); if (p && p.catch) p.catch(() => {}); } }
 
-/* ---------- Camera zoom (simulated digital zoom on a sample photo) ---------- */
+/* Camera zoom */
 const photo = $('#photo'), view = $('#view'), zr = $('#zr'), mark = $('#mark');
 const ZOOMS = [.5, 1, 2, 3, 5, 10, 20, 50, 100];
-ZOOMS.forEach(z => {
-  const b = document.createElement('button'); b.className = 'chip'; b.dataset.z = z; b.textContent = z + '×';
-  $('#zbtns').appendChild(b);
-});
-// scale = zoom * 2, so 0.5× shows the whole picture and 1× is the main-lens crop
+ZOOMS.forEach(z => { const b = document.createElement('button'); b.className = 'chip'; b.dataset.z = z; b.textContent = z + '×'; $('#zbtns').appendChild(b); });
 let Z = .5, X = 0, Y = 0, F = null;
 function paint() {
   const W = view.clientWidth, H = view.clientHeight, k = Z * 2;
@@ -340,7 +491,6 @@ function setZoom(nz) {
 $$('#zbtns .chip, #lenses .chip').forEach(b => b.onclick = () => setZoom(+b.dataset.z));
 zr.addEventListener('input', () => setZoom(+zr.value));
 $('#reset').onclick = () => { F = null; mark.style.opacity = 0; Z = .5; X = Y = 0; setZoom(1); };
-
 let pd = false, moved = 0, px = 0, py = 0;
 view.addEventListener('pointerdown', e => { pd = true; moved = 0; px = e.clientX; py = e.clientY; view.setPointerCapture(e.pointerId); });
 view.addEventListener('pointermove', e => {
@@ -351,7 +501,7 @@ view.addEventListener('pointermove', e => {
 });
 view.addEventListener('pointerup', e => {
   pd = false; view.classList.remove('drag');
-  if (moved <= 4) { // click = choose the zoom centre
+  if (moved <= 4) {
     const r = view.getBoundingClientRect(); F = { x: e.clientX - r.left, y: e.clientY - r.top };
     mark.style.left = F.x + 'px'; mark.style.top = F.y + 'px'; mark.style.opacity = 1;
     setTimeout(() => mark.style.opacity = 0, 1200);
@@ -360,7 +510,7 @@ view.addEventListener('pointerup', e => {
 addEventListener('resize', paint);
 Z = .5; setZoom(1);
 
-/* ---------- Battery simulation ---------- */
+/* Battery */
 let charging = false;
 $('#charge').onclick = () => {
   if (charging) return; charging = true;
@@ -374,7 +524,7 @@ $('#charge').onclick = () => {
   })(t0);
 };
 
-/* ---------- Specification tabs (only confirmed data; others marked) ---------- */
+/* Specs */
 const NC = 'Not confirmed';
 const SPECS = {
   Display: [['Size', '6.82 inches'], ['Panel', '2K AMOLED'], ['Resolution', '1216 x 2640 pixels'], ['Refresh rate', '120Hz']],
@@ -389,32 +539,33 @@ function showTab(name) {
   $$('.chip', tabs).forEach(b => { const on = b.textContent === name; b.classList.toggle('on', on); b.setAttribute('aria-selected', on); });
   panel.innerHTML = SPECS[name].map(([k, v]) => `<div class="spec"><small>${k}</small>${v === NC ? `<span class="na">${v}</span>` : v}</div>`).join('');
 }
-Object.keys(SPECS).forEach(n => {
-  const b = document.createElement('button'); b.className = 'chip'; b.textContent = n; b.setAttribute('role', 'tab');
-  b.onclick = () => showTab(n); tabs.appendChild(b);
-});
+Object.keys(SPECS).forEach(n => { const b = document.createElement('button'); b.className = 'chip'; b.textContent = n; b.setAttribute('role', 'tab'); b.onclick = () => showTab(n); tabs.appendChild(b); });
 showTab('Display');
 
-/* ---------- Configuration + cart (demo; no real purchase) ---------- */
+/* Configuration + cart (demo) */
 const CONFIGS = [
   { name: '512GB · Phone only', price: 109999 },
   { name: '512GB · with 200mm ZEISS Telephoto Kit', price: 123998 },
   { name: '512GB · Photographer Kit', price: 149999 },
 ];
 let cfg = CONFIGS[0], cart = 0;
-function renderCfg() {
-  $('#sel').textContent = cfg.name; $('#price').textContent = peso(cfg.price);
-  $$('.opt').forEach((o, i) => o.setAttribute('aria-checked', CONFIGS[i] === cfg));
-}
-CONFIGS.forEach(c => {
-  const b = document.createElement('button'); b.className = 'opt'; b.setAttribute('role', 'radio');
-  b.innerHTML = `<span>${c.name}</span><b>${peso(c.price)}</b>`;
-  b.onclick = () => { cfg = c; renderCfg(); };
-  $('#opts').appendChild(b);
-});
+function renderCfg() { $('#sel').textContent = cfg.name; $('#price').textContent = peso(cfg.price); $$('#opts .opt').forEach((o, i) => o.setAttribute('aria-checked', CONFIGS[i] === cfg)); }
+CONFIGS.forEach(c => { const b = document.createElement('button'); b.className = 'opt'; b.setAttribute('role', 'radio'); b.innerHTML = `<span>${c.name}</span><b>${peso(c.price)}</b>`; b.onclick = () => { cfg = c; renderCfg(); }; $('#opts').appendChild(b); });
 renderCfg();
 $('#addCart').onclick = () => { cart++; $('#cc').textContent = cart; toast(`Added: ${cfg.name} — demo cart`); };
 $('#buyNow').onclick = () => toast('Demo page: no order placed. Please buy from vivos’s official channels.');
+
+/* UM developer picker + sub tabs */
+$$('.pick').forEach(p => p.addEventListener('click', () => {
+  $$('.pick').forEach(x => x.classList.toggle('active', x === p));
+  $$('.dpanel').forEach(d => d.hidden = d.id !== p.dataset.dev);
+}));
+$$('.subtabs').forEach(group => {
+  const btns = $$('button', group);
+  btns.forEach(btn => btn.addEventListener('click', () => {
+    btns.forEach(b => { b.classList.toggle('active', b === btn); document.getElementById(b.dataset.target).hidden = b !== btn; });
+  }));
+});
 </script>
 </body>
 </html>
