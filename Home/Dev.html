@@ -24,14 +24,15 @@ html{ scroll-snap-type:none; }
 .sec{
   min-height:auto;
   scroll-snap-align:none;
-  padding:210px 16px 80px;   /* room for the taller header */
+  padding:210px 16px 80px;
   justify-content:flex-start;
 }
 .top{ padding:8px 20px; }
 @media (max-width:760px){
   .sec{ padding-top:260px; }
 }
-/* ============ STARFIELD BACKGROUND (pure CSS parallax stars, same on every section) ============ */
+
+/* ============ STARFIELD BACKGROUND ============ */
 .sky{
   position:fixed; inset:0; z-index:-1;
   overflow:hidden; pointer-events:none;
@@ -90,7 +91,7 @@ html{ scroll-snap-type:none; }
 .top{
   position:fixed; top:0; left:0; right:0; z-index:10;
   display:flex; align-items:center; gap:20px;
-  padding:10px 20px;
+  padding:8px 20px;
   border-radius:0;
   border-width:0 0 1px 0;
   border-color:rgba(255,255,255,.18);
@@ -137,8 +138,8 @@ p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
 /* History */
 .hgrid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; align-items:stretch; }
 .hl .panelbox:last-child{ margin-bottom:0; }
-.hr .glass{ height:100%; max-height:calc(100vh - 160px); margin:0; display:flex; flex-direction:column; }
-.hr .mile{ overflow-y:auto; padding-right:8px; }
+.hr .glass{ height:100%; margin:0; display:flex; flex-direction:column; }
+.hr .mile{ overflow:visible; padding-right:0; }
 .mile{ display:grid; grid-template-columns:92px 1fr; gap:8px 16px; font-size:18px; }
 .mile b{ color:#ffd76a; font-size:22px; }
 .mile span{ padding-bottom:10px; border-bottom:1px solid rgba(255,255,255,.15); }
@@ -181,17 +182,15 @@ p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
 .events figure{ margin:0; }
 .events figcaption{ text-align:center; font-weight:700; color:#ffd76a; font-size:17px; margin-bottom:8px; }
 
-
 /* Developer */
 .picker{ display:flex; margin:10px -28px 0; overflow-x:auto; border-top:1px solid rgba(255,255,255,.25); }
 .pick{
   flex:1 1 0; min-width:110px; padding:10px 8px;
   display:flex; flex-direction:column; align-items:center; gap:6px;
-  border:0; border-right:1px solid rgba(255,255,255,.25); border-bottom:3px solid transparent; border-radius:0;
+  border:0; border-bottom:3px solid transparent; border-radius:0;
   background:rgba(255,255,255,.08); color:#fff;
   font:700 17px "Segoe UI", sans-serif; cursor:pointer;
 }
-.pick:last-child{ border-right:0; }
 .pick img{ width:60px; height:68px; object-fit:cover; border-radius:10px; }
 .pick:hover{ background:rgba(255,255,255,.2); }
 .pick.active{ background:rgba(255,255,255,.28); border-bottom-color:#fff; }
@@ -269,7 +268,7 @@ p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
 .pcard:focus-within .pinfo{
   opacity:1;
   pointer-events:auto;
-  transition:opacity .35s ease .25s;   /* fades in after the card has widened */
+  transition:opacity .35s ease .25s;
 }
 .pinfo h3{ color:#ffd76a; font-size:19px; margin:0 0 10px; }
 .pinfo p{ font-size:15px; line-height:1.6; margin:0; text-align:justify; }
@@ -287,7 +286,7 @@ p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
   .dpanel{ grid-template-columns:1fr; }
   .dgal, .dgal.fam img{ max-height:60vh; }
   .hgrid{ grid-template-columns:1fr; }
-  .hr .glass{ max-height:60vh; }
+  .hr .glass{ max-height:none; }
 }
 @media (max-width:760px){
   .sec{ padding-top:200px; }
@@ -299,7 +298,7 @@ p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
   .mile{ grid-template-columns:60px 1fr; }
 }
 
-/* Clean look: remove dividers between developer picker buttons */
+/* Clean look: no divider between developer picker buttons */
 .pick{ border-right:0 !important; }
 
 /* Hide the scrollbar on the Friends/Family galleries (scrolling still works) */
@@ -504,7 +503,6 @@ p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
   <div class="glass panelbox center">
     <p class="label">College of Computer Science</p>
     <h1>Computer Science Department</h1>
-    <p>We offer academic programs leading to the degree of <i>Bachelor of Science in Computer Science</i> and <i>Associate in Computer Technology.</i></p>
   </div>
 
   <div class="subtabs glass" style="padding:0">
@@ -544,7 +542,6 @@ p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
   </div>
 </section>
 
-
 <!-- ============ 7. DEVELOPER ============ -->
 <section id="dev" class="sec">
   <div class="glass panelbox center" style="padding-bottom:0">
@@ -564,7 +561,7 @@ p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
         <img src="./jason.jpg" alt="Jason Manuel R. Molina">
         <div>
           <h2>Jason Manuel R. Molina</h2>
-          <p class="course">3rd Year — Bachelor of Science in Computer Science</p>
+          <p class="course">Bachelor of Science in Computer Science</p>
         </div>
       </div>
       <dl class="dlist">
@@ -600,7 +597,7 @@ p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
         <img src="./jess1.jpg" alt="Jessa Jane P. Olavides">
         <div>
           <h2>Jessa Jane P. Olavides</h2>
-          <p class="course">3rd Year — Bachelor of Science in Computer Science</p>
+          <p class="course">Bachelor of Science in Computer Science</p>
         </div>
       </div>
       <dl class="dlist">
@@ -669,7 +666,7 @@ p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
         <img src="./iris2.jpg" alt="Iris Matthew P. Pingul">
         <div>
           <h2>Iris Matthew</h2>
-          <p class="course">3rd Year — Bachelor of Science in Computer Science</p>
+          <p class="course">Bachelor of Science in Computer Science</p>
         </div>
       </div>
       <dl class="dlist">
