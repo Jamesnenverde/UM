@@ -65,6 +65,23 @@ h1 span { display: block; }
 .lead { margin: 1rem auto 0; color: var(--mut); max-width: 46ch; }
 .hero .row { justify-content: center; }
 
+/* Hero: text on the left, photos on the right */
+.hero-row { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; }
+.hero-row .hero-text { text-align: left; }
+.hero-row .row { justify-content: flex-start; }
+.hero-row .lead { margin-left: 0; }
+.hero-photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.hero-photos img { width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 16px;
+  border: 1px solid rgba(96,140,255,.4); background: rgba(255,255,255,.04);
+  box-shadow: 0 0 24px rgba(59,130,246,.18); image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; }
+.hero-photos img:first-child { grid-column: span 2; aspect-ratio: auto; }
+@media (max-width: 860px) {
+  .hero-row { grid-template-columns: 1fr; }
+  .hero-row .hero-text { text-align: center; }
+  .hero-row .row { justify-content: center; }
+  .hero-row .lead { margin-inline: auto; }
+}
+
 /* Price */
 .buy { max-width: 720px; margin: 0 auto; }
 .opts { display: grid; gap: .7rem; margin: 1rem 0; }
@@ -128,14 +145,24 @@ footer { text-align: center; color: var(--mut); font-size: .8rem; padding: 3rem 
     <p class="hint">Tap the speaker icon on the video for sound</p>
   </div>
 
-  <div class="hero-text reveal">
-    <p class="eyebrow">ZEISS co-engineered flagship</p>
-    <h1>VIVOS <span>X300 ULTRA</span></h1>
-    <p class="tag">“Beyond the Limits.”</p>
-    <p class="lead">A camera-first flagship with two 200MP sensors, a 6.82-inch 2K AMOLED display and a 6600mAh battery.</p>
-    <div class="row">
-      <a class="btn primary" href="#description">Product Description</a>
-      <a class="btn ghost" href="#buy">See the Price</a>
+  <div class="hero-row">
+    <div class="hero-text reveal">
+      <p class="eyebrow">ZEISS co-engineered flagship</p>
+      <h1>VIVOS <span>X300 ULTRA</span></h1>
+      <p class="tag">“Beyond the Limits.”</p>
+      <p class="lead">A camera-first flagship with two 200MP sensors, a 6.82-inch 2K AMOLED display and a 6600mAh battery.</p>
+      <div class="row">
+        <a class="btn primary" href="#description">Product Description</a>
+        <a class="btn ghost" href="#buy">See the Price</a>
+      </div>
+    </div>
+
+    <div class="hero-photos reveal">
+      <img src="jasonVIVO.png" alt="Jason with the vivo X300 Ultra">
+      <img src="jessaVIVO.png" alt="Jessa with the vivo X300 Ultra">
+      <img src="nicsVIVO.png" alt="Nicole with the vivo X300 Ultra">
+      <img src="KhenVIVO.png" alt="Khen with the vivo X300 Ultra">
+      <img src="IrisVIVO_2_.jpg" alt="Iris with the vivo X300 Ultra">
     </div>
   </div>
 </section>
