@@ -9,7 +9,7 @@
 /* ============ BASE ============ */
 *{ box-sizing:border-box; }
 [hidden]{ display:none !important; }
-html{ scroll-snap-type:y mandatory; }
+html{ scroll-snap-type:none; }
 @media (prefers-reduced-motion:no-preference){ html{ scroll-behavior:smooth; } }
 body{
   margin:0;
@@ -19,14 +19,14 @@ body{
   background:#090A0F;
   font-size:18px;
 }
-/* FIX: stop clipping at 100% zoom */
-html{ scroll-snap-type:none; }
 .sec{
   min-height:auto;
   scroll-snap-align:none;
   padding:210px 16px 80px;
-  justify-content:flex-start;
+  display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
 }
+.sec > *{ width:100%; max-width:1000px; }
+.sec > .hgrid{ max-width:1100px; }
 .top{ padding:8px 20px; }
 @media (max-width:760px){
   .sec{ padding-top:260px; }
@@ -119,14 +119,6 @@ html{ scroll-snap-type:none; }
 .nav button.active{ background:rgba(255,255,255,.28); border-bottom-color:#fff; }
 
 /* ============ SECTIONS ============ */
-.sec{
-  min-height:100vh;
-  scroll-snap-align:start;
-  padding:125px 16px 36px;
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-}
-.sec > *{ width:100%; max-width:1000px; }
-.sec > .hgrid{ max-width:1100px; }
 .panelbox{ padding:24px 28px; margin-bottom:16px; }
 .label{ color:#ffd76a; font-weight:700; font-size:20px; margin:0 0 6px; }
 h1,h2,h3{ margin:0 0 12px; }
@@ -145,7 +137,7 @@ p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
 .mile span{ padding-bottom:10px; border-bottom:1px solid rgba(255,255,255,.15); }
 .map{ width:100%; height:220px; border:0; border-radius:8px; }
 
-/* Mission cards (everything shown, no flipping) */
+/* Mission cards */
 .cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; }
 .card{ padding:26px 24px; min-height:260px; text-align:center; display:flex; flex-direction:column; justify-content:center; }
 .card h2{ font-size:72px; margin:4px 0 10px; color:#ffd76a; }
@@ -182,19 +174,7 @@ p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
 .events figure{ margin:0; }
 .events figcaption{ text-align:center; font-weight:700; color:#ffd76a; font-size:17px; margin-bottom:8px; }
 
-/* Developer */
-.picker{ display:flex; margin:10px -28px 0; overflow-x:auto; border-top:1px solid rgba(255,255,255,.25); }
-.pick{
-  flex:1 1 0; min-width:110px; padding:10px 8px;
-  display:flex; flex-direction:column; align-items:center; gap:6px;
-  border:0; border-bottom:3px solid transparent; border-radius:0;
-  background:rgba(255,255,255,.08); color:#fff;
-  font:700 17px "Segoe UI", sans-serif; cursor:pointer;
-}
-.pick img{ width:60px; height:68px; object-fit:cover; border-radius:10px; }
-.pick:hover{ background:rgba(255,255,255,.2); }
-.pick.active{ background:rgba(255,255,255,.28); border-bottom-color:#fff; }
-
+/* Developer panels */
 .dpanel{ display:grid; grid-template-columns:minmax(0,5fr) minmax(0,6fr); gap:16px; align-items:start; }
 .dcard{ padding:22px; }
 .dtop{ display:flex; gap:18px; align-items:center; margin-bottom:14px; }
@@ -205,83 +185,48 @@ p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
 .dlist dt{ font-weight:700; color:#ffd76a; }
 .dlist dd{ margin:0; overflow-wrap:anywhere; }
 .dcard .subtabs{ margin-bottom:14px; }
-.dgal{ display:flex; flex-wrap:wrap; justify-content:center; gap:10px; max-height:calc(100vh - 390px); min-height:240px; overflow-y:auto; }
+.dgal{ display:flex; flex-wrap:wrap; justify-content:center; gap:10px; max-height:calc(100vh - 390px); min-height:240px; overflow-y:auto; scrollbar-width:none; -ms-overflow-style:none; }
+.dgal::-webkit-scrollbar{ display:none; }
 .dgal.fam img{ max-width:100%; max-height:calc(100vh - 400px); height:auto; object-fit:contain; border-radius:10px; }
 .dgal.friends img{ width:140px; height:180px; object-fit:cover; border-radius:10px; }
 
-/* Professors (hover to expand and show info) */
-.pgrid{
-  display:flex;
-  gap:16px;
-  width:100%;
-  max-width:1200px;
-  height:360px;
-}
+/* Professors */
+.pgrid{ display:flex; gap:16px; width:100%; max-width:1200px; height:360px; }
 .pcard{
-  position:relative;
-  flex:1 1 0;
-  min-width:0;
-  height:100%;
-  border-radius:16px;
-  overflow:hidden;
-  cursor:pointer;
-  outline:none;
-  border:1px solid rgba(255,255,255,.12);
-  box-shadow:0 4px 30px rgba(0,0,0,.2);
+  position:relative; flex:1 1 0; min-width:0; height:100%;
+  border-radius:16px; overflow:hidden; cursor:pointer; outline:none;
+  border:1px solid rgba(255,255,255,.12); box-shadow:0 4px 30px rgba(0,0,0,.2);
   transition:flex-grow .55s cubic-bezier(.4,0,.2,1), box-shadow .55s ease;
 }
-.pcard:hover,
-.pcard:focus-within{
-  flex-grow:2.6;
-  box-shadow:0 10px 40px rgba(0,0,0,.45);
-}
-.pcard > img{
-  width:100%; height:100%;
-  object-fit:cover;
-  display:block;
-}
+.pcard:hover, .pcard:focus-within{ flex-grow:2.6; box-shadow:0 10px 40px rgba(0,0,0,.45); }
+.pcard > img{ width:100%; height:100%; object-fit:cover; display:block; }
 .pname{
   position:absolute; left:0; right:0; bottom:0;
-  padding:14px 10px;
-  background:rgba(9,10,15,.85);
-  border-top:2px solid #ffd76a;
+  padding:14px 10px; background:rgba(9,10,15,.85); border-top:2px solid #ffd76a;
   font-weight:700; font-size:18px; text-align:center;
-  color:#fff; text-shadow:0 1px 3px #000;
-  z-index:1;
+  color:#fff; text-shadow:0 1px 3px #000; z-index:1;
 }
 .pinfo{
-  position:absolute; inset:0;
-  padding:20px 22px;
+  position:absolute; inset:0; padding:20px 22px;
   display:flex; flex-direction:column;
-  background:rgba(9,10,15,.9);
-  backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);
-  opacity:0;
-  pointer-events:none;
-  transition:opacity .25s ease;
-  overflow-y:auto;
-  text-align:left;
-  z-index:2;
+  background:rgba(9,10,15,.9); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);
+  opacity:0; pointer-events:none; transition:opacity .25s ease;
+  overflow-y:auto; text-align:left; z-index:2;
 }
 .pinfo > *:first-child{ margin-top:auto; }
 .pinfo > *:last-child{ margin-bottom:auto; }
-.pcard:hover .pinfo,
-.pcard:focus-within .pinfo{
-  opacity:1;
-  pointer-events:auto;
-  transition:opacity .35s ease .25s;
+.pcard:hover .pinfo, .pcard:focus-within .pinfo{
+  opacity:1; pointer-events:auto; transition:opacity .35s ease .25s;
 }
 .pinfo h3{ color:#ffd76a; font-size:19px; margin:0 0 10px; }
 .pinfo p{ font-size:15px; line-height:1.6; margin:0; text-align:justify; }
 
-/* Phones: cards stack and expand downward */
 @media (max-width:760px){
   .pgrid{ flex-direction:column; height:auto; }
   .pcard{ flex:none; height:240px; transition:height .55s cubic-bezier(.4,0,.2,1), box-shadow .55s ease; }
-  .pcard:hover,
-  .pcard:focus-within{ flex-grow:0; height:420px; }
+  .pcard:hover, .pcard:focus-within{ flex-grow:0; height:420px; }
   .pinfo p{ font-size:14px; }
 }
-
 @media (max-width:900px){
   .dpanel{ grid-template-columns:1fr; }
   .dgal, .dgal.fam img{ max-height:60vh; }
@@ -298,30 +243,39 @@ p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
   .mile{ grid-template-columns:60px 1fr; }
 }
 
-/* Clean look: no divider between developer picker buttons */
-.pick{ border-right:0 !important; }
-
-/* Hide the scrollbar on the Friends/Family galleries (scrolling still works) */
-.dgal{ scrollbar-width:none; -ms-overflow-style:none; }
-.dgal::-webkit-scrollbar{ display:none; }
-
 /* Remove glass look from content boxes (header stays glass) */
 .sec .glass{
-  background:none;
-  backdrop-filter:none;
-  -webkit-backdrop-filter:none;
-  border:0;
-  border-radius:0;
-  box-shadow:none;
-  overflow:visible;
+  background:none; backdrop-filter:none; -webkit-backdrop-filter:none;
+  border:0; border-radius:0; box-shadow:none; overflow:visible;
 }
-.sec .glass::before,
-.sec .glass::after{ display:none; }
+.sec .glass::before, .sec .glass::after{ display:none; }
+
+/* ===== Developer slider ===== */
+.dev-slider{ position:relative; width:100%; max-width:1100px; margin:0 auto; }
+.dev-viewport{ overflow:hidden; border-radius:16px; touch-action:pan-y; }
+.dev-track{ display:flex; transition:transform .6s cubic-bezier(.4,0,.2,1); }
+.dev-slide{ flex:0 0 100%; min-width:0; padding:4px; }
+.dev-arrow{
+  position:absolute; top:40%; transform:translateY(-50%); z-index:3;
+  width:46px; height:46px; border-radius:50%;
+  border:1px solid rgba(255,255,255,.4); background:rgba(8,14,35,.85);
+  color:#fff; font-size:28px; line-height:1; cursor:pointer;
+}
+.dev-arrow:hover{ background:rgba(255,255,255,.25); }
+.dev-arrow.prev{ left:-14px; }
+.dev-arrow.next{ right:-14px; }
+.dev-dots{ display:flex; justify-content:center; gap:10px; margin-top:18px; }
+.dev-dot{ width:12px; height:12px; border-radius:50%; border:0; padding:0; background:rgba(255,255,255,.35); cursor:pointer; }
+.dev-dot.on{ background:#fff; }
+.dev-slide .dcard{ background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.3); border-radius:16px; }
+@media (max-width:900px){
+  .dev-arrow.prev{ left:4px; }
+  .dev-arrow.next{ right:4px; }
+}
 </style>
 </head>
 <body data-section="history">
 
-<!-- STARFIELD BACKGROUND -->
 <div class="sky" aria-hidden="true">
   <div id="stars"></div>
   <div id="stars2"></div>
@@ -352,7 +306,7 @@ p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
 
 <main>
 
-<!-- ============ 1. HISTORY ============ -->
+<!-- 1. HISTORY -->
 <section id="history" class="sec">
   <div class="hgrid">
   <div class="hl">
@@ -393,14 +347,13 @@ p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
   </div>
 </section>
 
-<!-- ============ 2. MISSION ============ -->
+<!-- 2. MISSION -->
 <section id="mission" class="sec">
   <div class="glass panelbox center">
     <p class="label">Our Purpose</p>
     <h1>UM MISSION</h1>
     <p><b>ACE</b> - to accomplish something with complete success.</p>
   </div>
-
   <div class="cards">
     <div class="glass card">
       <p class="word">Anchor</p><h2>A</h2>
@@ -417,7 +370,7 @@ p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
   </div>
 </section>
 
-<!-- ============ 3. VISION ============ -->
+<!-- 3. VISION -->
 <section id="vision" class="sec">
   <div class="glass panelbox center">
     <p class="label">Our Future</p>
@@ -431,7 +384,7 @@ p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
   </div>
 </section>
 
-<!-- ============ 4. MOTTO ============ -->
+<!-- 4. MOTTO -->
 <section id="motto" class="sec">
   <div class="glass panelbox center">
     <p class="label">Our Motto</p>
@@ -440,7 +393,7 @@ p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
   <div class="glass quote">"To acquire knowledge and skills for the benefit of mankind."</div>
 </section>
 
-<!-- ============ 5. OPERATING SYSTEM ============ -->
+<!-- 5. OPERATING SYSTEM -->
 <section id="os" class="sec">
   <div class="subtabs glass" style="padding:0">
     <button class="active" data-target="os-mac">MacOS</button>
@@ -498,7 +451,7 @@ p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
   </div>
 </section>
 
-<!-- ============ 6. CS EVENT ============ -->
+<!-- 6. CS EVENT -->
 <section id="cs" class="sec">
   <div class="glass panelbox center">
     <p class="label">College of Computer Science</p>
@@ -533,7 +486,7 @@ p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
       <figure><figcaption>Cheerdance</figcaption><img src="./Cheerdance.jpg" alt="Cheerdance"></figure>
       <figure><figcaption>Foundation Day</figcaption><img src="./Foundation_day(2).jpg" alt="Foundation Day"></figure>
       <figure><figcaption>Cleanup</figcaption><img src="./Cleanup.jpg" alt="Cleanup"></figure>
-      <figure><figcaption> Sa Bayang Pagbigkas</figcaption><img src="./pagbigkas.jpg" alt="Pagbigkas"></figure>
+      <figure><figcaption>Sa Bayang Pagbigkas</figcaption><img src="./pagbigkas.jpg" alt="Pagbigkas"></figure>
       <figure><figcaption>Sportsfest</figcaption><img src="./Sportsfest.jpg" alt="Sportsfest"></figure>
       <figure><figcaption>Farewell</figcaption><img src="./farewell.jpg" alt="Farewell"></figure>
       <figure><figcaption>Intrams</figcaption><img src="./intrams.jpg" alt="Intramurals"></figure>
@@ -542,198 +495,24 @@ p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
   </div>
 </section>
 
-<!-- ============ 7. DEVELOPER ============ -->
+<!-- 7. DEVELOPER (slider) -->
 <section id="dev" class="sec">
-  <div class="glass panelbox center" style="padding-bottom:0">
+  <div class="glass panelbox center">
     <p class="label">WEB DEVELOPERS</p>
-    <div class="picker">
-      <button class="pick active" data-dev="dev-molina"><img src="./me1.jpg" alt="Molina"><span>Molina</span></button>
-      <button class="pick" data-dev="dev-olavides"><img src="./jess1.jpg" alt="Olavides"><span>Olavides</span></button>
-      <button class="pick" data-dev="dev-leal"><img src="./leal1.jpg" alt="Leal"><span>Leal</span></button>
-      <button class="pick" data-dev="dev-pingul"><img src="./iris1.jpg" alt="Pingul"><span>Pingul</span></button>
-      <button class="pick" data-dev="dev-laxamana"><img src="./khen1.jpg" alt="Laxamana"><span>Laxamana</span></button>
-    </div>
+    <h2 style="color:#ffd76a">Meet the Developers</h2>
   </div>
 
-  <div class="dpanel" id="dev-molina">
-    <div class="glass dcard">
-      <div class="dtop">
-        <img src="./jason.jpg" alt="Jason Manuel R. Molina">
-        <div>
-          <h2>Jason Manuel R. Molina</h2>
-          <p class="course">Bachelor of Science in Computer Science</p>
-        </div>
-      </div>
-      <dl class="dlist">
-        <dt>Name:</dt><dd>Jason Manuel R. Molina</dd>
-        <dt>Address:</dt><dd>Blk 118 lot 45 Villazaragosa brgy. Turo bocaue bulacan</dd>
-        <dt>Age:</dt><dd>20</dd>
-        <dt>Contact no.:</dt><dd>09704844828</dd>
-        <dt>Email add.:</dt><dd>jasonmanuelmolina@gmail.com</dd>
-      </dl>
+  <div class="dev-slider" id="devSlider">
+    <button class="dev-arrow prev" id="devPrev" aria-label="Previous developer">&#8249;</button>
+    <div class="dev-viewport" id="devViewport">
+      <div class="dev-track" id="devTrack"></div>
     </div>
-    <div class="glass dcard">
-      <div class="subtabs">
-        <button class="active" data-target="molina-family">My Family</button>
-        <button data-target="molina-friends">Friends</button>
-      </div>
-      <div class="dgal fam" id="molina-family"><img src="./fam6.jpg" alt="My family"></div>
-      <div class="dgal friends" id="molina-friends" hidden>
-          <img src="./fam1.jpg" alt="">
-          <img src="./fam2.jpg" alt="">
-          <img src="./fam3.jpg" alt="">
-          <img src="./fam4.jpg" alt="">
-          <img src="./fam5.jpg" alt="">
-          <img src="./fams1.jpg" alt="">
-          <img src="./fg.jpg" alt="">
-          <img src="./f3.jpg" alt="">
-      </div>
-    </div>
+    <button class="dev-arrow next" id="devNext" aria-label="Next developer">&#8250;</button>
   </div>
-
-  <div class="dpanel" id="dev-olavides" hidden>
-    <div class="glass dcard">
-      <div class="dtop">
-        <img src="./jess1.jpg" alt="Jessa Jane P. Olavides">
-        <div>
-          <h2>Jessa Jane P. Olavides</h2>
-          <p class="course">Bachelor of Science in Computer Science</p>
-        </div>
-      </div>
-      <dl class="dlist">
-        <dt>Name:</dt><dd>Jessa Jane P. Olavides</dd>
-        <dt>Address:</dt><dd>146 B E Dela Paz Sanroque Marikina City</dd>
-        <dt>Age:</dt><dd>21</dd>
-        <dt>Contact no.:</dt><dd>09958193214</dd>
-        <dt>Email add.:</dt><dd>jessaolavides5@gmail.com</dd>
-      </dl>
-    </div>
-    <div class="glass dcard">
-      <div class="subtabs">
-        <button class="active" data-target="olavides-family">My Family</button>
-        <button data-target="olavides-friends">Friends</button>
-      </div>
-      <div class="dgal fam" id="olavides-family"><img src="./jessfam.jpg" alt="My family"></div>
-      <div class="dgal friends" id="olavides-friends" hidden>
-          <img src="./jessf1.jpg" alt="">
-          <img src="./jessf2.jpg" alt="">
-          <img src="./jessf3.jpg" alt="">
-          <img src="./jessf4.jpg" alt="">
-          <img src="./jessf5.jpg" alt="">
-          <img src="./khenf5.jpg" alt="">
-          <img src="./khenf1.jpg" alt="">
-          <img src="./khenf2.jpg" alt="">
-      </div>
-    </div>
-  </div>
-
-  <div class="dpanel" id="dev-leal" hidden>
-    <div class="glass dcard">
-      <div class="dtop">
-        <img src="./leal1.jpg" alt="Nicole L. Leal">
-        <div>
-          <h2>Nicole L. Leal</h2>
-          <p class="course">Bachelor of Science in Computer Science</p>
-        </div>
-      </div>
-      <dl class="dlist">
-        <dt>Name:</dt><dd>Nicole L. Leal</dd>
-        <dt>Address:</dt><dd>219 B. San Nicolas St. Binondo Manila, Brgy. 283 Zone 1010</dd>
-        <dt>Age:</dt><dd>20</dd>
-        <dt>Contact no.:</dt><dd>09453940244</dd>
-        <dt>Email add.:</dt><dd>labadannicole4@gmail.com</dd>
-      </dl>
-    </div>
-    <div class="glass dcard">
-      <div class="subtabs">
-        <button class="active" data-target="leal-family">My Family</button>
-        <button data-target="leal-friends">Friends</button>
-      </div>
-      <div class="dgal fam" id="leal-family"><img src="./nicsfam.jpg" alt="My family"></div>
-      <div class="dgal friends" id="leal-friends" hidden>
-          <img src="./nicsf1.jpg" alt="">
-          <img src="./nicsf2.jpg" alt="">
-          <img src="./nicsf3.jpg" alt="">
-          <img src="./nicsf4.jpg" alt="">
-          <img src="./nicsf5.jpg" alt="">
-      </div>
-    </div>
-  </div>
-
-  <div class="dpanel" id="dev-pingul" hidden>
-    <div class="glass dcard">
-      <div class="dtop">
-        <img src="./iris2.jpg" alt="Iris Matthew P. Pingul">
-        <div>
-          <h2>Iris Matthew</h2>
-          <p class="course">Bachelor of Science in Computer Science</p>
-        </div>
-      </div>
-      <dl class="dlist">
-        <dt>Name:</dt><dd>Iris Matthew P. Pingul</dd>
-        <dt>Address:</dt><dd>053 Bungad Kaingin 2 Barangay Pansol QC</dd>
-        <dt>Age:</dt><dd>20</dd>
-        <dt>Contact no.:</dt><dd>09777290245</dd>
-        <dt>Email add.:</dt><dd>irispingul257@gmail.com</dd>
-      </dl>
-    </div>
-    <div class="glass dcard">
-      <div class="subtabs">
-        <button class="active" data-target="pingul-family">My Family</button>
-        <button data-target="pingul-friends">Friends</button>
-      </div>
-      <div class="dgal fam" id="pingul-family"><img src="./irisfam.jpg" alt="My family"></div>
-      <div class="dgal friends" id="pingul-friends" hidden>
-          <img src="./irisf1.jpg" alt="">
-          <img src="./irisf2.jpg" alt="">
-          <img src="./irisf3.jpg" alt="">
-          <img src="./irisf4.jpg" alt="">
-          <img src="./irisf5.jpg" alt="">
-          <img src="./irisf6.jpg" alt="">
-          <img src="./irisf7.jpg" alt="">
-          <img src="./UM.jpg" alt="">
-      </div>
-    </div>
-  </div>
-
-  <div class="dpanel" id="dev-laxamana" hidden>
-    <div class="glass dcard">
-      <div class="dtop">
-        <img src="./khen1.jpg" alt="Khen Andrey T. Laxamana">
-        <div>
-          <h2>Khen Andrey T. Laxamana</h2>
-          <p class="course">3rd Year — Bachelor of Science in Computer Science</p>
-        </div>
-      </div>
-      <dl class="dlist">
-        <dt>Name:</dt><dd>Khen Andrey T. Laxamana</dd>
-        <dt>Address:</dt><dd>Blk 9 Lot 23 tawilis st. Dagat-dagatan Caloocan City</dd>
-        <dt>Age:</dt><dd>22</dd>
-        <dt>Contact no.:</dt><dd>09217054831</dd>
-        <dt>Email add.:</dt><dd>khenlaxamana04@gmail.com</dd>
-      </dl>
-    </div>
-    <div class="glass dcard">
-      <div class="subtabs">
-        <button class="active" data-target="laxamana-family">My Family</button>
-        <button data-target="laxamana-friends">Friends</button>
-      </div>
-      <div class="dgal fam" id="laxamana-family"><img src="./khenfam1.jpg" alt="My family"></div>
-      <div class="dgal friends" id="laxamana-friends" hidden>
-          <img src="./khenf1.jpg" alt="">
-          <img src="./khenf2.jpg" alt="">
-          <img src="./khenf3.jpg" alt="">
-          <img src="./khenf4.jpg" alt="">
-          <img src="./khenf5.jpg" alt="">
-          <img src="./khenf6.jpg" alt="">
-          <img src="./khenf7.jpg" alt="">
-          <img src="./khenf8.jpg" alt="">
-      </div>
-    </div>
-  </div>
+  <div class="dev-dots" id="devDots"></div>
 </section>
 
-<!-- ============ 8. PROFESSORS ============ -->
+<!-- 8. PROFESSORS -->
 <section id="prof" class="sec">
   <div class="glass panelbox center">
     <p class="label">Faculty</p>
@@ -742,7 +521,6 @@ p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
   </div>
 
   <div class="pgrid">
-
     <div class="glass pcard" tabindex="0">
       <img src="./1000052110.jpg" alt="Professor Rogelio Plaza Jr.">
       <div class="pname">Prof. Rogelio Plaza Jr.</div>
@@ -787,14 +565,13 @@ p{ font-size:19px; line-height:1.7; margin:0 0 12px; }
         <p>He served as a dedicated educator at the University of Manila. He brings real-world knowledge and practical insights to the classroom, helping students connect theory with actual industry applications. His expertise includes core Computer Science subjects such as programming, data structures and algorithms, computer systems, and software development. He also has a strong understanding of emerging technologies and their applications in real-world scenarios.</p>
       </div>
     </div>
-
   </div>
 </section>
 
 </main>
 
 <script>
-/* ===== Scroll sections: the nav scrolls to a section, scrolling changes the background ===== */
+/* Scroll sections: nav highlighting */
 const navBtns  = document.querySelectorAll('#nav button');
 const sections = document.querySelectorAll('.sec');
 
@@ -821,7 +598,7 @@ if (start && document.getElementById(start)) {
 }
 setActive(start && document.getElementById(start) ? start : 'history');
 
-/* ===== Sub tabs (Operating System + CS) ===== */
+/* Sub tabs (Operating System + CS) */
 document.querySelectorAll('.subtabs').forEach(group => {
   const btns = group.querySelectorAll('button');
   btns.forEach(btn => btn.addEventListener('click', () => {
@@ -832,12 +609,129 @@ document.querySelectorAll('.subtabs').forEach(group => {
   }));
 });
 
-/* ===== Developer picker ===== */
-const picks = document.querySelectorAll('.pick');
-picks.forEach(p => p.addEventListener('click', () => {
-  picks.forEach(x => x.classList.toggle('active', x === p));
-  document.querySelectorAll('.dpanel').forEach(d => d.hidden = d.id !== p.dataset.dev);
-}));
+/* Developer slider */
+(function () {
+  const DEVS = [
+    {
+      name: 'Jason Manuel R. Molina', course: 'Bachelor of Science in Computer Science',
+      photo: 'jason.jpg', address: 'Blk 118 lot 45 Villazaragosa brgy. Turo bocaue bulacan',
+      age: '20', contact: '09704844828', email: 'jasonmanuelmolina@gmail.com',
+      family: 'fam6.jpg',
+      friends: ['fam1.jpg','fam2.jpg','fam3.jpg','fam4.jpg','fam5.jpg','fams1.jpg','fg.jpg','f3.jpg']
+    },
+    {
+      name: 'Jessa Jane P. Olavides', course: 'Bachelor of Science in Computer Science',
+      photo: 'jess1.jpg', address: '146 B E Dela Paz Sanroque Marikina City',
+      age: '21', contact: '09958193214', email: 'jessaolavides5@gmail.com',
+      family: 'jessfam.jpg',
+      friends: ['jessf1.jpg','jessf2.jpg','jessf3.jpg','jessf4.jpg','jessf5.jpg','khenf5.jpg','khenf1.jpg','khenf2.jpg']
+    },
+    {
+      name: 'Nicole L. Leal', course: 'Bachelor of Science in Computer Science',
+      photo: 'leal1.jpg', address: '219 B. San Nicolas St. Binondo Manila, Brgy. 283 Zone 1010',
+      age: '20', contact: '09453940244', email: 'labadannicole4@gmail.com',
+      family: 'nicsfam.jpg',
+      friends: ['nicsf1.jpg','nicsf2.jpg','nicsf3.jpg','nicsf4.jpg','nicsf5.jpg']
+    },
+    {
+      name: 'Iris Matthew P. Pingul', course: 'Bachelor of Science in Computer Science',
+      photo: 'iris2.jpg', address: '053 Bungad Kaingin 2 Barangay Pansol QC',
+      age: '20', contact: '09777290245', email: 'irispingul257@gmail.com',
+      family: 'irisfam.jpg',
+      friends: ['irisf1.jpg','irisf2.jpg','irisf3.jpg','irisf4.jpg','irisf5.jpg','irisf6.jpg','irisf7.jpg','UM.jpg']
+    },
+    {
+      name: 'Khen Andrey T. Laxamana', course: '3rd Year — Bachelor of Science in Computer Science',
+      photo: 'khen1.jpg', address: 'Blk 9 Lot 23 tawilis st. Dagat-dagatan Caloocan City',
+      age: '22', contact: '09217054831', email: 'khenlaxamana04@gmail.com',
+      family: 'khenfam1.jpg',
+      friends: ['khenf1.jpg','khenf2.jpg','khenf3.jpg','khenf4.jpg','khenf5.jpg','khenf6.jpg','khenf7.jpg','khenf8.jpg']
+    }
+  ];
+
+  const track = document.getElementById('devTrack');
+  const dotsBox = document.getElementById('devDots');
+  const viewport = document.getElementById('devViewport');
+
+  track.innerHTML = DEVS.map((d, i) => `
+    <article class="dev-slide">
+      <div class="dpanel">
+        <div class="glass dcard">
+          <div class="dtop">
+            <img src="./${d.photo}" alt="${d.name}">
+            <div>
+              <h2>${d.name}</h2>
+              <p class="course">${d.course}</p>
+            </div>
+          </div>
+          <dl class="dlist">
+            <dt>Address:</dt><dd>${d.address}</dd>
+            <dt>Age:</dt><dd>${d.age}</dd>
+            <dt>Contact no.:</dt><dd>${d.contact}</dd>
+            <dt>Email add.:</dt><dd>${d.email}</dd>
+          </dl>
+        </div>
+        <div class="glass dcard">
+          <div class="subtabs">
+            <button class="active" data-t="fam-${i}">My Family</button>
+            <button data-t="fri-${i}">Friends</button>
+          </div>
+          <div class="dgal fam" id="fam-${i}"><img src="./${d.family}" alt="My family"></div>
+          <div class="dgal friends" id="fri-${i}" hidden>
+            ${d.friends.map(f => `<img src="./${f}" alt="">`).join('')}
+          </div>
+        </div>
+      </div>
+    </article>`).join('');
+
+  dotsBox.innerHTML = DEVS.map((d, i) =>
+    `<button class="dev-dot" data-i="${i}" aria-label="Show ${d.name}"></button>`).join('');
+
+  const dots = Array.from(dotsBox.querySelectorAll('.dev-dot'));
+  let idx = 0, timer = null;
+
+  function go(n) {
+    idx = (n + DEVS.length) % DEVS.length;
+    track.style.transform = `translateX(${-idx * 100}%)`;
+    dots.forEach((dot, i) => dot.classList.toggle('on', i === idx));
+  }
+
+  document.getElementById('devPrev').addEventListener('click', () => { go(idx - 1); restart(); });
+  document.getElementById('devNext').addEventListener('click', () => { go(idx + 1); restart(); });
+  dots.forEach(dot => dot.addEventListener('click', () => { go(+dot.dataset.i); restart(); }));
+
+  // Family / Friends switch inside each slide
+  track.addEventListener('click', e => {
+    const b = e.target.closest('.subtabs button');
+    if (!b) return;
+    const group = b.parentElement;
+    group.querySelectorAll('button').forEach(x => x.classList.toggle('active', x === b));
+    group.parentElement.querySelectorAll('.dgal').forEach(g => g.hidden = g.id !== b.dataset.t);
+  });
+
+  // Swipe (touch) and drag (mouse)
+  let startX = null;
+  viewport.addEventListener('pointerdown', e => { startX = e.clientX; });
+  viewport.addEventListener('pointerup', e => {
+    if (startX === null) return;
+    const dx = e.clientX - startX; startX = null;
+    if (Math.abs(dx) > 50) { go(dx < 0 ? idx + 1 : idx - 1); restart(); }
+  });
+
+  // Automatic slide change every 8 seconds, paused while hovering
+  function restart() {
+    clearInterval(timer);
+    timer = setInterval(() => go(idx + 1), 8000);
+  }
+  const slider = document.getElementById('devSlider');
+  slider.addEventListener('mouseenter', () => clearInterval(timer));
+  slider.addEventListener('mouseleave', restart);
+
+  go(0);
+  restart();
+})();
+
+/* Professors: nothing extra needed (hover CSS handles it) */
 </script>
 </body>
 </html>
